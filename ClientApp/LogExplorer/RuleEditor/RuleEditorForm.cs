@@ -79,7 +79,8 @@ namespace ClientApp.LogExplorer.RuleEditor
 
         private void RuleEditorForm_Load(object sender, EventArgs e)
         {
-            tbColorHex.Text = "DarkGreen";
+            if(tbColorHex.Text == "")
+                tbColorHex.Text = "DarkGreen";
         }
     }
 }
