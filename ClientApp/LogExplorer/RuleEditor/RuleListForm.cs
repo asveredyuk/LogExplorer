@@ -64,6 +64,7 @@ namespace ClientApp.LogExplorer.RuleEditor
                     //name not changed
                     //only replace
                     _state.Rules[name] = f.Result;
+                    return;
                 }
                 if (_state.Rules.ContainsKey(newName))
                 {
