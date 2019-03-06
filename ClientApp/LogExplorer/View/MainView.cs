@@ -43,7 +43,7 @@ namespace ClientApp.LogExplorer.View
 
         private void PbOnSizeChanged(object sender, EventArgs eventArgs)
         {
-            var newVal = _pb.Size.Height / (int)(RECT_SIZE+RECT_INDENT);
+            var newVal = _pb.Size.Height / (int)(RECT_SIZE + RECT_INDENT);
             if (newVal != State.TracesInView)
             {
                 Controller.ChangeTracesInWindow(newVal);
@@ -55,7 +55,7 @@ namespace ClientApp.LogExplorer.View
         {
             var pos = State.Pos;
             var dt = e.Delta * -1;
-            var newPos = Math.Min(Math.Max(pos+dt, 0), State.Info.ItemsCount);//todo: add here window size
+            var newPos = Math.Min(Math.Max(pos + dt, 0), State.Info.ItemsCount);//todo: add here window size
             Controller.ChangePos(newPos, this, true);
         }
 
@@ -64,13 +64,13 @@ namespace ClientApp.LogExplorer.View
             _clickHandler.Reset();
             var g = e.Graphics;
             g.Clear(Color.White);
-            if(State.Info == null)
+            if (State.Info == null)
                 return;
             var rectSize = new SizeF(RECT_SIZE, RECT_SIZE);
 
-            Vector2 y_cursor = new Vector2(0,RECT_INDENT);
+            Vector2 y_cursor = new Vector2(0, RECT_INDENT);
 
-            
+
             var y_step = new Vector2(0, RECT_SIZE + RECT_INDENT);
             bool yIsOverflow()
             {
@@ -82,11 +82,11 @@ namespace ClientApp.LogExplorer.View
                 Vector2 y_start = y_cursor;
                 Vector2 x_start = new Vector2(TRACE_INFO_W + RECT_INDENT, 0);
                 Vector2 x_cursor = x_start;
-                Vector2 x_step = new Vector2(RECT_SIZE + RECT_INDENT,0);
+                Vector2 x_step = new Vector2(RECT_SIZE + RECT_INDENT, 0);
                 bool notFullyDrawn = false;
                 if (trace == null)
                 {
-                    var rect = new RectangleF((x_cursor+y_cursor).ToPointF(), rectSize);
+                    var rect = new RectangleF((x_cursor + y_cursor).ToPointF(), rectSize);
                     g.FillRectangle(Brushes.LightGray, rect);
                 }
                 else
@@ -108,25 +108,39 @@ namespace ClientApp.LogExplorer.View
                             }
 
                         }
-                        var rect = new RectangleF((x_cursor+y_cursor).ToPointF(),rectSize);
+                        var rect = new RectangleF((x_cursor + y_cursor).ToPointF(), rectSize);
 
                         _clickHandler.PushItemRect(rect, trace, i);
 
                         var rules = GetRulesForItem(trace, i).ToArray();
-                        if (rules.Length == 0)
+                        switch (rules.Length)
                         {
-                            g.FillRectangle(Brushes.Gray, rect);
-                        }
-                        else
-                        {
-                            if (rules.Length == 1)
-                            {
+                            case 0:
+                                g.FillRectangle(Brushes.Gray, rect);
+                                break;
+                            
+                            case 2:
+                            case 3:
+                                {
+                                    for (int j = 0; j < rules.Length; j++)
+                                    {
+                                        var partRect = new RectangleF(rect.X + rect.Width/rules.Length*j, rect.Y, rect.Width/rules.Length,rect.Height);
+                                        g.FillRectangle(new SolidBrush(rules[j].Color), partRect);
+                                    }
+                                    //two sided rect
+                                    //var rect1 = new RectangleF(rect.X, rect.Y, rect.Width / 2, rect.Height);
+                                    //var rect2 = new RectangleF(rect.X + rect.Width / 2, rect.Y, rect.Width / 2, rect.Height);
+                                    //g.FillRectangle(new SolidBrush(rules[0].Color), rect1);
+                                    //g.FillRectangle(new SolidBrush(rules[1].Color), rect2);
+                                    break;
+
+                                }
+                            case 1:
+                            default:
                                 g.FillRectangle(new SolidBrush(rules[0].Color), rect);
-                            }
-                            else
-                            {
-                                //multicolor
-                            }
+                                break;
+
+
                         }
                         //increment x pos
                         x_cursor += x_step;
@@ -136,9 +150,9 @@ namespace ClientApp.LogExplorer.View
                     if (notFullyDrawn)
                     {
                         var start = y_start;
-                        var w = new Vector2(TRACE_INFO_W,0);
-                        var h = y_cursor  - new Vector2(0, RECT_INDENT) - y_start;
-                        
+                        var w = new Vector2(TRACE_INFO_W, 0);
+                        var h = y_cursor - new Vector2(0, RECT_INDENT) - y_start;
+
                         var b = new ShapeBuilder()
                             .MoveTo(start)
                             .MoveBy(w)
@@ -172,8 +186,8 @@ namespace ClientApp.LogExplorer.View
                 }
 
                 y_cursor += y_step;
-                
-                if(yIsOverflow())
+
+                if (yIsOverflow())
                     break;
             }
 
@@ -274,7 +288,7 @@ namespace ClientApp.LogExplorer.View
 
         private IEnumerable<Rule> GetRulesForItem(LogTraceWithLabels tr, int pos)
         {
-            if(pos >= tr.ItemsLabels.Count)
+            if (pos >= tr.ItemsLabels.Count)
                 yield break;
             var lb = tr.ItemsLabels[pos];
             foreach (var i in lb)
