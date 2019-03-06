@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -137,7 +138,15 @@ namespace ClientApp.LogExplorer.View
                                 }
                             case 1:
                             default:
-                                g.FillRectangle(new SolidBrush(rules[0].Color), rect);
+
+                                var bgColor = rules[0].Color;
+                                g.FillRectangle(new SolidBrush(bgColor), rect);
+                                var text = rules[0].Text;
+                                var textColor = bgColor.GetBrightness() > 0.5 ? Color.Black : Color.White;
+                                var font = new Font("Cosnsolas", 15);
+                                var textSize = g.MeasureString(text, font);
+                                var pos = new PointF(rect.X + rect.Width/2 - textSize.Width/2, rect.Y + rect.Height/2 - textSize.Height/2);
+                                g.DrawString(text,font,new SolidBrush(textColor), pos);
                                 break;
 
 
