@@ -53,8 +53,8 @@ namespace AppServer.Routes
             {
                 Database = new ImportJob.DatabaseInfo()
                 {
-                    Database = "test",
-                    Table = "traces"
+                    Database = "_log_test",//todo: make configurable
+                    Table = DatabaseBoundary.Database.LOG_DATA_COL_NAME
                 },
                 Id = Guid.NewGuid(),
                 Input = new ImportJob.CsvInputInfo()

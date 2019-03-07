@@ -34,6 +34,7 @@ namespace AppServer
         }
 
         public string FilesDir { get; set; } = @"C:\Users\Alex\Downloads\BPI2016_Clicks_Logged_In.csv\"; //@"X:\files\";
-        public string MongoDbName { get; set; } = "test";
+        //public string MongoDbName { get; set; } = "test";
+        public string MongoDbPrefix { get; set; } = "_log_";
     }
 }

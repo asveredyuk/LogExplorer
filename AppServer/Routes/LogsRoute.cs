@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AppServer.Ext;
 using AppServer.Routing;
+using DatabaseBoundary;
 using LogEntity;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -26,18 +27,19 @@ namespace AppServer.Routes
         public void GetLogsList(HttpListenerRequest req, HttpListenerResponse resp)
         {
             //TODO: reuse client
-            var db = GetDb();
-            var colNames = db.ListCollections().ToEnumerable().Select(t => t["name"].AsString).ToList();
-            resp.WriteJson(colNames);
+            //var db = GetDb();
+            //var colNames = db.ListCollections().ToEnumerable().Select(t => t["name"].AsString).ToList();
+            resp.WriteJson(Database.Self.GetLogNames());
         }
         //get info about collection
         public void GetLogInfo(HttpListenerRequest req, HttpListenerResponse resp, string param)
         {
 
             //todo: may be log infos should be stored in collection to store info
-            var db = GetDb();
+            
             string name = param;
-            var col = db.GetCollection<BsonDocument>(name);
+            var db = Database.Self.GetLogDatabase(name);
+            var col = db.GetCollection<BsonDocument>(Database.LOG_DATA_COL_NAME);
             //TODO: handle if does not exists
             
             var info = new LogInfo()
@@ -58,9 +60,10 @@ namespace AppServer.Routes
         }
         public void GetItemsAtPos(HttpListenerRequest req, HttpListenerResponse resp, string param)
         {
-            var db = GetDb();
+            
             string name = param;
-            var col = db.GetCollection<LogTrace>(name);
+            var db = Database.Self.GetLogDatabase(name);
+            var col = db.GetCollection<LogTrace>(Database.LOG_DATA_COL_NAME);
             var args = req.ReadJson<GetItemsAtPosArgs>();
             var fb = Builders<LogTrace>.Filter;
             var filterGte = fb.Gte(t => t._pos, args.Pos);
@@ -69,13 +72,6 @@ namespace AppServer.Routes
             //for performance, change this to bson redirect
             var res = col.FindSync(filter).ToEnumerable();
             resp.WriteJson(res);
-        }
-
-        private IMongoDatabase GetDb()
-        {
-            var client = new MongoClient();
-            var db = client.GetDatabase(Config.Self.MongoDbName);
-            return db;
         }
         
     }

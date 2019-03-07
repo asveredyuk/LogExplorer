@@ -91,6 +91,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DatabaseBoundary\DatabaseBoundary.csproj">
+      <Project>{dcfcacb1-422e-4e3d-986e-04ae25417716}</Project>
+      <Name>DatabaseBoundary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JobSystem\JobSystem.csproj">
       <Project>{B9CE5A5C-E971-40C8-8B30-5928A1ECD189}</Project>
       <Name>JobSystem</Name>
