@@ -7,18 +7,17 @@ using MongoDB.Driver;
 
 namespace DatabaseBoundary
 {
-    public class Database
+    public class DatabaseClient
     {
-        public const string LOG_DATA_COL_NAME = "data";
         public const string LOG_DATABASE_PREFIX = "_log_";
-        private static Database self;
+        private static DatabaseClient self;
 
-        public static Database Self
+        public static DatabaseClient Self
         {
             get
             {
                 if (self == null)
-                    self = new Database();
+                    self = new DatabaseClient();
                 return self;
                 
             }
@@ -26,7 +25,7 @@ namespace DatabaseBoundary
 
         private MongoClient client;
 
-        private Database()
+        private DatabaseClient()
         {
             this.client = new MongoClient();
         }
@@ -39,9 +38,10 @@ namespace DatabaseBoundary
                 .Select(t => t.Substring(LOG_DATABASE_PREFIX.Length));
         }
 
-        public IMongoDatabase GetLogDatabase(string name)
+        public LogDatabase GetLogDatabase(string name)
         {
-            return client.GetDatabase(LOG_DATABASE_PREFIX + name);
+            var db = client.GetDatabase(LOG_DATABASE_PREFIX + name);
+            return new LogDatabase(db, name);
         }
     }
 }

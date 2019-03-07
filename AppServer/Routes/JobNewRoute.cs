@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AppServer.Ext;
 using AppServer.Routing;
+using DatabaseBoundary;
 using JobSystem.Jobs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -54,7 +55,7 @@ namespace AppServer.Routes
                 Database = new ImportJob.DatabaseInfo()
                 {
                     Database = "_log_test",//todo: make configurable
-                    Table = DatabaseBoundary.Database.LOG_DATA_COL_NAME
+                    Table = LogDatabase.DATA_COL_NAME
                 },
                 Id = Guid.NewGuid(),
                 Input = new ImportJob.CsvInputInfo()

@@ -29,25 +29,15 @@ namespace AppServer.Routes
             //TODO: reuse client
             //var db = GetDb();
             //var colNames = db.ListCollections().ToEnumerable().Select(t => t["name"].AsString).ToList();
-            resp.WriteJson(Database.Self.GetLogNames());
+            resp.WriteJson(DatabaseClient.Self.GetLogNames());
         }
         //get info about collection
         public void GetLogInfo(HttpListenerRequest req, HttpListenerResponse resp, string param)
         {
 
-            //todo: may be log infos should be stored in collection to store info
-            
             string name = param;
-            var db = Database.Self.GetLogDatabase(name);
-            var col = db.GetCollection<BsonDocument>(Database.LOG_DATA_COL_NAME);
-            //TODO: handle if does not exists
-            
-            var info = new LogInfo()
-            {
-                Name = name,
-                ItemsCount = col.Count(new BsonDocument())
-            };
-
+            var db = DatabaseClient.Self.GetLogDatabase(name);
+            var info = db.Info;
             resp.WriteJson(info);
         }
 
@@ -60,17 +50,10 @@ namespace AppServer.Routes
         }
         public void GetItemsAtPos(HttpListenerRequest req, HttpListenerResponse resp, string param)
         {
-            
             string name = param;
-            var db = Database.Self.GetLogDatabase(name);
-            var col = db.GetCollection<LogTrace>(Database.LOG_DATA_COL_NAME);
+            var db = DatabaseClient.Self.GetLogDatabase(name);
             var args = req.ReadJson<GetItemsAtPosArgs>();
-            var fb = Builders<LogTrace>.Filter;
-            var filterGte = fb.Gte(t => t._pos, args.Pos);
-            var filterLt = fb.Lt(t => t._pos, args.Pos + args.Count);
-            var filter = fb.And(filterGte, filterLt);
-            //for performance, change this to bson redirect
-            var res = col.FindSync(filter).ToEnumerable();
+            var res = db.GetTracesAtPos(args.Pos, args.Count);
             resp.WriteJson(res);
         }
         
