@@ -1,0 +1,1 @@
+[] Add _pos_ field after import to mongodb index (makes future process faster)
