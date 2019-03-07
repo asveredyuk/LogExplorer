@@ -13,6 +13,7 @@ namespace DatabaseBoundary
     public class LogDatabase
     {
         public const string DATA_COL_NAME = "data";
+        public const string LABELS_COL_NAME = "labels";
         private readonly IMongoDatabase db;
         public IMongoDatabase Db => db;
         public readonly string Name;
@@ -51,5 +52,32 @@ namespace DatabaseBoundary
             var res =  col.FindSync(filter).ToEnumerable();
             return res;
         }
+
+        public IEnumerable<LogLabel> GetLabels()
+        {
+            var col = db.GetCollection<LogLabel>(LABELS_COL_NAME);
+            return col.AsQueryable();
+        }
+
+        public void AddLabel(LogLabel label)
+        {
+            var col = db.GetCollection<LogLabel>(LABELS_COL_NAME);
+            col.InsertOne(label);
+        }
+
+        public void DeleteLabel(string id)
+        {
+            var col = db.GetCollection<LogLabel>(LABELS_COL_NAME);
+            var idFilter = Builders<LogLabel>.Filter.Eq(t => t._id, id);
+            col.DeleteOne(idFilter);
+        }
+
+        public void UpdateLabel(LogLabel label)
+        {
+            var col = db.GetCollection<LogLabel>(LABELS_COL_NAME);
+            var idFilter = Builders<LogLabel>.Filter.Eq(t => t._id, label._id);
+            col.ReplaceOne(idFilter, label);
+        }
+
     }
 }
