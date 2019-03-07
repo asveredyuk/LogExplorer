@@ -11,6 +11,7 @@ using LogEntity;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AppServer.Routes
 {
@@ -19,8 +20,8 @@ namespace AppServer.Routes
         public LogsRoute()
         {
             Get("/list", new DelegateRouter(GetLogsList));
-            Get("/info", new DelegateRouter(GetLogInfo));
-            Post("/at_pos", new DelegateRouter(GetItemsAtPos));
+            Get("/:logname/info", new DelegateRouter(GetLogInfo));
+            Post("/:logname/at_pos", new DelegateRouter(GetItemsAtPos));
         }
         //TODO: add ability to delete the log
         ///get list of all available logs
@@ -32,10 +33,14 @@ namespace AppServer.Routes
             resp.WriteJson(DatabaseClient.Self.GetLogNames());
         }
         //get info about collection
-        public void GetLogInfo(HttpListenerRequest req, HttpListenerResponse resp, string param)
+        public void GetLogInfo(HttpListenerRequest req, HttpListenerResponse resp, JObject args)
         {
+            if (!args.ContainsKey("logname"))
+            {
+                throw new ApiException(400, "log name is not defined");
+            }
 
-            string name = param;
+            string name = args["logname"].Value<string>();
             var db = DatabaseClient.Self.GetLogDatabase(name);
             var info = db.Info;
             resp.WriteJson(info);
@@ -48,9 +53,13 @@ namespace AppServer.Routes
             [JsonRequired]
             public long Count { get; set; }
         }
-        public void GetItemsAtPos(HttpListenerRequest req, HttpListenerResponse resp, string param)
+        public void GetItemsAtPos(HttpListenerRequest req, HttpListenerResponse resp, JObject jobj)
         {
-            string name = param;
+            if (!jobj.ContainsKey("logname"))
+            {
+                throw new ApiException(400, "log name is not defined");
+            }
+            string name = jobj["logname"].Value<string>();
             var db = DatabaseClient.Self.GetLogDatabase(name);
             var args = req.ReadJson<GetItemsAtPosArgs>();
             var res = db.GetTracesAtPos(args.Pos, args.Count);

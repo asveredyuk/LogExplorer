@@ -11,6 +11,7 @@ using AppServer.Ext;
 using AppServer.Routing;
 using JobSystem;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AppServer.Routes
 {
@@ -22,7 +23,7 @@ namespace AppServer.Routes
         public JobRoute()
         {
             Get("/", new DelegateRouter(GetJobs));
-            Delete("/:", new DelegateRouter(RemoveJob));
+            Delete("/:id", new DelegateRouter(RemoveJob));
             Post("/new", new JobNewRoute());
         }
 
@@ -84,10 +85,14 @@ namespace AppServer.Routes
             resp.WriteJson(jobs);
         }
 
-        public void RemoveJob(HttpListenerRequest req, HttpListenerResponse resp, string param)
+        public void RemoveJob(HttpListenerRequest req, HttpListenerResponse resp, JObject args)
         {
+            if (!args.ContainsKey("id"))
+            {
+                throw new ApiException(400, "Guid is not specified");
+            }
             Guid guid;
-            if (!Guid.TryParse(param, out guid))
+            if (!Guid.TryParse(args["id"].Value<string>(), out guid))
             {
                 throw new ApiException(400, "Guid is not specified or invalid");
             }

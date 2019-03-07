@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AppServer.Routes;
 using AppServer.Routing;
+using Newtonsoft.Json.Linq;
 
 namespace AppServer
 {
@@ -22,7 +23,7 @@ namespace AppServer
             app.Use("/jobs", new JobRoute());
             app.Use("/files", new FilesRoute());
             app.Use("/logs", new LogsRoute());
-            //app.Use("helloworld", new HelloWorldRoute());
+         //   app.Use("/hello", new HelloWorldRoute());
 
             return app;
         }
@@ -32,7 +33,7 @@ namespace AppServer
             string absolutePath = req.Url.AbsolutePath;
             string[] arr = absolutePath.Split('/');
             var qu = new Queue<string>(arr.Where(t=>!string.IsNullOrEmpty(t)));
-            Handle(req, resp, qu);
+            Handle(req, resp, qu, new JObject());
 
         }
 

@@ -71,8 +71,10 @@
     <Compile Include="App.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Routes\FilesRoute.cs" />
+    <Compile Include="Routes\LogLabelsRoute.cs" />
     <Compile Include="Routes\JobNewRoute.cs" />
     <Compile Include="Routes\LogsRoute.cs" />
+    <Compile Include="Routing\ArgumentRouter.cs" />
     <Compile Include="Routing\DelegateRouter.cs" />
     <Compile Include="Ext\HttpListenerRequestExt.cs" />
     <Compile Include="Ext\HttpListenerResponseExt.cs" />

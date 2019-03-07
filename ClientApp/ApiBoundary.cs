@@ -40,7 +40,7 @@ namespace ClientApp
 
         public static async Task<LogInfo> GetLogInfo(string logName)
         {
-            (int code, LogInfo info) = await MakeRequest<LogInfo>("/logs/info/" + logName);
+            (int code, LogInfo info) = await MakeRequest<LogInfo>($"/logs/{logName}/info" );
             if (code != 200)
             {
                 MessageBox.Show("Api error");
@@ -57,7 +57,7 @@ namespace ClientApp
                 Count = count
             };
             var json = JsonConvert.SerializeObject(obj);
-            (int code, LogTraceWithLabels[] data) = await MakeRequest<LogTraceWithLabels[]>("/logs/at_pos/" + logName, "POST", json);
+            (int code, LogTraceWithLabels[] data) = await MakeRequest<LogTraceWithLabels[]>($"/logs/{logName}/at_pos", "POST", json);
             if (code != 200)
             {
                 MessageBox.Show("Api error");
