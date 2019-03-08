@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using AppServer.Ext;
@@ -10,6 +11,19 @@ namespace AppServer.Routing
     {
         private Dictionary<RoutingPath, IRouter> routers = new Dictionary<RoutingPath, IRouter>();
 
+        public void Print(string prev)
+        {
+            foreach ( var pair in routers)
+            {
+                string name = $"{pair.Key.method} {pair.Key.route}";
+                string str = $"|->{name}|";
+                string holder = $"|  {new String(' ', name.Length)}";
+                Console.WriteLine(prev + str);
+                pair.Value.Print(prev + holder);
+            }
+
+            Console.WriteLine(prev + new string('-', Console.WindowWidth - prev.Length-1));
+        }
         public void Use(string path, IRouter router, string method = "*")
         {
             if (!path.Contains(":") && path.Count(ch => ch == '/') == 1 || path == "/:")
@@ -98,15 +112,25 @@ namespace AppServer.Routing
                 else
                 {
                     //404, not found
-                    //try to find argumented method, if there are args, only method-specific allowed
-                    if (subpath != "/" && routers.TryGetValue(("/:", req.HttpMethod), out router))
+                    //try to find universal argumented method, if there are arg
+
+                    if (subpath != "/" && routers.TryGetValue(("/:", "*"), out router))
                     {
                         //push back to front of queue
                         router.Handle(req,resp, new Queue<string>(new string[] { subpath.TrimStart('/') }.Concat(path)), args);
                     }
                     else
                     {
-                        resp.CloseWithCode(404);
+                        //try to find concrete argumented http method 
+                        if (subpath != "/" && routers.TryGetValue(("/:", req.HttpMethod), out router))
+                        {
+                            //push back to front of queue
+                            router.Handle(req, resp, new Queue<string>(new string[] { subpath.TrimStart('/') }.Concat(path)), args);
+                        }
+                        else
+                        {
+                            resp.CloseWithCode(404);
+                        }
                     }
                 }
             }

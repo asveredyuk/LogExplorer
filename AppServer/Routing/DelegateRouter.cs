@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Reflection;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Newtonsoft.Json.Linq;
 
 namespace AppServer.Routing
@@ -38,6 +40,15 @@ namespace AppServer.Routing
                     args["rest_of_url"] = param;    
                 parametrizedHandler(req, resp, args);
             }
+        }
+
+        public void Print(string prev)
+        {
+            string formName(MethodInfo me)
+            {
+                return me.DeclaringType.Name + "." + me.Name;
+            }
+            Console.WriteLine(prev + "|=" + (handler==null?formName(parametrizedHandler.Method):formName(handler.Method)));
         }
     }
 }

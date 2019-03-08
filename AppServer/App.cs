@@ -24,8 +24,9 @@ namespace AppServer
             app.Use("/files", new FilesRoute());
             app.Use("/logs", new LogsRoute());
          //   app.Use("/hello", new HelloWorldRoute());
-
-            return app;
+            Console.WriteLine("Routes tree info:");
+            app.Print("");
+            return app;  
         }
 
         public void Handle(HttpListenerRequest req, HttpListenerResponse resp)
