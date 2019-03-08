@@ -70,6 +70,7 @@
     <Compile Include="ApiException.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="DebugLogger.cs" />
     <Compile Include="Routes\FilesRoute.cs" />
     <Compile Include="Routes\LogLabelsRoute.cs" />
     <Compile Include="Routes\JobNewRoute.cs" />

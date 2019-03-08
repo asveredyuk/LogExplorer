@@ -60,6 +60,7 @@ namespace AppServer
             try
             {
                 app.Handle(req, resp);
+                DebugLogger.LogRequest(req,resp);
             }
             catch (ApiException e)
             {
@@ -77,6 +78,7 @@ namespace AppServer
                     };
                     resp.StatusCode = e.Code;
                     resp.WriteJson(obj);
+                    DebugLogger.LogRequest(req,resp);
                 }
                 catch (Exception )
                 {
@@ -94,6 +96,7 @@ namespace AppServer
                         //set 500 - internal server error
                         resp.StatusCode = (int)HttpStatusCode.InternalServerError;
                         resp.Close();
+                        DebugLogger.LogRequest(req, resp);
                     }
                 }
                 catch (Exception)
