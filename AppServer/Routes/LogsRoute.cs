@@ -22,6 +22,7 @@ namespace AppServer.Routes
             Get("/list", new DelegateRouter(GetLogsList));
             Get("/:logname/info", new DelegateRouter(GetLogInfo));
             Post("/:logname/at_pos", new DelegateRouter(GetItemsAtPos));
+            Use("/:logname/labels", new LogLabelsRoute());
         }
         //TODO: add ability to delete the log
         ///get list of all available logs

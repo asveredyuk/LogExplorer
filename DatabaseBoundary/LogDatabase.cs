@@ -68,15 +68,15 @@ namespace DatabaseBoundary
         public void DeleteLabel(string id)
         {
             var col = db.GetCollection<LogLabel>(LABELS_COL_NAME);
-            var idFilter = Builders<LogLabel>.Filter.Eq(t => t._id, id);
-            col.DeleteOne(idFilter);
+            col.DeleteOne(t=>t._id==id);
+            //TODO: check if really deleted
         }
 
         public void UpdateLabel(LogLabel label)
         {
             var col = db.GetCollection<LogLabel>(LABELS_COL_NAME);
-            var idFilter = Builders<LogLabel>.Filter.Eq(t => t._id, label._id);
-            col.ReplaceOne(idFilter, label);
+            var res = col.ReplaceOne(t=>t._id == label._id, label);
+            //TODO: check if really replaced
         }
 
     }
