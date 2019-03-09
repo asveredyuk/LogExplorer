@@ -24,11 +24,64 @@ namespace AppServer.Routing
 
             Console.WriteLine(prev + new string('-', Console.WindowWidth - prev.Length-1));
         }
+
+        void AddRouter(string route, string method, IRouter router)
+        {
+            if (router is Router)
+            {
+                var newRouter = router as Router;
+                var pairsWithSamePath = routers.Where(t => t.Key.route == route).ToList();
+                if (method == "*")
+                {
+                    //our router is universal
+                    //we need to reassign all sub-routes of other routers
+                    //and remove same routers
+                    foreach (var pair in pairsWithSamePath)
+                    {
+                        var r = pair.Value as Router;
+                        if (r == null)
+                            throw new Exception("Conflict"); //dumb exception
+                        foreach (var kv in r.routers)
+                        {
+                            newRouter.routers[kv.Key] = kv.Value;
+                        }
+
+                        routers.Remove(pair.Key);
+                    }
+                    //there is no any other router with same path
+                    //we need to add this router, so no return
+                }
+                else
+                {
+                    //try to find universal router
+                    foreach (var pair in pairsWithSamePath)
+                    {
+                        if (pair.Key.method == "*")
+                        {
+                            //there is universal router with same path
+                            //we do not need to add current router
+                            //just reassign subrouters
+                            var r = pair.Value as Router;
+                            if (r == null)
+                                throw new Exception("Conflict"); //dumb exception
+                            foreach (var kv in newRouter.routers)
+                            {
+                                r.routers[kv.Key] = kv.Value;
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+            this.routers[(route, method)] = router;
+
+        }
         public void Use(string path, IRouter router, string method = "*")
         {
             if (!path.Contains(":") && path.Count(ch => ch == '/') == 1 || path == "/:")
             {
-                this.routers[(path, method)] = router;
+                AddRouter(path,method,router);
+               // this.routers[(path, method)] = router;
                 return;
             }
             //check if path is multiPath
