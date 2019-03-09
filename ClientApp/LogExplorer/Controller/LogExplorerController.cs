@@ -113,18 +113,19 @@ namespace ClientApp.LogExplorer.Controller
 
         private void SaveState()
         {
-            File.WriteAllText(STATE_FILE_PATH, JsonConvert.SerializeObject(_state));
+           // File.WriteAllText(STATE_FILE_PATH, JsonConvert.SerializeObject(_state));
         }
 
         private void LoadState()
         {
-            if(!File.Exists(STATE_FILE_PATH))
-            {
-                _state = Model.State.Default();
-                return;
-            }
-            var json = File.ReadAllText(STATE_FILE_PATH);
-            _state = JsonConvert.DeserializeObject<State>(json);
+            _state = Model.State.Default();
+            //if(!File.Exists(STATE_FILE_PATH))
+            //{
+            //    _state = Model.State.Default();
+            //    return;
+            //}
+            //var json = File.ReadAllText(STATE_FILE_PATH);
+            //_state = JsonConvert.DeserializeObject<State>(json);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClientApp.LogExplorer.Model;
 using LogEntity;
 using Newtonsoft.Json;
 

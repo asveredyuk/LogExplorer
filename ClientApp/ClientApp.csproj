@@ -40,9 +40,6 @@
     <Reference Include="FastColoredTextBox, Version=2.16.21.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
       <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
     </Reference>
-    <Reference Include="LogEntity">
-      <HintPath>..\..\CSVLogImporter\LogEntity\bin\Debug\LogEntity.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -81,6 +78,7 @@
     </Compile>
     <Compile Include="LogExplorer\Model\IState.cs" />
     <Compile Include="LogExplorer\Model\LazyLog.cs" />
+    <Compile Include="LogExplorer\Model\LogTraceWithLabels.cs" />
     <Compile Include="LogExplorer\Model\Rule.cs" />
     <Compile Include="LogExplorer\Model\State.cs" />
     <Compile Include="LogExplorer\RuleEditor\RuleEditorForm.cs">
@@ -159,6 +157,10 @@
     <ProjectReference Include="..\JobSystem\JobSystem.csproj">
       <Project>{b9ce5a5c-e971-40c8-8b30-5928a1ecd189}</Project>
       <Name>JobSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogEntity\LogEntity.csproj">
+      <Project>{a5261a9a-96a4-4366-be23-53aa1539a795}</Project>
+      <Name>LogEntity</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

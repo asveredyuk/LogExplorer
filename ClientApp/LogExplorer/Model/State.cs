@@ -17,8 +17,6 @@ namespace ClientApp.LogExplorer.Model
         public LazyLog Log { get; set; }  = new LazyLog();
         public long TracesInView { get; set; } = 10;
         public long Pos { get; set; } 
-
-        [DataMember]
         public Dictionary<string, Rule> Rules { get; set; } = new Dictionary<string, Rule>();
 
 
