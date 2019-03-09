@@ -79,7 +79,6 @@
     <Compile Include="LogExplorer\Model\IState.cs" />
     <Compile Include="LogExplorer\Model\LazyLog.cs" />
     <Compile Include="LogExplorer\Model\LogTraceWithLabels.cs" />
-    <Compile Include="LogExplorer\Model\Rule.cs" />
     <Compile Include="LogExplorer\Model\State.cs" />
     <Compile Include="LogExplorer\RuleEditor\RuleEditorForm.cs">
       <SubType>Form</SubType>

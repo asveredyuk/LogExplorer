@@ -20,10 +20,9 @@ namespace ClientApp.LogExplorer.RuleEditor
             InitializeComponent();
             
             //checkedListBoxRules.Items.AddRange(_state.Rules.Select(t=>t.Name).Cast<object>().ToArray());
-            foreach (var kv in _state.Rules)
+            foreach (var r in _state.Labels)
             {
-                var r = kv.Value;
-                checkedListBoxRules.Items.Add(r.Name, r.Enabled);
+                checkedListBoxRules.Items.Add(r.Name, false);
             }
 
             //fullfill the list of rules
@@ -39,7 +38,7 @@ namespace ClientApp.LogExplorer.RuleEditor
                 return;
             }
 
-            _state.Rules.Remove(name);
+            _state.Labels.Remove(_state.Labels.First(t=>t.Name == name));
             //_state.Rules.Remove(_state.Rules.FirstOrDefault(t => t.Name == name));
             checkedListBoxRules.Items.Remove(checkedListBoxRules.SelectedItem);
         }
@@ -53,7 +52,7 @@ namespace ClientApp.LogExplorer.RuleEditor
                 return;
             }
 
-            var item = _state.Rules[name];//_state.Rules.FirstOrDefault(t => t.Name == name);
+            var item = _state.Labels.First(t=>t.Name == name);//_state.Rules.FirstOrDefault(t => t.Name == name);
             //check?
             var f = new RuleEditorForm(item);
             if (f.ShowDialog() == DialogResult.OK)
@@ -63,21 +62,23 @@ namespace ClientApp.LogExplorer.RuleEditor
                 {
                     //name not changed
                     //only replace
-                    _state.Rules[name] = f.Result;
+                    //_state.Rules[name] = f.Result;
+                    _state.Labels.Remove(item);
+                    _state.Labels.Add(f.Result);
                     return;
                 }
-                if (_state.Rules.ContainsKey(newName))
-                {
-                    MessageBox.Show("Item with such name already exist, info is lost");
-                }
-                else
-                {
-                    _state.Rules.Remove(name);
-                    _state.Rules[newName] = f.Result;
-                    var index = checkedListBoxRules.Items.IndexOf(name);
-                    checkedListBoxRules.Items.Remove(name);
-                    checkedListBoxRules.Items.Insert(index, newName);
-                }
+                //if (_state.Rules.ContainsKey(newName))
+                //{
+                //    MessageBox.Show("Item with such name already exist, info is lost");
+                //}
+                //else
+                //{
+                //    _state.Rules.Remove(name);
+                //    _state.Rules[newName] = f.Result;
+                //    var index = checkedListBoxRules.Items.IndexOf(name);
+                //    checkedListBoxRules.Items.Remove(name);
+                //    checkedListBoxRules.Items.Insert(index, newName);
+                //}
             }
         }
 
@@ -87,26 +88,26 @@ namespace ClientApp.LogExplorer.RuleEditor
             if (f.ShowDialog() == DialogResult.OK)
             {
                 //check if there exist such item
-                if (_state.Rules.ContainsKey(f.Result.Name))
-                {
-                    MessageBox.Show("Item with such name already exist, info is lost");
-                }
-                else
-                {
-                    _state.Rules[f.Result.Name] = f.Result;
+                //if (_state.Rules.ContainsKey(f.Result.Name))
+                //{
+                //    MessageBox.Show("Item with such name already exist, info is lost");
+                //}
+                //else
+                //{
+                    _state.Labels.Add(f.Result);
                     checkedListBoxRules.Items.Add(f.Result.Name, true);
-                }
+                //}
             }
 
         }
 
         private void RuleListForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var names = checkedListBoxRules.CheckedItems.Cast<string>().ToList();
-            foreach (var kv in _state.Rules)
-            {
-                kv.Value.Enabled = names.Contains(kv.Key);
-            }
+            //var names = checkedListBoxRules.CheckedItems.Cast<string>().ToList();
+            //foreach (var kv in _state.Rules)
+            //{
+            //    kv.Value.Enabled = names.Contains(kv.Key);
+            //}
         }
     }
 }

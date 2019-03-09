@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientApp.LogExplorer.Model;
 using FastColoredTextBoxNS;
+using LogEntity;
 using DialogResult = System.Windows.Forms.DialogResult;
 
 namespace ClientApp.LogExplorer.RuleEditor
 {
     public partial class RuleEditorForm : Form
     {
-        public Rule Result { get; private set; }
+        public LogLabel Result { get; private set; }
         public RuleEditorForm()
         {
             InitializeComponent();
@@ -26,12 +27,12 @@ namespace ClientApp.LogExplorer.RuleEditor
             DialogResult = DialogResult.Cancel;
         }
 
-        public RuleEditorForm(Rule r) : this()
+        public RuleEditorForm(LogLabel r) : this()
         {
             tbName.Text = r.Name;
-            tbJs.Text = r.Js;
+            tbJs.Text = r.JSFilter;
             tbText.Text = r.Text;
-            tbColorHex.Text = ColorTranslator.ToHtml(r.Color);
+            tbColorHex.Text = r.Color;
         }
 
         private void tbColorHex_TextChanged(object sender, EventArgs e)
@@ -66,12 +67,12 @@ namespace ClientApp.LogExplorer.RuleEditor
         private void btOk_Click(object sender, EventArgs e)
         {
             //TODO: validate something?
-            Result = new Rule()
+            Result = new LogLabel()
             {
                 Name = tbName.Text,
-                Js = tbJs.Text,
+                JSFilter = tbJs.Text,
                 Text = tbText.Text,
-                Color = pbColorExample.BackColor
+                Color = ColorTranslator.ToHtml(pbColorExample.BackColor)
             };
 
             this.DialogResult = DialogResult.OK;

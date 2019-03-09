@@ -126,7 +126,7 @@ namespace ClientApp.LogExplorer.View
                                     for (int j = 0; j < rules.Length; j++)
                                     {
                                         var partRect = new RectangleF(rect.X + rect.Width/rules.Length*j, rect.Y, rect.Width/rules.Length,rect.Height);
-                                        g.FillRectangle(new SolidBrush(rules[j].Color), partRect);
+                                        g.FillRectangle(new SolidBrush(ColorTranslator.FromHtml(rules[j].Color)), partRect);
                                     }
                                     //two sided rect
                                     //var rect1 = new RectangleF(rect.X, rect.Y, rect.Width / 2, rect.Height);
@@ -139,7 +139,7 @@ namespace ClientApp.LogExplorer.View
                             case 1:
                             default:
 
-                                var bgColor = rules[0].Color;
+                                var bgColor = ColorTranslator.FromHtml(rules[0].Color);
                                 g.FillRectangle(new SolidBrush(bgColor), rect);
                                 var text = rules[0].Text;
                                 var textColor = bgColor.GetBrightness() > 0.5 ? Color.Black : Color.White;
@@ -276,7 +276,7 @@ namespace ClientApp.LogExplorer.View
                         {
                             if (rules.Length == 1)
                             {
-                                g.FillRectangle(new SolidBrush(rules[0].Color), rect);
+                                g.FillRectangle(new SolidBrush(ColorTranslator.FromHtml(rules[0].Color)), rect);
                             }
                             else
                             {
@@ -295,14 +295,14 @@ namespace ClientApp.LogExplorer.View
             }
         }
 
-        private IEnumerable<Rule> GetRulesForItem(LogTraceWithLabels tr, int pos)
+        private IEnumerable<LogLabel> GetRulesForItem(LogTraceWithLabels tr, int pos)
         {
             if (pos >= tr.ItemsLabels.Count)
                 yield break;
             var lb = tr.ItemsLabels[pos];
             foreach (var i in lb)
             {
-                yield return Controller.State.Rules[i];
+                yield return Controller.State.Labels.First(t => t._id == i);
             }
 
         }

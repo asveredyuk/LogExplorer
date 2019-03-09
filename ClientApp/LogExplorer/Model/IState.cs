@@ -11,7 +11,7 @@ namespace ClientApp.LogExplorer.Model
     {
         LogInfo Info { get; }
         LazyLog Log { get; }
-        Dictionary<string, Rule> Rules { get; }
+        List<LogLabel> Labels { get; }
         long TracesInView { get; }
         long Pos { get; }
     }

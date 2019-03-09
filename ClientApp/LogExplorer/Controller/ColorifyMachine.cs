@@ -15,7 +15,7 @@ namespace ClientApp.LogExplorer.Controller
 {
     class ColorifyMachine
     {
-        public static void Colorify(IEnumerable<LogTraceWithLabels> traces, List<Rule> activeRules)
+        public static void Colorify(IEnumerable<LogTraceWithLabels> traces, List<LogLabel> activeRules)
         {
             using (var v8 = new V8ScriptEngine())
             {
@@ -24,7 +24,7 @@ namespace ClientApp.LogExplorer.Controller
                 {
                     try
                     {
-                        v8.Execute("var " + rule.Name + " = " + rule.Js + ";");
+                        v8.Execute("var " + rule.Name + " = " + rule.JSFilter + ";");
                     }
                     catch (Exception e)
                     {
@@ -43,7 +43,7 @@ namespace ClientApp.LogExplorer.Controller
                         {
                             if (v8.Script[rule.Name](toPass))
                             {
-                                labels.Add(rule.Name);
+                                labels.Add(rule._id);
                             }
                         }
                         logTrace.ItemsLabels.Add(labels.ToArray());

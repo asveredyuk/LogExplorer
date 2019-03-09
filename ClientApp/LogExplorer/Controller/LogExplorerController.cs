@@ -87,7 +87,7 @@ namespace ClientApp.LogExplorer.Controller
             //colorify if enabled
             if(_state.Log == null)
                 return;
-            ColorifyMachine.Colorify(_state.Log.Enumerate(), _state.Rules.Select(t=>t.Value).Where(t=>t.Enabled).ToList());
+            ColorifyMachine.Colorify(_state.Log.Enumerate(), _state.Labels.ToList());
             mainView.Refresh();
         }
         public async void OpenNewLog(string name)
