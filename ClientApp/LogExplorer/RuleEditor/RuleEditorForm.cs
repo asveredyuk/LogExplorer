@@ -15,6 +15,7 @@ namespace ClientApp.LogExplorer.RuleEditor
 {
     public partial class RuleEditorForm : Form
     {
+        private string id = Guid.NewGuid().ToString();
         public LogLabel Result { get; private set; }
         public RuleEditorForm()
         {
@@ -33,6 +34,7 @@ namespace ClientApp.LogExplorer.RuleEditor
             tbJs.Text = r.JSFilter;
             tbText.Text = r.Text;
             tbColorHex.Text = r.Color;
+            id = r._id;
         }
 
         private void tbColorHex_TextChanged(object sender, EventArgs e)
@@ -69,6 +71,7 @@ namespace ClientApp.LogExplorer.RuleEditor
             //TODO: validate something?
             Result = new LogLabel()
             {
+                _id = id,
                 Name = tbName.Text,
                 JSFilter = tbJs.Text,
                 Text = tbText.Text,

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClientApp.LogExplorer.Controller;
 using ClientApp.LogExplorer.Model;
 
 namespace ClientApp.LogExplorer.RuleEditor
@@ -14,22 +15,30 @@ namespace ClientApp.LogExplorer.RuleEditor
     public partial class RuleListForm : Form
     {
         private State _state;
-        public RuleListForm(State state)
+        private LogExplorerController _controller;
+        public RuleListForm(State state, LogExplorerController controller)
         {
             _state = state;
+            _controller = controller;
             InitializeComponent();
             
             //checkedListBoxRules.Items.AddRange(_state.Rules.Select(t=>t.Name).Cast<object>().ToArray());
-            foreach (var r in _state.Labels)
-            {
-                checkedListBoxRules.Items.Add(r.Name, false);
-            }
+            FillTheList();
 
             //fullfill the list of rules
 
         }
 
-        private void btDelete_Click(object sender, EventArgs e)
+        private void FillTheList()
+        {
+            checkedListBoxRules.Items.Clear();
+            foreach (var r in _state.Labels)
+            {
+                checkedListBoxRules.Items.Add(r.Name, false);
+            }
+        }
+
+        private async void btDelete_Click(object sender, EventArgs e)
         {
             var name = checkedListBoxRules.SelectedItem?.ToString();
             if (name == null)
@@ -38,12 +47,16 @@ namespace ClientApp.LogExplorer.RuleEditor
                 return;
             }
 
-            _state.Labels.Remove(_state.Labels.First(t=>t.Name == name));
+            //_state.Labels.Remove(_state.Labels.First(t=>t.Name == name));
             //_state.Rules.Remove(_state.Rules.FirstOrDefault(t => t.Name == name));
-            checkedListBoxRules.Items.Remove(checkedListBoxRules.SelectedItem);
+            //checkedListBoxRules.Items.Remove(checkedListBoxRules.SelectedItem);
+            var label = _state.Labels.First(t => t.Name == name);
+            await _controller.DeleteLabel(label);
+            FillTheList();
+
         }
 
-        private void btEdit_Click(object sender, EventArgs e)
+        private async void btEdit_Click(object sender, EventArgs e)
         {
             var name = checkedListBoxRules.SelectedItem?.ToString();
             if (name == null)
@@ -57,16 +70,19 @@ namespace ClientApp.LogExplorer.RuleEditor
             var f = new RuleEditorForm(item);
             if (f.ShowDialog() == DialogResult.OK)
             {
-                var newName = f.Result.Name;
-                if (newName == name)
-                {
-                    //name not changed
-                    //only replace
-                    //_state.Rules[name] = f.Result;
-                    _state.Labels.Remove(item);
-                    _state.Labels.Add(f.Result);
-                    return;
-                }
+                var label = f.Result;
+                await _controller.UpdateLabel(label);
+                FillTheList();
+                //var newName = f.Result.Name;
+                //if (newName == name)
+                //{
+                //    //name not changed
+                //    //only replace
+                //    //_state.Rules[name] = f.Result;
+                //    _state.Labels.Remove(item);
+                //    _state.Labels.Add(f.Result);
+                //    return;
+                //}
                 //if (_state.Rules.ContainsKey(newName))
                 //{
                 //    MessageBox.Show("Item with such name already exist, info is lost");
@@ -82,7 +98,7 @@ namespace ClientApp.LogExplorer.RuleEditor
             }
         }
 
-        private void btAdd_Click(object sender, EventArgs e)
+        private async void btAdd_Click(object sender, EventArgs e)
         {
             var f = new RuleEditorForm();
             if (f.ShowDialog() == DialogResult.OK)
@@ -94,8 +110,10 @@ namespace ClientApp.LogExplorer.RuleEditor
                 //}
                 //else
                 //{
-                    _state.Labels.Add(f.Result);
-                    checkedListBoxRules.Items.Add(f.Result.Name, true);
+                    await _controller.AddLabel(f.Result);
+                    FillTheList();
+                    //_state.Labels.Add(f.Result);
+                    //checkedListBoxRules.Items.Add(f.Result.Name, true);
                 //}
             }
 

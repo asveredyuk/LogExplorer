@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 namespace ClientApp
 {
 
-    class ApiBoundary
+    static partial class ApiBoundary
     {
         private const string SERVER_PATH = "http://localhost:8080/";
         public static async Task<JobInfo[]> GetJobs()
@@ -135,6 +135,13 @@ namespace ClientApp
             {
                 MessageBox.Show("error");
             }
+        }
+
+        private static async Task<int> MakeRequest(string path, string method = "GET",
+            string payload = null)
+        {
+            (int code, string str) = await MakeRequest<string>(path, method, payload);
+            return code;
         }
         private static async Task<(int code, T res)> MakeRequest<T>(string path, string method = "GET", string payload = null)
         {

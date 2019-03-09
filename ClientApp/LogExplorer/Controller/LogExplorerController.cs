@@ -8,11 +8,12 @@ using System.Windows.Forms;
 using ClientApp.LogExplorer.Model;
 using ClientApp.LogExplorer.RuleEditor;
 using ClientApp.LogExplorer.View;
+using LogEntity;
 using Newtonsoft.Json;
 
 namespace ClientApp.LogExplorer.Controller
 {
-    class LogExplorerController
+    public class LogExplorerController
     {
         private const string STATE_FILE_PATH = "state.json";
         /// <summary>
@@ -95,17 +96,26 @@ namespace ClientApp.LogExplorer.Controller
             var info = await ApiBoundary.GetLogInfo(name);
             _state.Info = info;
             _state.Pos = 0;
+            
+            //_state.Labels = labels.ToList();
+            LoadLabels();
             //refresh views
             //MessageBox.Show(JsonConvert.SerializeObject(info, Formatting.Indented));
             mainView.Refresh();
             LoadLazyLogIfNeeded();
         }
 
+        private async Task LoadLabels()
+        {
+            var labels = await ApiBoundary.GetLabels(_state.Info.Name);
+            _state.Labels = labels.ToList();
+        }
+
         public void GoEditRules()
         {
-            var f = new RuleListForm(_state);
+            var f = new RuleListForm(_state, this);
             f.ShowDialog();
-            //need to colorify the elements
+            //need to recolorify the elements
             OnLazyLogLoaded();
             //need to save state
             SaveState();
@@ -127,5 +137,25 @@ namespace ClientApp.LogExplorer.Controller
             //var json = File.ReadAllText(STATE_FILE_PATH);
             //_state = JsonConvert.DeserializeObject<State>(json);
         }
+
+        public async Task AddLabel(LogLabel label)
+        {
+            await ApiBoundary.AddLabel(label, _state.Info.Name);
+            await LoadLabels();
+        }
+
+        public async Task DeleteLabel(LogLabel label)
+        {
+            await ApiBoundary.DeleteLabel(label, _state.Info.Name);
+            await LoadLabels();
+        }
+
+        public async Task UpdateLabel(LogLabel label)
+        {
+            await ApiBoundary.UpdateLabel(label, _state.Info.Name);
+            await LoadLabels();
+        }
+
+        
     }
 }
