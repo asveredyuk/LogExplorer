@@ -46,12 +46,16 @@
             this.Progress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Result = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.tbDelimiter = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgJobs)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.tbDelimiter);
             this.groupBox1.Controls.Add(this.btImport);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label4);
@@ -238,6 +242,24 @@
             this.Delete.ReadOnly = true;
             this.Delete.Text = "Delete";
             // 
+            // tbDelimiter
+            // 
+            this.tbDelimiter.Location = new System.Drawing.Point(302, 170);
+            this.tbDelimiter.MaxLength = 1;
+            this.tbDelimiter.Name = "tbDelimiter";
+            this.tbDelimiter.Size = new System.Drawing.Size(21, 20);
+            this.tbDelimiter.TabIndex = 3;
+            this.tbDelimiter.Text = ";";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(249, 173);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Delimiter";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -275,6 +297,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Progress;
         private System.Windows.Forms.DataGridViewTextBoxColumn Result;
         private System.Windows.Forms.DataGridViewButtonColumn Delete;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbDelimiter;
     }
 }
 

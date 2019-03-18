@@ -188,6 +188,8 @@ namespace ClientApp
         public string GroupingFieldType { get; set; }
         [JsonRequired]
         public string TimeFieldType { get; set; }
+        [JsonRequired]
+        public char CsvDelimiter { get; set; }
         //another data here
     }
 }

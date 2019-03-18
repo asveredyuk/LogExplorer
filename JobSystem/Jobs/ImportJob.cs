@@ -14,7 +14,7 @@ namespace JobSystem.Jobs
             [JsonRequired]
             public string CsvFileName { get; set; }
             //[JsonRequired]
-            public char CsvDelimiter { get; set; } = ',';
+            public char CsvDelimiter { get; set; } = ';';
         }
 
         public class SchemaItemInfo

@@ -33,12 +33,16 @@ namespace AppServer.Routes
             public string GroupingFieldType { get; set; }
             [JsonRequired]
             public string TimeFieldType { get; set; }
+            [JsonRequired]
+            public char CsvDelimiter { get; set; }
             //another data here
         }
         public void NewImportJob(HttpListenerRequest req, HttpListenerResponse resp)
         {
             //TODO: this is wrong!! internal data detected! client should not work with this
             ImportArgs args = req.ReadJson<ImportArgs>();
+            var fnameWithoutExtension = Path.GetFileNameWithoutExtension(args.FileName);
+            var dbName = new string(fnameWithoutExtension.Where(char.IsLetterOrDigit).ToArray());
             var schema = new Dictionary<string, ImportJob.SchemaItemInfo>();
             schema[args.GroupingField] = new ImportJob.SchemaItemInfo()
             {
@@ -54,13 +58,14 @@ namespace AppServer.Routes
             {
                 Database = new ImportJob.DatabaseInfo()
                 {
-                    Database = "_log_test",//todo: make configurable
+                    Database = Config.Self.MongoDbPrefix + dbName,
                     Table = LogDatabase.DATA_COL_NAME
                 },
                 Id = Guid.NewGuid(),
                 Input = new ImportJob.CsvInputInfo()
                 {
-                    CsvFileName = Config.Self.FilesDir + args.FileName
+                    CsvFileName = Config.Self.FilesDir + args.FileName,
+                    CsvDelimiter = args.CsvDelimiter
                 },
                 Schema = schema,
                 TmpFolder = "X:\\tmp"

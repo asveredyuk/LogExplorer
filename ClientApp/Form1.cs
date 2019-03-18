@@ -115,13 +115,15 @@ namespace ClientApp
             var groupingFieldType = cbGroupingFieldType.SelectedItem.ToString();
             var timeField = cbTimeField.SelectedItem.ToString();
             var timeFieldType = cbTimeFieldType.SelectedItem.ToString();
+            var delimiter = tbDelimiter.Text[0];
             var importArgs = new ImportArgs()
             {
                 FileName = fname,
                 GroupingField = groupingField,
                 GroupingFieldType = groupingFieldType,
                 TimeField = timeField,
-                TimeFieldType = timeFieldType
+                TimeFieldType = timeFieldType,
+                CsvDelimiter = delimiter
             };
             await ApiBoundary.AddImportTask(importArgs);
             btJobsRefresh_Click(null,null);
