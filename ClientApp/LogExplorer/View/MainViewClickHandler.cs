@@ -39,7 +39,7 @@ namespace ClientApp.LogExplorer.View
             else
             {
 
-                new JsonViewForm(JsonConvert.SerializeObject(item.trace.Items[item.itemPos], Formatting.Indented)).ShowDialog();
+                new JsonViewForm(JsonConvert.SerializeObject(item.trace.Items[item.itemPos], Formatting.Indented)).Show();
                 //MessageBox.Show("Item");
             }
         }

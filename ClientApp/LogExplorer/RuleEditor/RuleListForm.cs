@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientApp.LogExplorer.Controller;
 using ClientApp.LogExplorer.Model;
+using LogEntity;
+using Newtonsoft.Json;
 
 namespace ClientApp.LogExplorer.RuleEditor
 {
@@ -126,6 +128,23 @@ namespace ClientApp.LogExplorer.RuleEditor
             //{
             //    kv.Value.Enabled = names.Contains(kv.Key);
             //}
+        }
+
+        private async void btClone_Click(object sender, EventArgs e)
+        {
+            var name = checkedListBoxRules.SelectedItem?.ToString();
+            if (name == null)
+            {
+                MessageBox.Show("Select item first!");
+                return;
+            }
+
+            var item = _state.Labels.First(t => t.Name == name);//_state.Rules.FirstOrDefault(t => t.Name == name);
+            var clonedItem = JsonConvert.DeserializeObject<LogLabel>(JsonConvert.SerializeObject(item));
+            clonedItem._id = Guid.NewGuid().ToString();
+            clonedItem.Name += "_cloned";
+            await _controller.AddLabel(clonedItem);
+            FillTheList();
         }
     }
 }

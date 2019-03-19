@@ -32,14 +32,18 @@
             this.btEdit = new System.Windows.Forms.Button();
             this.btDelete = new System.Windows.Forms.Button();
             this.btAdd = new System.Windows.Forms.Button();
+            this.btClone = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // checkedListBoxRules
             // 
+            this.checkedListBoxRules.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.checkedListBoxRules.FormattingEnabled = true;
             this.checkedListBoxRules.Location = new System.Drawing.Point(12, 12);
             this.checkedListBoxRules.Name = "checkedListBoxRules";
-            this.checkedListBoxRules.Size = new System.Drawing.Size(237, 349);
+            this.checkedListBoxRules.Size = new System.Drawing.Size(318, 349);
             this.checkedListBoxRules.TabIndex = 1;
             // 
             // btEdit
@@ -72,11 +76,22 @@
             this.btAdd.UseVisualStyleBackColor = true;
             this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
             // 
+            // btClone
+            // 
+            this.btClone.Location = new System.Drawing.Point(256, 368);
+            this.btClone.Name = "btClone";
+            this.btClone.Size = new System.Drawing.Size(75, 23);
+            this.btClone.TabIndex = 4;
+            this.btClone.Text = "Clone";
+            this.btClone.UseVisualStyleBackColor = true;
+            this.btClone.Click += new System.EventHandler(this.btClone_Click);
+            // 
             // RuleListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(262, 407);
+            this.ClientSize = new System.Drawing.Size(343, 407);
+            this.Controls.Add(this.btClone);
             this.Controls.Add(this.btAdd);
             this.Controls.Add(this.btDelete);
             this.Controls.Add(this.btEdit);
@@ -94,5 +109,6 @@
         private System.Windows.Forms.Button btEdit;
         private System.Windows.Forms.Button btDelete;
         private System.Windows.Forms.Button btAdd;
+        private System.Windows.Forms.Button btClone;
     }
 }
