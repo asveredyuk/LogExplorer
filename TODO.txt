@@ -1,1 +1,2 @@
 [] Add _pos_ field after import to mongodb index (makes future process faster)
+[] Add ability to generate labels for each variant of specific field value

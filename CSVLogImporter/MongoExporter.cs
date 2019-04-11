@@ -14,6 +14,23 @@ namespace CSVLogImporter
 {
     class MongoExporter
     {
+        static string FilterField(string header)
+        {
+            char FilterChar(char ch)
+            {
+                if (char.IsLetterOrDigit(ch))
+                    return ch;
+                return '_';
+            }
+            var res = "";
+            if (!char.IsLetter(header[0]))
+            {
+                //field cannot start with no-letter
+                res += "_";
+            }
+            res += new string(header.Select(FilterChar).ToArray());
+            return res;
+        }
         public static int ExportToMongoDB(ImportJob job)
         {
             Program.Progress.Progress.CurrentStage = "Importing to MongoDB";
