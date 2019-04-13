@@ -52,6 +52,7 @@
     <Compile Include="JobProgressWrapper.cs" />
     <Compile Include="JobResult.cs" />
     <Compile Include="Jobs\ImportJob.cs" />
+    <Compile Include="Jobs\ProcessMapJob.cs" />
     <Compile Include="JobType.cs" />
     <Compile Include="Job.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

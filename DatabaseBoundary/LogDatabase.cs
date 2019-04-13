@@ -14,6 +14,8 @@ namespace DatabaseBoundary
     {
         public const string DATA_COL_NAME = "data";
         public const string LABELS_COL_NAME = "labels";
+        public const string MAPS_COL_NAME = "maps";
+        public const string LABEL_CACHE_COL_PREFIX = "labelcache_";
         private readonly IMongoDatabase db;
         public IMongoDatabase Db => db;
         public readonly string Name;
@@ -53,6 +55,22 @@ namespace DatabaseBoundary
             return res;
         }
 
+        public IMongoCollection<LogTrace> GetTracesCollection()
+        {
+            return db.GetCollection<LogTrace>(DATA_COL_NAME);
+        }
+
+        public IMongoCollection<ProcessMap> GetMapsCollection()
+        {
+            return db.GetCollection<ProcessMap>(MAPS_COL_NAME);
+        }
+
+        public void AddMap(ProcessMap map)
+        {
+            GetMapsCollection().InsertOne(map);
+        }        
+        
+
         public IEnumerable<LogLabel> GetLabels()
         {
             var col = db.GetCollection<LogLabel>(LABELS_COL_NAME);
@@ -69,6 +87,7 @@ namespace DatabaseBoundary
         {
             var col = db.GetCollection<LogLabel>(LABELS_COL_NAME);
             col.DeleteOne(t=>t._id==id);
+            ClearLabelCache(id);
             //TODO: check if really deleted
         }
 
@@ -76,8 +95,39 @@ namespace DatabaseBoundary
         {
             var col = db.GetCollection<LogLabel>(LABELS_COL_NAME);
             var res = col.ReplaceOne(t=>t._id == label._id, label);
+            ClearLabelCache(label._id);
             //TODO: check if really replaced
         }
+
+        public bool CollectionExists(string collectionName)
+        {
+            return CollectionExists(db, collectionName);
+        }
+        static bool CollectionExists(IMongoDatabase database, string collectionName)
+        {
+            var filter = new BsonDocument("name", collectionName);
+            var options = new ListCollectionNamesOptions { Filter = filter };
+
+            return database.ListCollectionNames(options).Any();
+        }
+
+        public string MakeCacheNameForLabel(string labelId)
+        {
+            return LABEL_CACHE_COL_PREFIX + labelId;
+        }
+
+        public bool LabelHasCache(string labelId)
+        {
+            return CollectionExists(MakeCacheNameForLabel(labelId));
+        }
+
+        private void ClearLabelCache(string labelId)
+        {
+            if(LabelHasCache(labelId))
+                db.DropCollection(MakeCacheNameForLabel(labelId));
+        }
+
+
 
     }
 }

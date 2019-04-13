@@ -8,6 +8,7 @@ namespace JobSystem
 {
     public enum JobType
     {
-        LogImport = 1
+        LogImport = 1,
+        MakeMap = 3
     }
 }

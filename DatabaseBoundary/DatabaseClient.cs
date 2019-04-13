@@ -10,6 +10,7 @@ namespace DatabaseBoundary
     public class DatabaseClient
     {
         public const string LOG_DATABASE_PREFIX = "_log_";
+
         private static DatabaseClient self;
 
         public static DatabaseClient Self
