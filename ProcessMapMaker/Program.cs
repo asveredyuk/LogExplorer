@@ -104,12 +104,12 @@ namespace ProcessMapMaker
                 Console.WriteLine($"{kv.Key} - {kv.Value}");
             }
 
-            //Console.WriteLine("Saving map");
-            //var saveMapCode = SaveMap(map,labels);
-            //Console.WriteLine("OK");
+            Console.WriteLine("Saving map");
+            var saveMapCode = SaveMap(map, labels);
+            Console.WriteLine("OK");
             Console.ReadLine();
-            //return saveMapCode;
-            return 0;
+            return saveMapCode;
+            //return 0;
 
 
 

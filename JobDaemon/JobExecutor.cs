@@ -45,16 +45,17 @@ namespace JobDaemon
                             Logger.LogCompletedJob(job.Id.ToString(), job.Type.ToString());
                             break;
                         case 1:
-                            //TODO
+                            //todo: cancelled
                             break;
                         case 2:
                         case 3:
+                        default:
                             MoveJobToFailed(jobFname);
                             Logger.LogFailedJob(job.Id.ToString(), job.Type.ToString());
                             break;
                     }
                 }
-                
+
 
                 try
                 {
@@ -77,33 +78,48 @@ namespace JobDaemon
         {
             const string IMPORTER_PATH =
                 @"C:\Users\Alex\source\repos\CSVLogImporter\CSVLogImporter\bin\Debug\CSVLogImporter.exe";
-            switch (job.Type)
+            const string MAPMAKER_PATH =
+                @"C:\dev\LogExplorer\ProcessMapMaker\bin\Debug\ProcessMapMaker.exe";
+            Stopwatch sw = Stopwatch.StartNew();
+
+            (int, long) ReturnInfo(int exitCode)
             {
-                case JobType.LogImport:
-                    Stopwatch sw = Stopwatch.StartNew();
-                    var proc = Process.Start(IMPORTER_PATH, jobFname);
-                    proc.WaitForExit();
-                    sw.Stop();
-                    if (proc.ExitCode == 0)
+                sw.Stop();
+                if (exitCode == 0)
+                {
+                    return (0, sw.ElapsedMilliseconds);
+                }
+                else
+                {
+                    if (exitCode == 1)
                     {
-                        return (0, sw.ElapsedMilliseconds);
+                        return (2, sw.ElapsedMilliseconds);
                     }
                     else
                     {
-                        if (proc.ExitCode == 1)
-                        {
-                            return (2,sw.ElapsedMilliseconds);
-                        }
-                        else
-                        {
-                            return (3, sw.ElapsedMilliseconds);
-                        }
+                        return (3, sw.ElapsedMilliseconds);
                     }
-                    
-                    break;
+                }
+            }
+            switch (job.Type)
+            {
+                case JobType.LogImport:
+                    {
+                        var proc = Process.Start(IMPORTER_PATH, jobFname);
+                        proc.WaitForExit();
+                        return ReturnInfo(proc.ExitCode);
+                    }
+                case JobType.MakeMap:
+                    {
+                        var proc = Process.Start(MAPMAKER_PATH, jobFname);
+                        proc.WaitForExit();
+                        return ReturnInfo(proc.ExitCode);
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
         }
 
         private static void TryUpdateTimeTaken(string jobFname, Job job, long ms)
