@@ -70,6 +70,24 @@
     </Compile>
     <Compile Include="LogExplorer\Controller\ColorifyMachine.cs" />
     <Compile Include="LogExplorer\Controller\LogExplorerController.cs" />
+    <Compile Include="LogExplorer\LabelEditor\LabelListItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LogExplorer\LabelEditor\LabelListItem.Designer.cs">
+      <DependentUpon>LabelListItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogExplorer\LabelEditor\LabelsListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogExplorer\LabelEditor\LabelsListForm.Designer.cs">
+      <DependentUpon>LabelsListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogExplorer\LabelEditor\LabelEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogExplorer\LabelEditor\LabelEditorForm.Designer.cs">
+      <DependentUpon>LabelEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LogExplorer\LogExplorerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,7 +119,20 @@
     <Compile Include="LogExplorer\View\MainScrollView.cs" />
     <Compile Include="LogExplorer\View\MainView.cs" />
     <Compile Include="LogExplorer\View\MainViewClickHandler.cs" />
+    <Compile Include="LogExplorer\View\RecycleListView\RecycleListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LogExplorer\View\RecycleListView\RecycleListView.Designer.cs">
+      <DependentUpon>RecycleListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogExplorer\View\RecycleListView\RecycleListViewAdapter.cs" />
+    <Compile Include="LogExplorer\View\RecycleListView\RecycleLIstViewItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="LogExplorer\View\ViewBase.cs" />
+    <Compile Include="LogExplorer\View\WinformsComponents\IconButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="OpenLogDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +144,15 @@
     <Compile Include="Vector2Ext.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogExplorer\LabelEditor\LabelListItem.resx">
+      <DependentUpon>LabelListItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogExplorer\LabelEditor\LabelsListForm.resx">
+      <DependentUpon>LabelsListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogExplorer\LabelEditor\LabelEditorForm.resx">
+      <DependentUpon>LabelEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\LogExplorerForm.resx">
       <DependentUpon>LogExplorerForm.cs</DependentUpon>
@@ -126,6 +166,9 @@
     <EmbeddedResource Include="LogExplorer\View\JsonViewForm.resx">
       <DependentUpon>JsonViewForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LogExplorer\View\RecycleListView\RecycleListView.resx">
+      <DependentUpon>RecycleListView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OpenLogDialog.resx">
       <DependentUpon>OpenLogDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -137,6 +180,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="ApiBoundary.LogLabel.cs" />
     <None Include="packages.config" />
@@ -162,6 +206,18 @@
       <Project>{a5261a9a-96a4-4366-be23-53aa1539a795}</Project>
       <Name>LogEntity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baseline_edit_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baseline_delete_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baseline_add_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baseline_library_add_black_18dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.ClearScript.5.5.5\build\Microsoft.ClearScript.targets" Condition="Exists('..\packages\Microsoft.ClearScript.5.5.5\build\Microsoft.ClearScript.targets')" />

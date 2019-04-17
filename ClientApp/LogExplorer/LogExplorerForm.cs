@@ -34,7 +34,11 @@ namespace ClientApp
 
         private void LogExplorerForm_Load(object sender, EventArgs e)
         {
-            
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length == 2)
+            {
+                controller.OpenNewLog(args[1]);
+            }
         }
 
         private void editorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -45,6 +49,11 @@ namespace ClientApp
         private void jobEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Form1().ShowDialog();
+        }
+
+        private void newEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.GoEditRulesNew();
         }
     }
 }

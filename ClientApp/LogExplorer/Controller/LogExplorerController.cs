@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClientApp.LogExplorer.LabelEditor;
 using ClientApp.LogExplorer.Model;
 using ClientApp.LogExplorer.RuleEditor;
 using ClientApp.LogExplorer.View;
@@ -119,6 +120,14 @@ namespace ClientApp.LogExplorer.Controller
             OnLazyLogLoaded();
             //need to save state
             SaveState();
+        }
+
+        public void GoEditRulesNew()
+        {
+            var f = new LabelsListForm(_state, this);
+            f.ShowDialog();
+            OnLazyLogLoaded();
+
         }
 
         private void SaveState()

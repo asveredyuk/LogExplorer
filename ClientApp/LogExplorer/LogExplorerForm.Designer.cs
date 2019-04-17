@@ -38,6 +38,7 @@
             this.editorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jobEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -95,7 +96,8 @@
             // 
             this.rulesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.enabledToolStripMenuItem,
-            this.editorToolStripMenuItem});
+            this.editorToolStripMenuItem,
+            this.newEditorToolStripMenuItem});
             this.rulesToolStripMenuItem.Name = "rulesToolStripMenuItem";
             this.rulesToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.rulesToolStripMenuItem.Text = "Rules";
@@ -103,13 +105,13 @@
             // enabledToolStripMenuItem
             // 
             this.enabledToolStripMenuItem.Name = "enabledToolStripMenuItem";
-            this.enabledToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.enabledToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.enabledToolStripMenuItem.Text = "Enabled";
             // 
             // editorToolStripMenuItem
             // 
             this.editorToolStripMenuItem.Name = "editorToolStripMenuItem";
-            this.editorToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.editorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editorToolStripMenuItem.Text = "Editor";
             this.editorToolStripMenuItem.Click += new System.EventHandler(this.editorToolStripMenuItem_Click);
             // 
@@ -124,9 +126,16 @@
             // jobEditorToolStripMenuItem
             // 
             this.jobEditorToolStripMenuItem.Name = "jobEditorToolStripMenuItem";
-            this.jobEditorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.jobEditorToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.jobEditorToolStripMenuItem.Text = "Job editor";
             this.jobEditorToolStripMenuItem.Click += new System.EventHandler(this.jobEditorToolStripMenuItem_Click);
+            // 
+            // newEditorToolStripMenuItem
+            // 
+            this.newEditorToolStripMenuItem.Name = "newEditorToolStripMenuItem";
+            this.newEditorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newEditorToolStripMenuItem.Text = "New editor";
+            this.newEditorToolStripMenuItem.Click += new System.EventHandler(this.newEditorToolStripMenuItem_Click);
             // 
             // LogExplorerForm
             // 
@@ -159,5 +168,6 @@
         private System.Windows.Forms.ToolStripMenuItem editorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem jobEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newEditorToolStripMenuItem;
     }
 }
