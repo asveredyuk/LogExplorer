@@ -17,9 +17,11 @@ namespace ClientApp.LogExplorer.LabelEditor
     {
         private string id = Guid.NewGuid().ToString();
         public LogLabel Result { get; private set; }
-        public LabelEditorForm()
+        private string _profileName;
+        public LabelEditorForm(string profileName)
         {
             InitializeComponent();
+            _profileName = profileName;
             foreach (var tbJsStyle in tbJs.Styles)
             {
                 if (tbJsStyle is TextStyle textStyle)
@@ -28,14 +30,21 @@ namespace ClientApp.LogExplorer.LabelEditor
             DialogResult = DialogResult.Cancel;
         }
 
-        public static (DialogResult res, LabelEditorForm form) GoEdit(LogLabel lb = null)
+        public static (DialogResult res, LabelEditorForm form) GoEdit(LogLabel lb)
         {
-            LabelEditorForm form = lb == null ? new LabelEditorForm() : new LabelEditorForm(lb);
+            LabelEditorForm form =  new LabelEditorForm(lb);
             var res = form.ShowDialog();
             return (res, form);
         }
 
-        public LabelEditorForm(LogLabel r) : this()
+        public static (DialogResult res, LabelEditorForm form) GoCreate(string profileName)
+        {
+            var form = new LabelEditorForm(profileName);
+            var res = form.ShowDialog();
+            return (res, form);
+        }
+
+        public LabelEditorForm(LogLabel r) : this(r.ProfileName)
         {
             tbName.Text = r.Name;
             tbJs.Text = r.JSFilter;
@@ -79,6 +88,7 @@ namespace ClientApp.LogExplorer.LabelEditor
             Result = new LogLabel()
             {
                 _id = id,
+                ProfileName = _profileName,
                 Name = tbName.Text,
                 JSFilter = tbJs.Text,
                 Text = tbText.Text,

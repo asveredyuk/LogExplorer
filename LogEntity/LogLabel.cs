@@ -10,6 +10,10 @@ namespace LogEntity
     {
         public string _id;
         /// <summary>
+        /// The profile of the label
+        /// </summary>
+        public string ProfileName = "default";
+        /// <summary>
         /// The name of the label
         /// </summary>
         public string Name;
