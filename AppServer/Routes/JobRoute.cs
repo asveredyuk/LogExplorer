@@ -23,11 +23,39 @@ namespace AppServer.Routes
         public JobRoute()
         {
             Get("/", new DelegateRouter(GetJobs));
+            Get("/:id", new DelegateRouter(GetJobInfo));
             Delete("/:id", new DelegateRouter(RemoveJob));
             Post("/new", new JobNewRoute());
         }
 
+        public void GetJobInfo(HttpListenerRequest req, HttpListenerResponse resp, JObject args)
+        {
+            if (!args.ContainsKey("id"))
+            {
+                throw new ApiException(400, "no id specified");
+            }
+
+            var id = args["id"].Value<string>();
+            Guid guid;
+            if (!Guid.TryParse(id, out guid))
+            {
+                throw new ApiException(400, "Guid is invalid");
+            }
+            var jobs = GetJobInfos();
+            var job = jobs.FirstOrDefault(t => t.Id == guid);
+            if (job == null)
+            {
+                throw new ApiException(404,"Such job not found");
+            }
+            resp.WriteJson(job);
+        }
         public void GetJobs(HttpListenerRequest req, HttpListenerResponse resp)
+        {
+            var jobs = GetJobInfos();
+            resp.WriteJson(jobs);
+        }
+
+        private List<JobInfo> GetJobInfos()
         {
             var files = GetAllJobs();
             var ordered = files.OrderByDescending(t => t.CreationTime);
@@ -82,7 +110,8 @@ namespace AppServer.Routes
                 }
                 jobs.Add(jobInfo);
             }
-            resp.WriteJson(jobs);
+
+            return jobs;
         }
 
         public void RemoveJob(HttpListenerRequest req, HttpListenerResponse resp, JObject args)

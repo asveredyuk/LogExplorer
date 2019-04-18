@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pbMain = new System.Windows.Forms.PictureBox();
             this.vScroll = new System.Windows.Forms.VScrollBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,23 +35,15 @@
             this.rulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enabledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jobEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
+            this.pbMain = new System.Windows.Forms.PictureBox();
+            this.mapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pbMain
-            // 
-            this.pbMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbMain.Location = new System.Drawing.Point(12, 43);
-            this.pbMain.Name = "pbMain";
-            this.pbMain.Size = new System.Drawing.Size(1056, 620);
-            this.pbMain.TabIndex = 0;
-            this.pbMain.TabStop = false;
             // 
             // vScroll
             // 
@@ -69,6 +60,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.logToolStripMenuItem,
+            this.mapToolStripMenuItem,
             this.rulesToolStripMenuItem,
             this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -105,15 +97,22 @@
             // enabledToolStripMenuItem
             // 
             this.enabledToolStripMenuItem.Name = "enabledToolStripMenuItem";
-            this.enabledToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.enabledToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.enabledToolStripMenuItem.Text = "Enabled";
             // 
             // editorToolStripMenuItem
             // 
             this.editorToolStripMenuItem.Name = "editorToolStripMenuItem";
-            this.editorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editorToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.editorToolStripMenuItem.Text = "Editor";
             this.editorToolStripMenuItem.Click += new System.EventHandler(this.editorToolStripMenuItem_Click);
+            // 
+            // newEditorToolStripMenuItem
+            // 
+            this.newEditorToolStripMenuItem.Name = "newEditorToolStripMenuItem";
+            this.newEditorToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.newEditorToolStripMenuItem.Text = "New editor";
+            this.newEditorToolStripMenuItem.Click += new System.EventHandler(this.newEditorToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -130,12 +129,31 @@
             this.jobEditorToolStripMenuItem.Text = "Job editor";
             this.jobEditorToolStripMenuItem.Click += new System.EventHandler(this.jobEditorToolStripMenuItem_Click);
             // 
-            // newEditorToolStripMenuItem
+            // pbMain
             // 
-            this.newEditorToolStripMenuItem.Name = "newEditorToolStripMenuItem";
-            this.newEditorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.newEditorToolStripMenuItem.Text = "New editor";
-            this.newEditorToolStripMenuItem.Click += new System.EventHandler(this.newEditorToolStripMenuItem_Click);
+            this.pbMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbMain.Location = new System.Drawing.Point(12, 43);
+            this.pbMain.Name = "pbMain";
+            this.pbMain.Size = new System.Drawing.Size(1056, 620);
+            this.pbMain.TabIndex = 0;
+            this.pbMain.TabStop = false;
+            // 
+            // mapToolStripMenuItem
+            // 
+            this.mapToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem});
+            this.mapToolStripMenuItem.Name = "mapToolStripMenuItem";
+            this.mapToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.mapToolStripMenuItem.Text = "Map";
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // LogExplorerForm
             // 
@@ -149,9 +167,9 @@
             this.Name = "LogExplorerForm";
             this.Text = "LogExplorerForm";
             this.Load += new System.EventHandler(this.LogExplorerForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,5 +187,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem jobEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
     }
 }

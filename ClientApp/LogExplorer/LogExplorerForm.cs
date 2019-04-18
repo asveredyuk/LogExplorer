@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientApp.LogExplorer.Controller;
+using ClientApp.LogExplorer.View;
 using LogEntity;
 using Newtonsoft.Json;
 
@@ -15,12 +16,12 @@ namespace ClientApp
 {
     public partial class LogExplorerForm : Form
     {
-        private LogExplorerController controller;
+        private LogExplorerController _controller;
         public LogExplorerForm()
         {
-            controller = new LogExplorerController();
+            _controller = new LogExplorerController();
             InitializeComponent();
-            controller.BindForm(this);
+            _controller.BindForm(this);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -28,7 +29,7 @@ namespace ClientApp
             var dialog = new OpenLogDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                controller.OpenNewLog(dialog.Result);
+                _controller.OpenNewLog(dialog.Result);
             }
         }
 
@@ -37,13 +38,13 @@ namespace ClientApp
             var args = Environment.GetCommandLineArgs();
             if (args.Length == 2)
             {
-                controller.OpenNewLog(args[1]);
+                _controller.OpenNewLog(args[1]);
             }
         }
 
         private void editorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.GoEditRules();
+            _controller.GoEditRules();
         }
 
         private void jobEditorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -53,7 +54,13 @@ namespace ClientApp
 
         private void newEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.GoEditRulesNew();
+            _controller.GoEditRulesNew();
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateProcessMapForm form = new CreateProcessMapForm(_controller);
+            form.Show();
         }
     }
 }

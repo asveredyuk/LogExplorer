@@ -40,6 +40,15 @@
     <Reference Include="FastColoredTextBox, Version=2.16.21.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
       <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Msagl, Version=3.0.0.0, Culture=neutral, PublicKeyToken=640c57aa40e7ae7d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Msagl.1.1.3\lib\net40\Microsoft.Msagl.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Msagl.Drawing, Version=3.0.0.0, Culture=neutral, PublicKeyToken=8a3d7c21d5fa1306, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Msagl.Drawing.1.1.3\lib\net40\Microsoft.Msagl.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Msagl.GraphViewerGdi, Version=3.0.0.0, Culture=neutral, PublicKeyToken=fffc27ea4058b3a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Msagl.GraphViewerGDI.1.1.3\lib\net40\Microsoft.Msagl.GraphViewerGdi.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -116,6 +125,12 @@
     <Compile Include="LogExplorer\RuleEditor\RuleListForm.Designer.cs">
       <DependentUpon>RuleListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogExplorer\View\CreateProcessMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogExplorer\View\CreateProcessMapForm.Designer.cs">
+      <DependentUpon>CreateProcessMapForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LogExplorer\View\JsonViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +140,12 @@
     <Compile Include="LogExplorer\View\MainScrollView.cs" />
     <Compile Include="LogExplorer\View\MainView.cs" />
     <Compile Include="LogExplorer\View\MainViewClickHandler.cs" />
+    <Compile Include="LogExplorer\View\ProcessMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogExplorer\View\ProcessMapForm.Designer.cs">
+      <DependentUpon>ProcessMapForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LogExplorer\View\RecycleListView\RecycleListView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -172,8 +193,14 @@
     <EmbeddedResource Include="LogExplorer\RuleEditor\RuleListForm.resx">
       <DependentUpon>RuleListForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LogExplorer\View\CreateProcessMapForm.resx">
+      <DependentUpon>CreateProcessMapForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\View\JsonViewForm.resx">
       <DependentUpon>JsonViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogExplorer\View\ProcessMapForm.resx">
+      <DependentUpon>ProcessMapForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\View\RecycleListView\RecycleListView.resx">
       <DependentUpon>RecycleListView.cs</DependentUpon>

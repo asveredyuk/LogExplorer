@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientApp.LogExplorer.Model;
 using JobSystem;
+using JobSystem.Jobs;
 using LogEntity;
 using Newtonsoft.Json;
 
@@ -28,6 +29,16 @@ namespace ClientApp
             }
         }
 
+        public static async Task<JobInfo> GetJobInfo(Guid id)
+        {
+            WebRequest wq = WebRequest.CreateHttp(SERVER_PATH + "/jobs/" + id.ToString());
+            var res = await wq.GetResponseAsync();
+            using (var sr = new StreamReader(res.GetResponseStream()))
+            {
+                var json = await sr.ReadToEndAsync();
+                return JsonConvert.DeserializeObject<JobInfo>(json);
+            }
+        }
         public static async Task<string[]> GetLogsNames()
         {
             (int code, string[] data) = await MakeRequest<string[]>("/logs/list");
@@ -117,6 +128,24 @@ namespace ClientApp
             }
 
 
+        }
+
+        public static async Task AddProcessMapJob(ProcessMapJob job)
+        {
+            var json = JsonConvert.SerializeObject(job);
+            HttpWebRequest wq = WebRequest.CreateHttp(SERVER_PATH + "/jobs/new/processmap");
+            wq.Method = "POST";
+            var reqStr = await wq.GetRequestStreamAsync();
+            using (var sw = new StreamWriter(reqStr))
+            {
+                await sw.WriteAsync(json);
+                sw.Close();
+            }
+            var res = await wq.GetResponseAsync() as HttpWebResponse;
+            if ((int)res.StatusCode != 200)
+            {
+                MessageBox.Show("error");
+            }
         }
 
         public static async Task AddImportTask(ImportArgs args)

@@ -10,6 +10,11 @@ namespace JobSystem.Jobs
     {
         public string LogName { get; set; }
 
+
+        public string MapName { get; set; }
+
+        public Guid MapId { get; set; }
+
         /// <summary>
         /// GUIDs of labels
         /// </summary>

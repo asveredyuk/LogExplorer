@@ -138,9 +138,9 @@ namespace ProcessMapMaker
             var relations = map.OrderByDescending(t => t.Value).Select(MakeRelation).ToArray();
             var processMap = new ProcessMap()
             {
-                _id = Guid.NewGuid().ToString(),
+                _id = Job.MapId.ToString(),
                 Labels = labels.ToArray(),
-                Name = "Yet another process map",
+                Name = Job.MapName,
                 Relations = relations
             };
             Database.AddMap(processMap);

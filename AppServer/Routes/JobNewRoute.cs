@@ -19,8 +19,24 @@ namespace AppServer.Routes
         public JobNewRoute()
         {
             Post("/import", new DelegateRouter(NewImportJob));
+            Post("/processmap", new DelegateRouter(NewProcessMapJob));
         }
 
+        public void NewProcessMapJob(HttpListenerRequest req, HttpListenerResponse resp)
+        {
+            var job = req.ReadJson<ProcessMapJob>();
+            try
+            {
+                var json = JsonConvert.SerializeObject(job, Formatting.Indented);
+                var path = JobRoute.NEW_JOBS_PATH + job.Id.ToString() + ".job";
+                File.WriteAllText(path, json);
+            }
+            catch (Exception e)
+            {
+                throw new ApiException(500, "Failed to write job file", e);
+            }
+            resp.Close();
+        }
         public class ImportArgs
         {
             [JsonRequired]
