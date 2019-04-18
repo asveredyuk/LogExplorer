@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using ClientApp.LogExplorer.Controller;
 using ClientApp.LogExplorer.Model;
 using ClientApp.LogExplorer.View.RecycleListView;
+using ClientApp.LogExplorer.View.WinformsComponents;
 using LogEntity;
 
 namespace ClientApp.LogExplorer.LabelEditor
@@ -124,7 +125,7 @@ namespace ClientApp.LogExplorer.LabelEditor
                 return;//nothing changed
             if (cbProfile.SelectedItem.ToString() == CREATE_NEW_PROFILE)
             {
-                var form = new CreateProfileForm();
+                var form = new TextFieldDialog("Create new profile", "Profile name");
                 var res = form.ShowDialog();
                 if (res == DialogResult.OK)
                 {

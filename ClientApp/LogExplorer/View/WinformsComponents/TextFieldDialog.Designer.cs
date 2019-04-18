@@ -1,6 +1,6 @@
-﻿namespace ClientApp.LogExplorer.LabelEditor
+﻿namespace ClientApp.LogExplorer.View.WinformsComponents
 {
-    partial class CreateProfileForm
+    partial class TextFieldDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.textBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btOk = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
@@ -36,11 +36,11 @@
             // 
             // textBoxName
             // 
-            this.textBoxName.Location = new System.Drawing.Point(77, 21);
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(195, 20);
-            this.textBoxName.TabIndex = 0;
-            this.textBoxName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxName_KeyDown);
+            this.textBox.Location = new System.Drawing.Point(77, 21);
+            this.textBox.Name = "textBox";
+            this.textBox.Size = new System.Drawing.Size(195, 20);
+            this.textBox.TabIndex = 0;
+            this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxName_KeyDown);
             // 
             // label1
             // 
@@ -79,8 +79,8 @@
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.btOk);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBoxName);
-            this.Name = "CreateProfileForm";
+            this.Controls.Add(this.textBox);
+            this.Name = "TextFieldDialog";
             this.Text = "CreateProfileForm";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -89,7 +89,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btOk;
         private System.Windows.Forms.Button btCancel;

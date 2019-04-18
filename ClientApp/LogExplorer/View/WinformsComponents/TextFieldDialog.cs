@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ClientApp.LogExplorer.LabelEditor
+namespace ClientApp.LogExplorer.View.WinformsComponents
 {
-    public partial class CreateProfileForm : Form
+    public partial class TextFieldDialog : Form
     {
         public string Result { get; private set; }
-        public CreateProfileForm()
+        public TextFieldDialog(string caption, string labelText, string defaultText = "")
         {
             InitializeComponent();
+            Text = caption;
+            label1.Text = labelText;
+            textBox.Text = defaultText;
         }
 
         private void btCancel_Click(object sender, EventArgs e)
@@ -26,7 +22,7 @@ namespace ClientApp.LogExplorer.LabelEditor
 
         private void btOk_Click(object sender, EventArgs e)
         {
-            Result = textBoxName.Text;
+            Result = textBox.Text;
             DialogResult = DialogResult.OK;
             Close();
         }

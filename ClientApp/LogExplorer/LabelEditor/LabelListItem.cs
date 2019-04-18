@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientApp.LogExplorer.Controller;
 using ClientApp.LogExplorer.View.RecycleListView;
+using ClientApp.LogExplorer.View.WinformsComponents;
 using LogEntity;
 using Newtonsoft.Json;
 
@@ -21,7 +22,7 @@ namespace ClientApp.LogExplorer.LabelEditor
         public LabelListItem()
         {
             InitializeComponent();
-            
+
         }
 
         public LabelListItem(LogExplorerController controller) : this()
@@ -33,12 +34,12 @@ namespace ClientApp.LogExplorer.LabelEditor
         {
             var label = boxLabel;
             var lbSize = label.Size;
-            
-            Font font2 = FlexFont(0, 15, new Size(lbSize.Width-5, lbSize.Height-5), label.Text, label.Font);
+
+            Font font2 = FlexFont(0, 15, new Size(lbSize.Width - 5, lbSize.Height - 5), label.Text, label.Font);
             label.Font = font2;
             label.BackColor = ColorTranslator.FromHtml(data.Color);
             label.ForeColor = label.BackColor.GetBrightness() > 0.5 ? Color.Black : Color.White;
-            
+
         }
 
         public static Font FlexFont(float minFontSize, float maxFontSize, Size layoutSize, string s, Font f)
@@ -101,9 +102,19 @@ namespace ClientApp.LogExplorer.LabelEditor
 
         private async void cloneButton_Click(object sender, EventArgs e)
         {
+            var dialog = new TextFieldDialog("Cloned item profile", "Profile", data.ProfileName);
+            var res = dialog.ShowDialog();
+            if (res != DialogResult.OK)
+            {
+                return;
+            }
             var clonedItem = JsonConvert.DeserializeObject<LogLabel>(JsonConvert.SerializeObject(data));
             clonedItem._id = Guid.NewGuid().ToString();
-            clonedItem.Name += "_cloned";
+            clonedItem.ProfileName = dialog.Result;
+            if (clonedItem.ProfileName == data.ProfileName)
+            {
+                clonedItem.Name += "_cloned";
+            }
             await _controller.AddLabel(clonedItem);
             RaiseOnDataDirty();
         }

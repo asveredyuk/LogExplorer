@@ -79,11 +79,11 @@
     </Compile>
     <Compile Include="LogExplorer\Controller\ColorifyMachine.cs" />
     <Compile Include="LogExplorer\Controller\LogExplorerController.cs" />
-    <Compile Include="LogExplorer\LabelEditor\CreateProfileForm.cs">
+    <Compile Include="LogExplorer\View\WinformsComponents\TextFieldDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogExplorer\LabelEditor\CreateProfileForm.Designer.cs">
-      <DependentUpon>CreateProfileForm.cs</DependentUpon>
+    <Compile Include="LogExplorer\View\WinformsComponents\TextFieldDialog.Designer.cs">
+      <DependentUpon>TextFieldDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="LogExplorer\LabelEditor\LabelListItem.cs">
       <SubType>UserControl</SubType>
@@ -172,8 +172,8 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogExplorer\LabelEditor\CreateProfileForm.resx">
-      <DependentUpon>CreateProfileForm.cs</DependentUpon>
+    <EmbeddedResource Include="LogExplorer\View\WinformsComponents\TextFieldDialog.resx">
+      <DependentUpon>TextFieldDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\LabelEditor\LabelListItem.resx">
       <DependentUpon>LabelListItem.cs</DependentUpon>
