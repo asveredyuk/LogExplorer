@@ -68,7 +68,19 @@ namespace DatabaseBoundary
         public void AddMap(ProcessMap map)
         {
             GetMapsCollection().InsertOne(map);
-        }        
+        }
+
+        public ProcessMap GetMap(string id)
+        {
+            var col = GetMapsCollection();
+            var map = col.Find(t => t._id == id).FirstOrDefault();
+            return map;
+        }
+
+        public IEnumerable<ProcessMap> GetMaps()
+        {
+            return GetMapsCollection().AsQueryable();
+        }
         
 
         public IEnumerable<LogLabel> GetLabels()

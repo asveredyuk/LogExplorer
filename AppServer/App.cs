@@ -23,6 +23,7 @@ namespace AppServer
             app.Use("/jobs", new JobRoute());
             app.Use("/files", new FilesRoute());
             app.Use("/logs", new LogsRoute());
+            app.Use("/maps", new MapRoute());
          //   app.Use("/hello", new HelloWorldRoute());
             Console.WriteLine("Routes tree info:");
             app.Print("");

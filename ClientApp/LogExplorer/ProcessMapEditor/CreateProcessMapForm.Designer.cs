@@ -1,4 +1,4 @@
-﻿namespace ClientApp.LogExplorer.View
+﻿namespace ClientApp.LogExplorer.ProcessMapEditor
 {
     partial class CreateProcessMapForm
     {

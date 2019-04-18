@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiBoundary.ProcessMap.cs" />
     <Compile Include="ApiBoundary.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -79,6 +80,12 @@
     </Compile>
     <Compile Include="LogExplorer\Controller\ColorifyMachine.cs" />
     <Compile Include="LogExplorer\Controller\LogExplorerController.cs" />
+    <Compile Include="LogExplorer\ProcessMapEditor\OpenMapDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogExplorer\ProcessMapEditor\OpenMapDialog.Designer.cs">
+      <DependentUpon>OpenMapDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="LogExplorer\View\WinformsComponents\TextFieldDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,10 +132,10 @@
     <Compile Include="LogExplorer\RuleEditor\RuleListForm.Designer.cs">
       <DependentUpon>RuleListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LogExplorer\View\CreateProcessMapForm.cs">
+    <Compile Include="LogExplorer\ProcessMapEditor\CreateProcessMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogExplorer\View\CreateProcessMapForm.Designer.cs">
+    <Compile Include="LogExplorer\ProcessMapEditor\CreateProcessMapForm.Designer.cs">
       <DependentUpon>CreateProcessMapForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LogExplorer\View\JsonViewForm.cs">
@@ -140,10 +147,10 @@
     <Compile Include="LogExplorer\View\MainScrollView.cs" />
     <Compile Include="LogExplorer\View\MainView.cs" />
     <Compile Include="LogExplorer\View\MainViewClickHandler.cs" />
-    <Compile Include="LogExplorer\View\ProcessMapForm.cs">
+    <Compile Include="LogExplorer\ProcessMapEditor\ProcessMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogExplorer\View\ProcessMapForm.Designer.cs">
+    <Compile Include="LogExplorer\ProcessMapEditor\ProcessMapForm.Designer.cs">
       <DependentUpon>ProcessMapForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LogExplorer\View\RecycleListView\RecycleListView.cs">
@@ -172,6 +179,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LogExplorer\ProcessMapEditor\OpenMapDialog.resx">
+      <DependentUpon>OpenMapDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\View\WinformsComponents\TextFieldDialog.resx">
       <DependentUpon>TextFieldDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -193,13 +203,13 @@
     <EmbeddedResource Include="LogExplorer\RuleEditor\RuleListForm.resx">
       <DependentUpon>RuleListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogExplorer\View\CreateProcessMapForm.resx">
+    <EmbeddedResource Include="LogExplorer\ProcessMapEditor\CreateProcessMapForm.resx">
       <DependentUpon>CreateProcessMapForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\View\JsonViewForm.resx">
       <DependentUpon>JsonViewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogExplorer\View\ProcessMapForm.resx">
+    <EmbeddedResource Include="LogExplorer\ProcessMapEditor\ProcessMapForm.resx">
       <DependentUpon>ProcessMapForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\View\RecycleListView\RecycleListView.resx">

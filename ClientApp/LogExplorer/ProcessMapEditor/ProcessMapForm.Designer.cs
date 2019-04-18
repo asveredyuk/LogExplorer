@@ -1,4 +1,4 @@
-﻿namespace ClientApp.LogExplorer.View
+﻿namespace ClientApp.LogExplorer.ProcessMapEditor
 {
     partial class ProcessMapForm
     {
@@ -28,19 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.panelForMainView = new System.Windows.Forms.Panel();
             this.SuspendLayout();
+            // 
+            // panelForMainView
+            // 
+            this.panelForMainView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelForMainView.Location = new System.Drawing.Point(13, 13);
+            this.panelForMainView.Name = "panelForMainView";
+            this.panelForMainView.Size = new System.Drawing.Size(765, 400);
+            this.panelForMainView.TabIndex = 0;
             // 
             // ProcessMapForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(989, 425);
+            this.Controls.Add(this.panelForMainView);
             this.Name = "ProcessMapForm";
             this.Text = "ProcessMapForm";
+            this.Load += new System.EventHandler(this.ProcessMapForm_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel panelForMainView;
     }
 }

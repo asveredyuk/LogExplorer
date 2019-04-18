@@ -77,6 +77,7 @@
     <Compile Include="Routes\LogLabelsRoute.cs" />
     <Compile Include="Routes\JobNewRoute.cs" />
     <Compile Include="Routes\LogsRoute.cs" />
+    <Compile Include="Routes\MapRoute.cs" />
     <Compile Include="Routing\ArgumentRouter.cs" />
     <Compile Include="Routing\DelegateRouter.cs" />
     <Compile Include="Ext\HttpListenerRequestExt.cs" />

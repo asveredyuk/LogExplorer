@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientApp.LogExplorer.Controller;
 using JobSystem.Jobs;
 
-namespace ClientApp.LogExplorer.View
+namespace ClientApp.LogExplorer.ProcessMapEditor
 {
     public partial class CreateProcessMapForm : Form
     {
