@@ -78,8 +78,10 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
 
         private void btOpenMap_Click(object sender, EventArgs e)
         {
+            
             ProcessMapForm form = new ProcessMapForm(_controller, Job.MapId.ToString());
-            form.ShowDialog();
+            form.Show();
+            Close();
         }
     }
 }
