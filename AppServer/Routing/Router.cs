@@ -11,9 +11,11 @@ namespace AppServer.Routing
     {
         private Dictionary<RoutingPath, IRouter> routers = new Dictionary<RoutingPath, IRouter>();
 
+        private List<(string route, string method, IRouter router)> dirtyRouters = new List<(string path, string method, IRouter router)>();
+
         public void Print(string prev)
         {
-            foreach ( var pair in routers)
+            foreach (var pair in routers)
             {
                 string name = $"{pair.Key.method} {pair.Key.route}";
                 string str = $"|->{name}|";
@@ -22,9 +24,22 @@ namespace AppServer.Routing
                 pair.Value.Print(prev + holder);
             }
 
-            Console.WriteLine(prev + new string('-', Console.WindowWidth - prev.Length-1));
+            Console.WriteLine(prev + new string('-', Console.WindowWidth - prev.Length - 1));
         }
 
+        protected void Compile()
+        {
+            foreach (var dr in dirtyRouters)
+            {
+                var drr = dr.router as Router;
+                if (drr != null)
+                {
+                    drr.Compile();
+                }
+                AddRouter(dr.route, dr.method, dr.router);
+            }
+        }
+        //TODO: make truncate after the whole tree is built
         void AddRouter(string route, string method, IRouter router)
         {
             if (router is Router)
@@ -70,6 +85,18 @@ namespace AppServer.Routing
                             }
                             return;
                         }
+
+                        if (pair.Key.method == method)
+                        {
+                            var r = pair.Value as Router;
+                            if (r == null)
+                                throw new Exception("Conflict"); //dumb exception
+                            foreach (var kv in newRouter.routers)
+                            {
+                                r.routers[kv.Key] = kv.Value;
+                            }
+                            return;
+                        }
                     }
                 }
             }
@@ -80,8 +107,9 @@ namespace AppServer.Routing
         {
             if (!path.Contains(":") && path.Count(ch => ch == '/') == 1 || path == "/:")
             {
-                AddRouter(path,method,router);
-               // this.routers[(path, method)] = router;
+                dirtyRouters.Add((path, method, router));
+                //AddRouter(path,method,router);
+                // this.routers[(path, method)] = router;
                 return;
             }
             //check if path is multiPath
@@ -98,7 +126,7 @@ namespace AppServer.Routing
                     if (pathItems.Count == 0)
                     {
                         //this was the last item
-                        lastRouter.Use("/", router,method);
+                        lastRouter.Use("/", router, method);
                     }
                     continue;
                 }
@@ -116,7 +144,7 @@ namespace AppServer.Routing
                 }
 
             }
-            
+
         }
 
         public void Get(string path, IRouter router)
@@ -150,7 +178,7 @@ namespace AppServer.Routing
             }
             IRouter router;
             //try find universal method
-            
+
             if (routers.TryGetValue((subpath, "*"), out router))
             {
                 router.Handle(req, resp, path, args);
@@ -170,7 +198,7 @@ namespace AppServer.Routing
                     if (subpath != "/" && routers.TryGetValue(("/:", "*"), out router))
                     {
                         //push back to front of queue
-                        router.Handle(req,resp, new Queue<string>(new string[] { subpath.TrimStart('/') }.Concat(path)), args);
+                        router.Handle(req, resp, new Queue<string>(new string[] { subpath.TrimStart('/') }.Concat(path)), args);
                     }
                     else
                     {

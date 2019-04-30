@@ -25,6 +25,8 @@ namespace AppServer
             app.Use("/logs", new LogsRoute());
             app.Use("/maps", new MapRoute());
          //   app.Use("/hello", new HelloWorldRoute());
+
+            app.Compile();
             Console.WriteLine("Routes tree info:");
             app.Print("");
             return app;  
