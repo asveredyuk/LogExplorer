@@ -23,7 +23,24 @@ namespace AppServer.Routes
             Get("/:logname/info", new DelegateRouter(GetLogInfo));
             Post("/:logname/at_pos", new DelegateRouter(GetItemsAtPos));
             Post("/:logname/get_distinct_field_values", new DelegateRouter(GetDistinctFieldValues));
+            Get("/:logname/field_names", new DelegateRouter(GetFieldNames));
             Use("/:logname/labels", new LogLabelsRoute());
+        }
+        /// <summary>
+        /// Get field names of one record
+        /// </summary>
+        /// <param name="req"></param>
+        /// <param name="resp"></param>
+        /// <param name="jobj"></param>
+        public void GetFieldNames(HttpListenerRequest req, HttpListenerResponse resp, JObject jobj)
+        {
+            if (!jobj.ContainsKey("logname"))
+            {
+                throw new ApiException(400, "log name is not defined");
+            }
+            string name = jobj["logname"].Value<string>();
+            var db = DatabaseClient.Self.GetLogDatabase(name);
+            resp.WriteJson(db.GetFieldNames().ToArray());
         }
         //TODO: add ability to delete the log
         ///get list of all available logs

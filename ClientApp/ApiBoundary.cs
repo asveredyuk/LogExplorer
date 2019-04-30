@@ -39,6 +39,8 @@ namespace ClientApp
                 return JsonConvert.DeserializeObject<JobInfo>(json);
             }
         }
+
+        
         public static async Task<string[]> GetLogsNames()
         {
             (int code, string[] data) = await MakeRequest<string[]>("/logs/list");
@@ -59,6 +61,39 @@ namespace ClientApp
             }
 
             return info;
+        }
+        public static async Task<string[]> GetFieldNames(string logname)
+        {
+            (int code, string[] names) = await MakeRequest<string[]>($"/logs/{logname}/field_names");
+            if (code != 200)
+            {
+                MessageBox.Show("Api error");
+            }
+
+            return names;
+
+        }
+
+        public static async Task<string[]> GetDistinctFieldValues(string logname, string fieldname)
+        {
+            var obj = new 
+            {
+                FieldName = fieldname
+            };
+            var json = JsonConvert.SerializeObject(obj);
+            (int code, string[] arr) =
+                await MakeRequest<string[]>($"/logs/{logname}/get_distinct_field_values", "POST", json);
+            if (code != 200)
+            {
+                if (code == 400)
+                {
+                    //was too much values
+                    return null;
+                }
+                MessageBox.Show("Api error");
+            }
+
+            return arr;
         }
 
         public static async Task<LogTraceWithLabels[]> GetLogAtPos(string logName, long pos, long count)
@@ -174,33 +209,46 @@ namespace ClientApp
         }
         private static async Task<(int code, T res)> MakeRequest<T>(string path, string method = "GET", string payload = null)
         {
-            HttpWebRequest wq = WebRequest.CreateHttp(SERVER_PATH + path);
-            wq.Method = method;
-            if (payload != null)
+            try
             {
-                var reqStr = await wq.GetRequestStreamAsync();
-                using (var sw = new StreamWriter(reqStr))
+                HttpWebRequest wq = WebRequest.CreateHttp(SERVER_PATH + path);
+                wq.Method = method;
+                if (payload != null)
                 {
-                    await sw.WriteAsync(payload);
-                    sw.Close();
+                    var reqStr = await wq.GetRequestStreamAsync();
+                    using (var sw = new StreamWriter(reqStr))
+                    {
+                        await sw.WriteAsync(payload);
+                        sw.Close();
+                    }
+                }
+                var res = await wq.GetResponseAsync() as HttpWebResponse;
+                if (typeof(T) == typeof(void))
+                {
+                    return ((int)res.StatusCode, default(T));
+                }
+                //if code is not 200, no data
+                if (res.StatusCode != HttpStatusCode.OK)
+                {
+                    return ((int)res.StatusCode, default(T));
+                }
+                using (var sr = new StreamReader(res.GetResponseStream()))
+                {
+                    var json = await sr.ReadToEndAsync();
+                    var data = JsonConvert.DeserializeObject<T>(json);
+                    return (200, data);
                 }
             }
-            var res = await wq.GetResponseAsync() as HttpWebResponse;
-            if (typeof(T) == typeof(void))
+            catch (WebException e)
             {
-                return ((int)res.StatusCode, default(T));
+                return ((int) (e.Response as HttpWebResponse).StatusCode, default(T));
             }
-            //if code is not 200, no data
-            if (res.StatusCode != HttpStatusCode.OK)
+            catch (Exception e)
             {
-                return ((int)res.StatusCode, default(T));
+                throw;
             }
-            using (var sr = new StreamReader(res.GetResponseStream()))
-            {
-                var json = await sr.ReadToEndAsync();
-                var data = JsonConvert.DeserializeObject<T>(json);
-                return (200, data);
-            }
+
+            
         }
     }
 

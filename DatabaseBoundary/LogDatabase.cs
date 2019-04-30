@@ -138,6 +138,20 @@ namespace DatabaseBoundary
             if(LabelHasCache(labelId))
                 db.DropCollection(MakeCacheNameForLabel(labelId));
         }
+
+        public IEnumerable<string> GetFieldNames()
+        {
+            var data = GetTracesCollection();
+            var oneInList = data.Find(t => true).Limit(1).ToList();
+            if (oneInList.Count != 1)
+            {
+                throw new Exception("NO data in traces collections");
+            }
+            //TODO: is it enough?
+            var trace = oneInList[0];
+            var record = trace.Items[0];
+            return record.Keys;
+        }
         /// <summary>
         /// Get all distinct values of given field in logrecord
         /// </summary>

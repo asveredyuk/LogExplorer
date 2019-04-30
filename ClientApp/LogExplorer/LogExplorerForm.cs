@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientApp.LogExplorer.Controller;
+using ClientApp.LogExplorer.LabelEditor;
 using ClientApp.LogExplorer.ProcessMapEditor;
 using ClientApp.LogExplorer.View;
 using LogEntity;
@@ -75,6 +76,12 @@ namespace ClientApp
                 form.ShowDialog();
             }
 
+        }
+
+        private void generateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LabelGenerateForm form = new LabelGenerateForm(_controller);
+            form.ShowDialog();
         }
     }
 }
