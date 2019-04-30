@@ -15,7 +15,7 @@ namespace AppServer.Routes
     {
         public MapRoute()
         {
-            Get("/list/:logname", new DelegateRouter(GetMapsList));
+            Get("/:logname/list", new DelegateRouter(GetMapsList));
             Get("/:logname/:id", new DelegateRouter(GetMap));
         }
 

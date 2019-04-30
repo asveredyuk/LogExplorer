@@ -32,7 +32,7 @@ namespace ClientApp
 
         public static async Task<MapListItem[]> GetMapList(string logname)
         {
-            WebRequest wq = WebRequest.CreateHttp(SERVER_PATH + "/maps/list/" + logname);
+            WebRequest wq = WebRequest.CreateHttp(SERVER_PATH + "/maps/" + logname + "/list");
             var res = await wq.GetResponseAsync();
             using (var sr = new StreamReader(res.GetResponseStream()))
             {
