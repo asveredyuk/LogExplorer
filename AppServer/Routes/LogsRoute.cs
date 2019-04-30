@@ -22,6 +22,7 @@ namespace AppServer.Routes
             Get("/list", new DelegateRouter(GetLogsList));
             Get("/:logname/info", new DelegateRouter(GetLogInfo));
             Post("/:logname/at_pos", new DelegateRouter(GetItemsAtPos));
+            Post("/:logname/get_distinct_field_values", new DelegateRouter(GetDistinctFieldValues));
             Use("/:logname/labels", new LogLabelsRoute());
         }
         //TODO: add ability to delete the log
@@ -65,6 +66,38 @@ namespace AppServer.Routes
             var args = req.ReadJson<GetItemsAtPosArgs>();
             var res = db.GetTracesAtPos(args.Pos, args.Count);
             resp.WriteJson(res);
+        }
+
+        public class GetDistinctFieldValuesArgs
+        {
+            [JsonRequired]
+            public string FieldName { get; set; }
+        }
+
+        public void GetDistinctFieldValues(HttpListenerRequest req, HttpListenerResponse resp, JObject jobj)
+        {
+            if (!jobj.ContainsKey("logname"))
+            {
+                throw new ApiException(400, "log name is not defined");
+            }
+            string name = jobj["logname"].Value<string>();
+            var db = DatabaseClient.Self.GetLogDatabase(name);
+            var args = req.ReadJson<GetDistinctFieldValuesArgs>();
+            bool success;
+            var res = db.GetDistinctFieldValues(args.FieldName, out success);
+            if (!success)
+            {
+                if (res == null)
+                {
+                    throw new ApiException(404, "field not found");
+                }
+                else
+                {
+                    throw new ApiException(400, "too much field values");
+                }
+            }
+            resp.WriteJson(res.ToArray());
+
         }
         
     }

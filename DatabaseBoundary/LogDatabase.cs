@@ -138,6 +138,90 @@ namespace DatabaseBoundary
             if(LabelHasCache(labelId))
                 db.DropCollection(MakeCacheNameForLabel(labelId));
         }
+        /// <summary>
+        /// Get all distinct values of given field in logrecord
+        /// </summary>
+        /// <param name="fieldName"></param>
+        /// <param name="success"></param>
+        /// <returns></returns>
+        public IEnumerable<string> GetDistinctFieldValues(string fieldName, out bool success)
+        {
+            var data = GetTracesCollection();
+            int testNum = 1000;
+            int maxDistinctValues = 100;
+
+            var dfvpipeline = DFVPipeline(fieldName).ToArray();
+            var limit = LimitPipelineStage(testNum);
+            
+            var testPipelineStages = new List<BsonDocument>();
+            testPipelineStages.Add(limit);
+            testPipelineStages.AddRange(dfvpipeline);
+
+            var testPipeline = PipelineDefinition<LogTrace, BsonDocument>.Create(testPipelineStages);
+            var testRes = data.Aggregate(testPipeline).ToList();
+            if (testRes.Count > maxDistinctValues)
+            {
+                success = false;
+                return testRes.Select(t => t.GetValue("_id").AsString);
+            }
+
+            if (testRes.Count == 1)
+            {
+                if (testRes[0].GetValue("_id").IsBsonNull)
+                {
+                    success = false;
+                    return null;
+                }
+            }
+
+            var pipeline = PipelineDefinition<LogTrace, BsonDocument>.Create(dfvpipeline);
+            var res = data.Aggregate(pipeline).ToList();
+            if (res.Count > maxDistinctValues)
+            {
+                success = false;
+                return res.Take(maxDistinctValues).Select(t=>t.GetValue("_id").AsString);
+            }
+            success = true;
+            return res.Select(t => t.GetValue("_id").AsString);
+
+
+
+        }
+
+        private IEnumerable<BsonDocument> DFVPipeline(string fieldname)
+        {
+            var stage1 = new BsonDocument
+            {
+                {
+                    "$unwind", new BsonDocument
+                    {
+                        {"path","$Items" }
+                    }
+                }
+            };
+            var stage2 = new BsonDocument
+            {
+                {
+                    "$group", new BsonDocument
+                    {
+                        {"_id","$Items." + fieldname }
+                    }
+                }
+            };
+            yield return stage1;
+            yield return stage2;
+        }
+
+        private BsonDocument LimitPipelineStage(int limit)
+        {
+            var stage1 = new BsonDocument
+            {
+                {
+                    "$limit", limit
+                }
+            };
+            return stage1;
+        }
 
 
 
