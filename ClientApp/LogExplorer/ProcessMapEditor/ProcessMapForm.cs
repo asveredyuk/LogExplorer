@@ -14,6 +14,13 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
 {
     public partial class ProcessMapForm : Form
     {
+        enum TruncateMode
+        {
+            byValue,
+            byNumberOfConnections
+        }
+
+        private TruncateMode _truncateMode = TruncateMode.byValue;
         private GViewer viewer;
         private LogExplorerController _controller;
         private string _mapId;
@@ -72,10 +79,54 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
 
         IEnumerable<ProcessMapRelation> GetFilteredRelations()
         {
-            long total = _map.Relations.Sum(t => t.count);
-            long min = 0;
+            if (_truncateMode == TruncateMode.byNumberOfConnections)
+            {
+                return _map.Relations.OrderByDescending(t => t.count).Take((100-trackBarTruncate.Value)*_map.Relations.Length/100);
+            }
+            //byValue
+            long max = _map.Relations.Max(t => t.count);
+            long min = max * trackBarTruncate.Value / 100;
+
+
             return _map.Relations.Where(t => t.count > min);
         }
 
+        private bool ignoreTruncateEvent = false;
+        private void trackBarTruncate_Scroll(object sender, EventArgs e)
+        {
+            ignoreTruncateEvent = true;
+            nudTruncate.Value = trackBarTruncate.Value;
+            ignoreTruncateEvent = false;
+            if(checkBoxLiveRefresh.Checked)
+                FillGraph();
+        }
+
+        private void nudTruncate_ValueChanged(object sender, EventArgs e)
+        {
+            ignoreTruncateEvent = true;
+            trackBarTruncate.Value = (int)nudTruncate.Value;
+            ignoreTruncateEvent = false;
+            if (checkBoxLiveRefresh.Checked)
+                FillGraph();
+
+        }
+
+        private void btTruncate_Click(object sender, EventArgs e)
+        {
+            FillGraph();
+        }
+
+        private void radioButtonTruncate_CheckedChanged(object sender, EventArgs e)
+        {
+            var newTr = radioButtonTruncateByValue.Checked ? TruncateMode.byValue : TruncateMode.byNumberOfConnections;
+            if (newTr != _truncateMode)
+            {
+                _truncateMode = newTr;
+                if (checkBoxLiveRefresh.Checked)
+                {
+                    FillGraph();
+                }
+            }
+        }
     }
 }
