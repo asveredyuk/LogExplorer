@@ -8,7 +8,9 @@ using Microsoft.Msagl.Core.Layout;
 using Microsoft.Msagl.Drawing;
 using Microsoft.Msagl.GraphViewerGdi;
 using Microsoft.Msagl.Miscellaneous;
+using Newtonsoft.Json;
 using Edge = Microsoft.Msagl.Drawing.Edge;
+using Node = Microsoft.Msagl.Drawing.Node;
 
 namespace ClientApp.LogExplorer.ProcessMapEditor
 {
@@ -33,6 +35,27 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
             viewer = new GViewer();
             viewer.Dock = DockStyle.Fill;
             panelForMainView.Controls.Add(viewer);
+            viewer.MouseClick += ViewerOnMouseClick;
+        }
+
+        private void ViewerOnMouseClick(object sender, MouseEventArgs mouseEventArgs)
+        {
+            var node = viewer.SelectedObject as Node;
+            if (node != null)
+            {
+                SetAsSelectedObject(node.UserData);
+                return;
+            }
+
+            var edge = viewer.SelectedObject as Edge;
+            if (edge != null)
+            {
+                SetAsSelectedObject(edge.UserData);
+                return;
+            }
+            SetAsSelectedObject(null);
+            SetAsSelectedObject(null);
+            
         }
 
         private async void ProcessMapForm_Load(object sender, EventArgs e)
@@ -58,13 +81,19 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
 
             foreach (var relation in GetFilteredRelations())
             {
-                var a = labels[relation.labelFrom];
-                var b = labels[relation.labelTo];
-                var edge = graph.AddEdge(a.Text, b.Text);
+                //var a = labels[relation.labelFrom];
+                //var b = labels[relation.labelTo];
+                var edge = graph.AddEdge(relation.labelFrom, relation.labelTo);
                 double width = minWidth + (maxWidth-minWidth) * (relation.count * 1.0 / total);
                 if (width > maxWidth)
                     width = maxWidth;
                 edge.Attr.LineWidth = width;
+                if (checkBoxShowValues.Checked)
+                {
+                    edge.LabelText = relation.count.ToString();
+                }
+
+                edge.UserData = relation;
                 //edge.Attr.Weight = (int)relation.count;
                 //edge.Weight = (int) relation.count;
                 var alpha = minA + (maxA - minA) * (relation.count / total);
@@ -73,10 +102,32 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
                 edge.Attr.Color = new Color(Convert.ToByte(alpha),0,0,0);
             }
 
+            foreach (var graphNode in graph.Nodes)
+            {
+                var id = graphNode.LabelText;
+                var label = labels[id];
+                graphNode.LabelText = label.Text;
+                graphNode.UserData = label;
+            }
+
             
             viewer.Graph = graph;
         }
 
+        void SetAsSelectedObject(object obj)
+        {
+            if (obj == null)
+            {
+                dgvSelectedObject.DataSource = null;
+                return;
+            }
+            var json = JsonConvert.SerializeObject(obj);
+            var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            var list = new List<KeyValuePair<string,string>>(dict);
+            dgvSelectedObject.DataSource = list;
+            dgvSelectedObject.Columns[0].Width = 100;
+            dgvSelectedObject.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
         IEnumerable<ProcessMapRelation> GetFilteredRelations()
         {
             if (_truncateMode == TruncateMode.byNumberOfConnections)
@@ -127,6 +178,12 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
                     FillGraph();
                 }
             }
+        }
+
+        private void checkBoxShowValues_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkBoxLiveRefresh.Checked)
+                FillGraph();
         }
     }
 }
