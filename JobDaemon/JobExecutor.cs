@@ -115,6 +115,12 @@ namespace JobDaemon
                         proc.WaitForExit();
                         return ReturnInfo(proc.ExitCode);
                     }
+                case JobType.CacheLabel:
+                    {
+                        var proc = Process.Start(MAPMAKER_PATH, jobFname);
+                        proc.WaitForExit();
+                        return ReturnInfo(proc.ExitCode);
+                    }
 
                 default:
                     throw new ArgumentOutOfRangeException();

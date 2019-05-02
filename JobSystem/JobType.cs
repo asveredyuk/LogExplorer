@@ -9,6 +9,7 @@ namespace JobSystem
     public enum JobType
     {
         LogImport = 1,
+        CacheLabel = 2,
         MakeMap = 3
     }
 }

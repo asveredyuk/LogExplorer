@@ -44,6 +44,9 @@ namespace ProcessMapMaker
             }
 
             string jobPath = args[0];
+            var checkCacheJobRes = CheckCacheJob(jobPath);
+            if (checkCacheJobRes >= 0)
+                return checkCacheJobRes;
             //load the job
             try
             {
@@ -115,6 +118,59 @@ namespace ProcessMapMaker
 
 
 
+        }
+
+        static int CheckCacheJob(string jobPath)
+        {
+            try
+            {
+                string json = File.ReadAllText(jobPath);
+                var job = JsonConvert.DeserializeObject<Job>(json);
+                if (job.Type == JobType.CacheLabel)
+                {
+                    var cachejob = JsonConvert.DeserializeObject<CacheLabelJob>(json);
+                    if (!DatabaseClient.Self.GetLogNames().Contains(cachejob.LogName))
+                    {
+                        //no such log
+                        string msg = $"No such log \"{cachejob.LogName}\"";
+                        Console.WriteLine(msg);
+                        JobResult.WriteForJob(jobPath, cachejob, 3, msg);
+                        return 3;
+                    }
+
+                    Database = DatabaseClient.Self.GetLogDatabase(cachejob.LogName);
+
+                    var label = GetLabels(new []{cachejob.LabelId}).FirstOrDefault();
+                    if (label == null)
+                    {
+                        Console.WriteLine("Label not found");
+                        JobResult.WriteForJob(jobPath,cachejob, 4, $"label {cachejob.LabelId} not found");
+                    }
+
+                    Console.WriteLine("Baking label " + label._id);
+                    var sw = Stopwatch.StartNew();
+                    BakeLabel(label);
+                    sw.Stop();
+                    Console.WriteLine("done in " + sw.ElapsedMilliseconds + "ms");
+                    return 0;
+                }
+                else
+                {
+                    return -1;
+                }
+
+            }
+            catch (JobParseException e)
+            {
+                Console.WriteLine("Failed to initialize the job");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to load the job");
+                return 2;
+            }
+
+            return 0;
         }
         /// <summary>
         /// Converts dictionary into process map and saves it to database

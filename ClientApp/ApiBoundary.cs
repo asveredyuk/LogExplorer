@@ -182,6 +182,23 @@ namespace ClientApp
                 MessageBox.Show("error");
             }
         }
+        public static async Task AddCacheLabelJob(CacheLabelJob job)
+        {
+            var json = JsonConvert.SerializeObject(job);
+            HttpWebRequest wq = WebRequest.CreateHttp(SERVER_PATH + "/jobs/new/cachelabel");
+            wq.Method = "POST";
+            var reqStr = await wq.GetRequestStreamAsync();
+            using (var sw = new StreamWriter(reqStr))
+            {
+                await sw.WriteAsync(json);
+                sw.Close();
+            }
+            var res = await wq.GetResponseAsync() as HttpWebResponse;
+            if ((int)res.StatusCode != 200)
+            {
+                MessageBox.Show("error");
+            }
+        }
 
         public static async Task AddImportTask(ImportArgs args)
         {

@@ -31,7 +31,11 @@ namespace AppServer.Routes
         {
             string logname = args["logname"].Value<string>();
             var db = GetDb(logname);
-            var data = db.GetLabels();
+            var data = db.GetLabels().ToList();
+            foreach (var logLabel in data)
+            {
+                logLabel.HasCache = db.LabelHasCache(logLabel._id);
+            }
             resp.WriteJson(data, Formatting.Indented);
         }
 

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using ClientApp.LogExplorer.Controller;
 using ClientApp.LogExplorer.View.RecycleListView;
 using ClientApp.LogExplorer.View.WinformsComponents;
+using JobSystem.Jobs;
 using LogEntity;
 using Newtonsoft.Json;
 
@@ -82,6 +83,16 @@ namespace ClientApp.LogExplorer.LabelEditor
             labelGuid.Text = data._id;
             boxLabel.Text = data.Text;
             MatchTheBox();
+            if (data.HasCache)
+            {
+                btCache.Enabled = false;
+                btCache.Text = "Is cached";
+            }
+            else
+            {
+                btCache.Enabled = true;
+                btCache.Text = "Make cache";
+            }
         }
 
         private async void btEdit_Click(object sender, EventArgs e)
@@ -117,6 +128,17 @@ namespace ClientApp.LogExplorer.LabelEditor
             }
             await _controller.AddLabel(clonedItem);
             RaiseOnDataDirty();
+        }
+
+        private async void btCache_Click(object sender, EventArgs e)
+        {
+            var job = new CacheLabelJob()
+            {
+                LabelId = data._id,
+                LogName = _controller.State.Info.Name
+            };
+            await ApiBoundary.AddCacheLabelJob(job);
+            MessageBox.Show("Added job, you may continue to work, do not click this button again");
         }
     }
 }

@@ -34,6 +34,7 @@
             this.removeButton = new ClientApp.LogExplorer.View.WinformsComponents.IconButton();
             this.btEdit = new ClientApp.LogExplorer.View.WinformsComponents.IconButton();
             this.cloneButton = new ClientApp.LogExplorer.View.WinformsComponents.IconButton();
+            this.btCache = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelName
@@ -107,10 +108,23 @@
             this.cloneButton.UseVisualStyleBackColor = false;
             this.cloneButton.Click += new System.EventHandler(this.cloneButton_Click);
             // 
+            // btCache
+            // 
+            this.btCache.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btCache.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btCache.Location = new System.Drawing.Point(7, 56);
+            this.btCache.Name = "btCache";
+            this.btCache.Size = new System.Drawing.Size(199, 33);
+            this.btCache.TabIndex = 5;
+            this.btCache.Text = "Cache button";
+            this.btCache.UseVisualStyleBackColor = true;
+            this.btCache.Click += new System.EventHandler(this.btCache_Click);
+            // 
             // LabelListItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btCache);
             this.Controls.Add(this.cloneButton);
             this.Controls.Add(this.removeButton);
             this.Controls.Add(this.btEdit);
@@ -132,5 +146,6 @@
         private System.Windows.Forms.Label labelGuid;
         private View.WinformsComponents.IconButton removeButton;
         private View.WinformsComponents.IconButton cloneButton;
+        private System.Windows.Forms.Button btCache;
     }
 }
