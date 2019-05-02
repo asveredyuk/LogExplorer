@@ -101,23 +101,42 @@ namespace JobDaemon
                     }
                 }
             }
+
+            Process StartProc(string exe, string args)
+            {
+                Process process = new Process();
+
+                // Stop the process from opening a new window
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+
+                // Setup executable and parameters
+                process.StartInfo.FileName = exe;
+                process.StartInfo.Arguments = args;
+
+                // Go
+                process.Start();
+                return process;
+            }
+
             switch (job.Type)
             {
                 case JobType.LogImport:
                     {
-                        var proc = Process.Start(IMPORTER_PATH, jobFname);
+                        var proc = StartProc(IMPORTER_PATH, jobFname);//Process.Start(IMPORTER_PATH, jobFname);
                         proc.WaitForExit();
                         return ReturnInfo(proc.ExitCode);
                     }
                 case JobType.MakeMap:
                     {
-                        var proc = Process.Start(MAPMAKER_PATH, jobFname);
+                        var proc = StartProc(MAPMAKER_PATH, jobFname);//Process.Start(MAPMAKER_PATH, jobFname);
                         proc.WaitForExit();
                         return ReturnInfo(proc.ExitCode);
                     }
                 case JobType.CacheLabel:
                     {
-                        var proc = Process.Start(MAPMAKER_PATH, jobFname);
+                        var proc = StartProc(MAPMAKER_PATH, jobFname);//Process.Start(MAPMAKER_PATH, jobFname);
                         proc.WaitForExit();
                         return ReturnInfo(proc.ExitCode);
                     }

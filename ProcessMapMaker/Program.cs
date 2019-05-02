@@ -110,7 +110,7 @@ namespace ProcessMapMaker
             Console.WriteLine("Saving map");
             var saveMapCode = SaveMap(map, labels);
             Console.WriteLine("OK");
-            Console.ReadLine();
+            //Console.ReadLine();
             return saveMapCode;
             //return 0;
 
