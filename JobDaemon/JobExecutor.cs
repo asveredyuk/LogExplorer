@@ -117,6 +117,8 @@ namespace JobDaemon
 
                 // Go
                 process.Start();
+                //TODO: problem may occur
+                string output = process.StandardOutput.ReadToEnd();
                 return process;
             }
 

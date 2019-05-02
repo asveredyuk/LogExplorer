@@ -28,20 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.checkedListBoxProfiles = new System.Windows.Forms.CheckedListBox();
             this.tbName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.btMakeMap = new System.Windows.Forms.Button();
-            this.btClose = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btOpenMap = new System.Windows.Forms.Button();
-            this.timerCheckStatus = new System.Windows.Forms.Timer(this.components);
-            this.labelStatus = new System.Windows.Forms.Label();
+            this.btClose = new System.Windows.Forms.Button();
+            this.jobWaiter = new ClientApp.LogExplorer.View.JobWaiter();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -108,28 +105,6 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.labelStatus);
-            this.tabPage2.Controls.Add(this.btOpenMap);
-            this.tabPage2.Controls.Add(this.btClose);
-            this.tabPage2.Controls.Add(this.progressBar1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(499, 317);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(7, 124);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(486, 23);
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.progressBar1.TabIndex = 0;
-            // 
             // btMakeMap
             // 
             this.btMakeMap.Location = new System.Drawing.Point(418, 288);
@@ -140,15 +115,18 @@
             this.btMakeMap.UseVisualStyleBackColor = true;
             this.btMakeMap.Click += new System.EventHandler(this.btMakeMap_Click);
             // 
-            // btClose
+            // tabPage2
             // 
-            this.btClose.Location = new System.Drawing.Point(418, 288);
-            this.btClose.Name = "btClose";
-            this.btClose.Size = new System.Drawing.Size(75, 23);
-            this.btClose.TabIndex = 1;
-            this.btClose.Text = "Close";
-            this.btClose.UseVisualStyleBackColor = true;
-            this.btClose.Click += new System.EventHandler(this.btClose_Click);
+            this.tabPage2.Controls.Add(this.jobWaiter);
+            this.tabPage2.Controls.Add(this.btOpenMap);
+            this.tabPage2.Controls.Add(this.btClose);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(499, 317);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // btOpenMap
             // 
@@ -161,19 +139,22 @@
             this.btOpenMap.UseVisualStyleBackColor = true;
             this.btOpenMap.Click += new System.EventHandler(this.btOpenMap_Click);
             // 
-            // timerCheckStatus
+            // btClose
             // 
-            this.timerCheckStatus.Interval = 1000;
-            this.timerCheckStatus.Tick += new System.EventHandler(this.timerCheckStatus_Tick);
+            this.btClose.Location = new System.Drawing.Point(418, 288);
+            this.btClose.Name = "btClose";
+            this.btClose.Size = new System.Drawing.Size(75, 23);
+            this.btClose.TabIndex = 1;
+            this.btClose.Text = "Close";
+            this.btClose.UseVisualStyleBackColor = true;
+            this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
-            // labelStatus
+            // jobWaiter
             // 
-            this.labelStatus.AutoSize = true;
-            this.labelStatus.Location = new System.Drawing.Point(7, 105);
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(63, 13);
-            this.labelStatus.TabIndex = 3;
-            this.labelStatus.Text = "Status: new";
+            this.jobWaiter.Location = new System.Drawing.Point(4, 4);
+            this.jobWaiter.Name = "jobWaiter";
+            this.jobWaiter.Size = new System.Drawing.Size(489, 278);
+            this.jobWaiter.TabIndex = 3;
             // 
             // CreateProcessMapForm
             // 
@@ -188,7 +169,6 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -203,10 +183,8 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button btMakeMap;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button btOpenMap;
         private System.Windows.Forms.Button btClose;
-        private System.Windows.Forms.Timer timerCheckStatus;
-        private System.Windows.Forms.Label labelStatus;
+        private View.JobWaiter jobWaiter;
     }
 }

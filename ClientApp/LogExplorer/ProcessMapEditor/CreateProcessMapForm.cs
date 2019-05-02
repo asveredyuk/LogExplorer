@@ -47,29 +47,37 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
             await ApiBoundary.AddProcessMapJob(Job);
 
             tabControl.SelectTab(1);
-            timerCheckStatus.Start();
+            jobWaiter.SetJobs(new Guid[]{Job.Id});
+            jobWaiter.Start();
+            jobWaiter.onAllJobsCompleted += JobWaiterOnOnAllJobsCompleted;
+            //timerCheckStatus.Start();
         }
 
-        private async void timerCheckStatus_Tick(object sender, EventArgs e)
+        private void JobWaiterOnOnAllJobsCompleted()
         {
-            timerCheckStatus.Stop();
-
-            var info = await ApiBoundary.GetJobInfo(Job.Id);
-            labelStatus.Text = "Status: " + info.State;
-            string[] statuswait = new[] {"new", "pending", "active"};
-            if (statuswait.Contains(info.State))
-            {
-                timerCheckStatus.Start();
-                return;
-            }
-
-            progressBar1.Style = ProgressBarStyle.Blocks;
-            if (info.State == "completed")
-            {
-                btOpenMap.Enabled = true;
-                return;
-            }
+            btOpenMap.Enabled = true;
         }
+
+        //private async void timerCheckStatus_Tick(object sender, EventArgs e)
+        //{
+        //    timerCheckStatus.Stop();
+
+        //    var info = await ApiBoundary.GetJobInfo(Job.Id);
+        //    labelStatus.Text = "Status: " + info.State;
+        //    string[] statuswait = new[] {"new", "pending", "active"};
+        //    if (statuswait.Contains(info.State))
+        //    {
+        //        timerCheckStatus.Start();
+        //        return;
+        //    }
+
+        //    progressBar1.Style = ProgressBarStyle.Blocks;
+        //    if (info.State == "completed")
+        //    {
+        //        btOpenMap.Enabled = true;
+        //        return;
+        //    }
+        //}
 
         private void btClose_Click(object sender, EventArgs e)
         {
