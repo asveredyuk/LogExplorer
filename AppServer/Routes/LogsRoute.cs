@@ -22,9 +22,34 @@ namespace AppServer.Routes
             Get("/list", new DelegateRouter(GetLogsList));
             Get("/:logname/info", new DelegateRouter(GetLogInfo));
             Post("/:logname/at_pos", new DelegateRouter(GetItemsAtPos));
+            Post("/:logname/at_pos_with_labels", new DelegateRouter(GetItemsAtPosWithLabels));
             Post("/:logname/get_distinct_field_values", new DelegateRouter(GetDistinctFieldValues));
             Get("/:logname/field_names", new DelegateRouter(GetFieldNames));
             Use("/:logname/labels", new LogLabelsRoute());
+        }
+
+        class GetItemsAtPosWithLabelsArgs
+        {
+            [JsonRequired]
+            public long Pos { get; set; }
+            [JsonRequired]
+            public long Count { get; set; }
+            public string[] LabelIds { get; set; }
+        }
+        public void GetItemsAtPosWithLabels(HttpListenerRequest req, HttpListenerResponse resp, JObject jobj)
+        {
+            if (!jobj.ContainsKey("logname"))
+            {
+                throw new ApiException(400, "log name is not defined");
+            }
+            string name = jobj["logname"].Value<string>();
+            var db = DatabaseClient.Self.GetLogDatabase(name);
+            var args = req.ReadJson<GetItemsAtPosWithLabelsArgs>();
+            if(args.LabelIds == null)
+                args.LabelIds = new string[0];
+            var res = DatabaseClient.Self.GetLogDatabase(name)
+                .GetTracesWithLabelsAtPos(args.Pos, args.Count, args.LabelIds);
+            resp.WriteJson(res);
         }
         /// <summary>
         /// Get field names of one record

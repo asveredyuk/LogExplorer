@@ -237,6 +237,7 @@ namespace ClientApp.LogExplorer.View
             int rectsInRow = (int)((_pb.Width - TRACE_INFO_W) / (RECT_SIZE + TRACE_INDENT));
             var rectSize = new SizeF(RECT_SIZE, RECT_SIZE);
             int linesUsed = 0;
+            int linesTotal = (int)(_pb.Height / (RECT_SIZE + TRACE_INDENT));
 
             Vector2 GetPos()
             {
@@ -291,11 +292,12 @@ namespace ClientApp.LogExplorer.View
                 }
 
                 traceSize++;
-                linesUsed++;
+                linesUsed++;                
+
             }
         }
 
-        private IEnumerable<LogLabel> GetRulesForItem(LogTraceWithLabels tr, int pos)
+        private IEnumerable<LogLabel> GetRulesForItem(LabelledLogTraceExt tr, int pos)
         {
             if (pos >= tr.ItemsLabels.Count)
                 yield break;

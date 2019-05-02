@@ -13,18 +13,18 @@ namespace ClientApp.LogExplorer.View
 {
     class MainViewClickHandler
     {
-        private List<(RectangleF rect, LogTraceWithLabels trace, int itemPos)> rects = new List<(RectangleF rect, LogTraceWithLabels trace, int itemPos)>();
+        private List<(RectangleF rect, LabelledLogTraceExt trace, int itemPos)> rects = new List<(RectangleF rect, LabelledLogTraceExt trace, int itemPos)>();
 
         public void Reset()
         {
             rects.Clear();
         }
-        public void PushItemRect(RectangleF f, LogTraceWithLabels trace, int itemPos)
+        public void PushItemRect(RectangleF f, LabelledLogTraceExt trace, int itemPos)
         {
             rects.Add((f,trace,itemPos));
         }
 
-        public void PushTraceRect(RectangleF f, LogTraceWithLabels trace)
+        public void PushTraceRect(RectangleF f, LabelledLogTraceExt trace)
         {
             rects.Add((f,trace,-1));
         }

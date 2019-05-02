@@ -79,7 +79,7 @@ namespace ClientApp.LogExplorer.Controller
 
             if (!State.Log.CoversWindow(State.Pos, State.Pos + State.TracesInView))
             {
-                var data = await ApiBoundary.GetLogAtPos(State.Info.Name, State.Pos, State.TracesInView);
+                var data = await ApiBoundary.GetLogAtPos(State.Info.Name, State.Pos, State.TracesInView, State.Labels.Select(t=>t._id).ToArray());
                 State.Log.PushData(data);
                 OnLazyLogLoaded();
             }
@@ -89,7 +89,7 @@ namespace ClientApp.LogExplorer.Controller
             //colorify if enabled
             if(_state.Log == null)
                 return;
-            ColorifyMachine.Colorify(_state.Log.Enumerate(), _state.Labels.ToList());
+            ColorifyMachine.Colorify(_state.Log.Enumerate().ToList(), _state.Labels.ToList());
             mainView.Refresh();
         }
         public async void OpenNewLog(string name)

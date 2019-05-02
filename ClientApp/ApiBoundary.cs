@@ -96,20 +96,20 @@ namespace ClientApp
             return arr;
         }
 
-        public static async Task<LogTraceWithLabels[]> GetLogAtPos(string logName, long pos, long count)
+        public static async Task<LabelledLogTraceExt[]> GetLogAtPos(string logName, long pos, long count, string[] labelIds = null)
         {
             var obj = new
             {
                 Pos = pos,
-                Count = count
+                Count = count,
+                LabelIds = labelIds
             };
             var json = JsonConvert.SerializeObject(obj);
-            (int code, LogTraceWithLabels[] data) = await MakeRequest<LogTraceWithLabels[]>($"/logs/{logName}/at_pos", "POST", json);
+            (int code, LabelledLogTraceExt[] data) = await MakeRequest<LabelledLogTraceExt[]>($"/logs/{logName}/at_pos_with_labels", "POST", json);
             if (code != 200)
             {
                 MessageBox.Show("Api error");
             }
-
             return data;
 
         }

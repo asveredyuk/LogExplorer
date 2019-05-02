@@ -55,6 +55,91 @@ namespace DatabaseBoundary
             return res;
         }
 
+        public IEnumerable<LabeledLogTrace> GetTracesWithLabelsAtPos(long pos, long count, string[] labelIds)
+        {
+            List<BsonDocument> stages = new List<BsonDocument>();
+            var stage1 = new BsonDocument
+            {
+                {
+                    "$match" , new BsonDocument
+                    {
+                        {
+                            "_pos", new BsonDocument
+                            {
+                                {"$gte",pos },
+                                {"$lt",pos + count }
+                            }
+
+                        }
+                    }
+                }
+            };
+            stages.Add(stage1);
+            foreach (var labelId in labelIds)
+            {
+                if(!LabelHasCache(labelId))
+                    continue;
+                var substage1 = new BsonDocument
+                {
+                    {
+                        "$lookup", new BsonDocument
+                        {
+                            { "from",MakeCacheNameForLabel(labelId)},
+                            {"localField","_id" },
+                            {"foreignField", "_id"},
+                            {"as","Filters." + labelId}
+                        }
+                    }
+                };
+                var substage2 = new BsonDocument
+                {
+                    {
+                        "$addFields", new BsonDocument
+                        {
+                            {
+                                "Filters." + labelId, new BsonDocument
+                                {
+                                    {
+                                        "$arrayElemAt",new BsonArray
+                                        {
+                                            "$Filters." + labelId + ".value",
+                                            0
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+                var substage3 = new BsonDocument
+                {
+                    {
+                        "$addFields", new BsonDocument
+                        {
+                            {
+                                "Filters." + labelId, new BsonDocument
+                                {
+                                    {
+                                        "$ifNull", new BsonArray
+                                        {
+                                            "$Filters." + labelId,
+                                            new BsonArray()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+                stages.Add(substage1);
+                stages.Add(substage2);
+                stages.Add(substage3);
+            }
+
+            var pipeline = PipelineDefinition<LogTrace, LabeledLogTrace>.Create(stages);
+            return GetTracesCollection().Aggregate(pipeline).ToEnumerable();
+
+        }
         public IMongoCollection<LogTrace> GetTracesCollection()
         {
             return db.GetCollection<LogTrace>(DATA_COL_NAME);
