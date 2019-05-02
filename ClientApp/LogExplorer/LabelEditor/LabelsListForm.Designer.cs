@@ -33,6 +33,7 @@
             this.cbProfile = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btDeleteAll = new System.Windows.Forms.Button();
+            this.btCacheAll = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panelForListView
@@ -93,11 +94,24 @@
             this.btDeleteAll.UseVisualStyleBackColor = true;
             this.btDeleteAll.Click += new System.EventHandler(this.btDeleteAll_Click);
             // 
+            // btCacheAll
+            // 
+            this.btCacheAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btCacheAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btCacheAll.Location = new System.Drawing.Point(197, 598);
+            this.btCacheAll.Name = "btCacheAll";
+            this.btCacheAll.Size = new System.Drawing.Size(110, 40);
+            this.btCacheAll.TabIndex = 4;
+            this.btCacheAll.Text = "Cache all";
+            this.btCacheAll.UseVisualStyleBackColor = true;
+            this.btCacheAll.Click += new System.EventHandler(this.btCacheAll_Click);
+            // 
             // LabelsListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(481, 651);
+            this.Controls.Add(this.btCacheAll);
             this.Controls.Add(this.btDeleteAll);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbProfile);
@@ -119,5 +133,6 @@
         private System.Windows.Forms.ComboBox cbProfile;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btDeleteAll;
+        private System.Windows.Forms.Button btCacheAll;
     }
 }

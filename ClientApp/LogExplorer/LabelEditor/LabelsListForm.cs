@@ -11,6 +11,7 @@ using ClientApp.LogExplorer.Controller;
 using ClientApp.LogExplorer.Model;
 using ClientApp.LogExplorer.View.RecycleListView;
 using ClientApp.LogExplorer.View.WinformsComponents;
+using JobSystem.Jobs;
 using LogEntity;
 
 namespace ClientApp.LogExplorer.LabelEditor
@@ -171,6 +172,22 @@ namespace ClientApp.LogExplorer.LabelEditor
                 AdapterOnOnDataChanged();
             }
 
+        }
+
+        private async void btCacheAll_Click(object sender, EventArgs e)
+        {
+            var labelsToCache = _state.Labels.Where(ProfileFilter).ToList();
+            foreach (var label in labelsToCache)
+            {
+                var job = new CacheLabelJob()
+                {
+                    LabelId = label._id,
+                    LogName = _controller.State.Info.Name
+                };
+                await ApiBoundary.AddCacheLabelJob(job);
+            }
+
+            MessageBox.Show($"Added {labelsToCache.Count} cache jobs, wait and do not click this button again");
         }
     }
 }
