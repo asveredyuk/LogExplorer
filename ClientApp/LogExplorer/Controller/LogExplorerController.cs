@@ -119,7 +119,7 @@ namespace ClientApp.LogExplorer.Controller
             LoadLazyLogIfNeeded();
         }
 
-        private async Task LoadLabels()
+        public async Task LoadLabels()
         {
             var labels = await ApiBoundary.GetLabels(_state.Info.Name);
             _state.Labels = labels.ToList();

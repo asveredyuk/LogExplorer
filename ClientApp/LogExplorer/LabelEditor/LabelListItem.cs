@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientApp.LogExplorer.Controller;
+using ClientApp.LogExplorer.View;
 using ClientApp.LogExplorer.View.RecycleListView;
 using ClientApp.LogExplorer.View.WinformsComponents;
 using JobSystem.Jobs;
@@ -138,7 +139,16 @@ namespace ClientApp.LogExplorer.LabelEditor
                 LogName = _controller.State.Info.Name
             };
             await ApiBoundary.AddCacheLabelJob(job);
-            MessageBox.Show("Added job, you may continue to work, do not click this button again");
+            JobWaiterForm form = new JobWaiterForm(new Guid[]{job.Id});
+            
+            form.jobWaiter.onAllJobsCompleted += async delegate
+            {
+                await _controller.LoadLabels();
+                RaiseOnDataDirty();
+            };
+            form.Show();
+
+            //MessageBox.Show("Added job, you may continue to work, do not click this button again");
         }
     }
 }

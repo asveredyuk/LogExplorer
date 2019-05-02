@@ -92,6 +92,18 @@
     <Compile Include="LogExplorer\ProcessMapEditor\OpenMapDialog.Designer.cs">
       <DependentUpon>OpenMapDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogExplorer\View\JobWaiter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LogExplorer\View\JobWaiter.Designer.cs">
+      <DependentUpon>JobWaiter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogExplorer\View\JobWaiterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogExplorer\View\JobWaiterForm.Designer.cs">
+      <DependentUpon>JobWaiterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LogExplorer\View\ProfileSelector.cs" />
     <Compile Include="LogExplorer\View\WinformsComponents\TextFieldDialog.cs">
       <SubType>Form</SubType>
@@ -191,6 +203,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\ProcessMapEditor\OpenMapDialog.resx">
       <DependentUpon>OpenMapDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogExplorer\View\JobWaiter.resx">
+      <DependentUpon>JobWaiter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogExplorer\View\JobWaiterForm.resx">
+      <DependentUpon>JobWaiterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\View\WinformsComponents\TextFieldDialog.resx">
       <DependentUpon>TextFieldDialog.cs</DependentUpon>

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientApp.LogExplorer.Controller;
 using ClientApp.LogExplorer.Model;
+using ClientApp.LogExplorer.View;
 using ClientApp.LogExplorer.View.RecycleListView;
 using ClientApp.LogExplorer.View.WinformsComponents;
 using JobSystem.Jobs;
@@ -176,7 +177,8 @@ namespace ClientApp.LogExplorer.LabelEditor
 
         private async void btCacheAll_Click(object sender, EventArgs e)
         {
-            var labelsToCache = _state.Labels.Where(ProfileFilter).ToList();
+            var labelsToCache = _state.Labels.Where(ProfileFilter).Where(t=>!t.HasCache).ToList();
+            List<Guid> guids = new List<Guid>();
             foreach (var label in labelsToCache)
             {
                 var job = new CacheLabelJob()
@@ -184,10 +186,20 @@ namespace ClientApp.LogExplorer.LabelEditor
                     LabelId = label._id,
                     LogName = _controller.State.Info.Name
                 };
+                guids.Add(job.Id);
                 await ApiBoundary.AddCacheLabelJob(job);
             }
 
-            MessageBox.Show($"Added {labelsToCache.Count} cache jobs, wait and do not click this button again");
+            //MessageBox.Show($"Added {labelsToCache.Count} cache jobs, wait and do not click this button again");
+            JobWaiterForm form = new JobWaiterForm(guids.ToArray());
+            form.jobWaiter.onAllJobsCompleted += async delegate
+            {
+                await _controller.LoadLabels();
+                RefreshDataInAdapter();
+
+            };
+            form.Show();
+
         }
     }
 }
