@@ -157,5 +157,20 @@ namespace ClientApp.LogExplorer.LabelEditor
             _selectedProfile = cbProfile.SelectedItem.ToString();
             RefreshDataInAdapter();
         }
+
+        private async void btDeleteAll_Click(object sender, EventArgs e)
+        {
+            var labelsToDelete = _state.Labels.Where(ProfileFilter).ToList();
+            var res = MessageBox.Show($"Delete {labelsToDelete.Count} labels in {_selectedProfile} profile?", "Confirm", MessageBoxButtons.YesNo);
+            if (res == DialogResult.Yes)
+            {
+                foreach (var label in labelsToDelete)
+                {
+                    await _controller.DeleteLabel(label);
+                }
+                AdapterOnOnDataChanged();
+            }
+
+        }
     }
 }

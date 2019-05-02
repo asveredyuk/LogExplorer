@@ -32,6 +32,7 @@
             this.addButton = new ClientApp.LogExplorer.View.WinformsComponents.IconButton();
             this.cbProfile = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btDeleteAll = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panelForListView
@@ -80,11 +81,24 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Profile";
             // 
+            // btDeleteAll
+            // 
+            this.btDeleteAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btDeleteAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btDeleteAll.Location = new System.Drawing.Point(313, 598);
+            this.btDeleteAll.Name = "btDeleteAll";
+            this.btDeleteAll.Size = new System.Drawing.Size(110, 40);
+            this.btDeleteAll.TabIndex = 4;
+            this.btDeleteAll.Text = "Delete all";
+            this.btDeleteAll.UseVisualStyleBackColor = true;
+            this.btDeleteAll.Click += new System.EventHandler(this.btDeleteAll_Click);
+            // 
             // LabelsListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(481, 651);
+            this.Controls.Add(this.btDeleteAll);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbProfile);
             this.Controls.Add(this.addButton);
@@ -104,5 +118,6 @@
         private View.WinformsComponents.IconButton addButton;
         private System.Windows.Forms.ComboBox cbProfile;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btDeleteAll;
     }
 }
