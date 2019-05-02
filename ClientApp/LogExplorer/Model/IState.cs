@@ -14,5 +14,8 @@ namespace ClientApp.LogExplorer.Model
         List<LogLabel> Labels { get; }
         long TracesInView { get; }
         long Pos { get; }
+
+        IEnumerable<string> LabelProfiles { get; }
+        string ActiveLabelProfile { get; }
     }
 }

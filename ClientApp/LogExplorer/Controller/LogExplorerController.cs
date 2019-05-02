@@ -29,6 +29,8 @@ namespace ClientApp.LogExplorer.Controller
 
         private MainScrollView scr;
 
+        private ProfileSelector profileSelector;
+
         public LogExplorerController()
         {
             LoadState();
@@ -41,6 +43,9 @@ namespace ClientApp.LogExplorer.Controller
             mainView.Bind(_form.pbMain);
             scr = new MainScrollView(this);
             scr.Bind(_form.vScroll);
+            profileSelector = new ProfileSelector(this);
+            profileSelector.Bind(_form.comboBoxProfile);
+
             
             //todo: init views
         }
@@ -68,18 +73,18 @@ namespace ClientApp.LogExplorer.Controller
             //no need to serialize, non-persistant property changed
         }
 
-        private async void LoadLazyLogIfNeeded()
+        private async void LoadLazyLogIfNeeded(bool reallyNeeded = false)
         {
             if(State.Info == null)
                 return;
             var posWas = State.Pos;
             await Task.Delay(50);
-            if(posWas != State.Pos)
+            if(posWas != State.Pos && !reallyNeeded)
                 return;
 
             if (!State.Log.CoversWindow(State.Pos, State.Pos + State.TracesInView))
             {
-                var data = await ApiBoundary.GetLogAtPos(State.Info.Name, State.Pos, State.TracesInView, State.Labels.Select(t=>t._id).ToArray());
+                var data = await ApiBoundary.GetLogAtPos(State.Info.Name, State.Pos, State.TracesInView, State.Labels.Where(t=>t.ProfileName == State.ActiveLabelProfile).Select(t=>t._id).ToArray());
                 State.Log.PushData(data);
                 OnLazyLogLoaded();
             }
@@ -89,8 +94,15 @@ namespace ClientApp.LogExplorer.Controller
             //colorify if enabled
             if(_state.Log == null)
                 return;
-            ColorifyMachine.Colorify(_state.Log.Enumerate().ToList(), _state.Labels.ToList());
+            ColorifyMachine.Colorify(_state.Log.Enumerate().ToList(), _state.Labels.Where(t=>t.ProfileName == _state.ActiveLabelProfile).ToList());
             mainView.Refresh();
+        }
+
+        public void SetActiveProfile(string profileName)
+        {
+            _state.ActiveLabelProfile = profileName;
+            //OnLazyLogLoaded();
+            LoadLazyLogIfNeeded(true);
         }
         public async void OpenNewLog(string name)
         {
@@ -99,10 +111,11 @@ namespace ClientApp.LogExplorer.Controller
             _state.Pos = 0;
             
             //_state.Labels = labels.ToList();
-            LoadLabels();
+            await LoadLabels();
             //refresh views
             //MessageBox.Show(JsonConvert.SerializeObject(info, Formatting.Indented));
             mainView.Refresh();
+            profileSelector.Refresh();
             LoadLazyLogIfNeeded();
         }
 

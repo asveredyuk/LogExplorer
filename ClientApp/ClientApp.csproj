@@ -92,6 +92,7 @@
     <Compile Include="LogExplorer\ProcessMapEditor\OpenMapDialog.Designer.cs">
       <DependentUpon>OpenMapDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogExplorer\View\ProfileSelector.cs" />
     <Compile Include="LogExplorer\View\WinformsComponents\TextFieldDialog.cs">
       <SubType>Form</SubType>
     </Compile>
