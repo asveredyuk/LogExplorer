@@ -112,6 +112,11 @@ namespace ClientApp.LogExplorer.LabelEditor
 
         private async void addButton_Click(object sender, EventArgs e)
         {
+            if (_selectedProfile == PROFILES_ALL_NAME)
+            {
+                MessageBox.Show("Select profile first");
+                return;
+            }
             var (res, form) = LabelEditorForm.GoCreate(_selectedProfile);
             if (res == DialogResult.OK)
             {
