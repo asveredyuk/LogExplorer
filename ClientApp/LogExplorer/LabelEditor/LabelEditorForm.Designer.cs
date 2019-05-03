@@ -35,12 +35,12 @@
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.pbColorExample = new System.Windows.Forms.PictureBox();
+            this.btColorPick = new System.Windows.Forms.Button();
+            this.tbColorHex = new System.Windows.Forms.TextBox();
             this.tbText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.tbColorHex = new System.Windows.Forms.TextBox();
-            this.btColorPick = new System.Windows.Forms.Button();
-            this.pbColorExample = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.btOk = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
             this.tbJs = new FastColoredTextBoxNS.FastColoredTextBox();
@@ -98,14 +98,32 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Display options";
             // 
-            // label3
+            // pbColorExample
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 79);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 13);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Text (optional)";
+            this.pbColorExample.BackColor = System.Drawing.SystemColors.Control;
+            this.pbColorExample.Location = new System.Drawing.Point(192, 31);
+            this.pbColorExample.Name = "pbColorExample";
+            this.pbColorExample.Size = new System.Drawing.Size(25, 25);
+            this.pbColorExample.TabIndex = 4;
+            this.pbColorExample.TabStop = false;
+            // 
+            // btColorPick
+            // 
+            this.btColorPick.Location = new System.Drawing.Point(223, 32);
+            this.btColorPick.Name = "btColorPick";
+            this.btColorPick.Size = new System.Drawing.Size(75, 23);
+            this.btColorPick.TabIndex = 3;
+            this.btColorPick.Text = "Picker";
+            this.btColorPick.UseVisualStyleBackColor = true;
+            this.btColorPick.Click += new System.EventHandler(this.btColorPick_Click);
+            // 
+            // tbColorHex
+            // 
+            this.tbColorHex.Location = new System.Drawing.Point(9, 32);
+            this.tbColorHex.Name = "tbColorHex";
+            this.tbColorHex.Size = new System.Drawing.Size(177, 20);
+            this.tbColorHex.TabIndex = 2;
+            this.tbColorHex.TextChanged += new System.EventHandler(this.tbColorHex_TextChanged);
             // 
             // tbText
             // 
@@ -123,32 +141,14 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Color";
             // 
-            // tbColorHex
+            // label3
             // 
-            this.tbColorHex.Location = new System.Drawing.Point(9, 32);
-            this.tbColorHex.Name = "tbColorHex";
-            this.tbColorHex.Size = new System.Drawing.Size(177, 20);
-            this.tbColorHex.TabIndex = 2;
-            this.tbColorHex.TextChanged += new System.EventHandler(this.tbColorHex_TextChanged);
-            // 
-            // btColorPick
-            // 
-            this.btColorPick.Location = new System.Drawing.Point(223, 32);
-            this.btColorPick.Name = "btColorPick";
-            this.btColorPick.Size = new System.Drawing.Size(75, 23);
-            this.btColorPick.TabIndex = 3;
-            this.btColorPick.Text = "Picker";
-            this.btColorPick.UseVisualStyleBackColor = true;
-            this.btColorPick.Click += new System.EventHandler(this.btColorPick_Click);
-            // 
-            // pbColorExample
-            // 
-            this.pbColorExample.BackColor = System.Drawing.SystemColors.Control;
-            this.pbColorExample.Location = new System.Drawing.Point(192, 31);
-            this.pbColorExample.Name = "pbColorExample";
-            this.pbColorExample.Size = new System.Drawing.Size(25, 25);
-            this.pbColorExample.TabIndex = 4;
-            this.pbColorExample.TabStop = false;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 79);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(74, 13);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Text (optional)";
             // 
             // btOk
             // 
@@ -196,7 +196,7 @@
             this.tbJs.CharWidth = 9;
             this.tbJs.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbJs.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.tbJs.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbJs.Font = new System.Drawing.Font("Consolas", 12F);
             this.tbJs.IsReplaceMode = false;
             this.tbJs.Language = FastColoredTextBoxNS.Language.JS;
             this.tbJs.LeftBracket = '(';
@@ -213,7 +213,7 @@
             this.tbJs.Text = "function(o){\r\n    return true;\r\n};";
             this.tbJs.Zoom = 100;
             // 
-            // RuleEditorForm
+            // LabelEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -226,7 +226,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbName);
             this.Name = "LabelEditorForm";
-            this.Text = "RuleEditorForm";
+            this.Text = "Label editor";
             this.Load += new System.EventHandler(this.RuleEditorForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

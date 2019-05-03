@@ -36,9 +36,9 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btMakeMap = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.jobWaiter = new ClientApp.LogExplorer.View.JobWaiter();
             this.btOpenMap = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
-            this.jobWaiter = new ClientApp.LogExplorer.View.JobWaiter();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -82,7 +82,7 @@
             this.tabControl.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
-            this.tabControl.ItemSize = new System.Drawing.Size(20, 20);
+            this.tabControl.ItemSize = new System.Drawing.Size(0, 1);
             this.tabControl.Location = new System.Drawing.Point(12, 12);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -97,10 +97,10 @@
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.tbName);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Location = new System.Drawing.Point(4, 5);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(499, 317);
+            this.tabPage1.Size = new System.Drawing.Size(499, 336);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -128,6 +128,13 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // jobWaiter
+            // 
+            this.jobWaiter.Location = new System.Drawing.Point(4, 4);
+            this.jobWaiter.Name = "jobWaiter";
+            this.jobWaiter.Size = new System.Drawing.Size(489, 278);
+            this.jobWaiter.TabIndex = 3;
+            // 
             // btOpenMap
             // 
             this.btOpenMap.Enabled = false;
@@ -149,13 +156,6 @@
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
-            // jobWaiter
-            // 
-            this.jobWaiter.Location = new System.Drawing.Point(4, 4);
-            this.jobWaiter.Name = "jobWaiter";
-            this.jobWaiter.Size = new System.Drawing.Size(489, 278);
-            this.jobWaiter.TabIndex = 3;
-            // 
             // CreateProcessMapForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,7 +163,7 @@
             this.ClientSize = new System.Drawing.Size(531, 369);
             this.Controls.Add(this.tabControl);
             this.Name = "CreateProcessMapForm";
-            this.Text = "CreateProcessMapForm";
+            this.Text = "Create";
             this.Load += new System.EventHandler(this.CreateProcessMapForm_Load);
             this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

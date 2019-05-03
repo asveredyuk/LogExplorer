@@ -132,7 +132,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxFieldName);
             this.Name = "LabelGenerateForm";
-            this.Text = "LabelGenerateForm";
+            this.Text = "Generate labels";
             this.Load += new System.EventHandler(this.LabelGenerateForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);

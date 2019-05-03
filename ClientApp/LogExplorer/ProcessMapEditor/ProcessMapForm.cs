@@ -61,6 +61,8 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
         private async void ProcessMapForm_Load(object sender, EventArgs e)
         {
             _map = await ApiBoundary.GetMap(_controller.State.Info.Name, _mapId);
+
+            Text = _controller.State.Info.Name + " - " + _map.Name + " - Process Map";
             FillGraph();
         }
 

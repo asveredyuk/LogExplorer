@@ -52,7 +52,7 @@
             this.ClientSize = new System.Drawing.Size(335, 277);
             this.Controls.Add(this.listBox1);
             this.Name = "OpenMapDialog";
-            this.Text = "OpenMapDialog";
+            this.Text = "Open";
             this.Load += new System.EventHandler(this.OpenMapDialog_Load);
             this.ResumeLayout(false);
 

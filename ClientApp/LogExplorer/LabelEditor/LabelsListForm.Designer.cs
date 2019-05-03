@@ -119,7 +119,7 @@
             this.Controls.Add(this.panelForListView);
             this.DoubleBuffered = true;
             this.Name = "LabelsListForm";
-            this.Text = "LabelsList";
+            this.Text = "Labels";
             this.Load += new System.EventHandler(this.LabelsList_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

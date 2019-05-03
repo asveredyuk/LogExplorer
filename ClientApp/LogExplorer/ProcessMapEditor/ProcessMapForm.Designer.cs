@@ -33,11 +33,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButtonTruncateByNumberOfCon = new System.Windows.Forms.RadioButton();
             this.radioButtonTruncateByValue = new System.Windows.Forms.RadioButton();
-            this.checkBoxLiveRefresh = new System.Windows.Forms.CheckBox();
-            this.btRefresh = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.nudTruncate = new System.Windows.Forms.NumericUpDown();
             this.trackBarTruncate = new System.Windows.Forms.TrackBar();
+            this.checkBoxLiveRefresh = new System.Windows.Forms.CheckBox();
+            this.btRefresh = new System.Windows.Forms.Button();
             this.checkBoxShowValues = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -104,29 +104,6 @@
             this.radioButtonTruncateByValue.UseVisualStyleBackColor = true;
             this.radioButtonTruncateByValue.CheckedChanged += new System.EventHandler(this.radioButtonTruncate_CheckedChanged);
             // 
-            // checkBoxLiveRefresh
-            // 
-            this.checkBoxLiveRefresh.AutoSize = true;
-            this.checkBoxLiveRefresh.Location = new System.Drawing.Point(15, 505);
-            this.checkBoxLiveRefresh.Name = "checkBoxLiveRefresh";
-            this.checkBoxLiveRefresh.Size = new System.Drawing.Size(83, 17);
-            this.checkBoxLiveRefresh.TabIndex = 5;
-            this.checkBoxLiveRefresh.Text = "LiveRefresh";
-            this.checkBoxLiveRefresh.UseVisualStyleBackColor = true;
-            // 
-            // btRefresh
-            // 
-            this.btRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btRefresh.Location = new System.Drawing.Point(15, 466);
-            this.btRefresh.Name = "btRefresh";
-            this.btRefresh.Size = new System.Drawing.Size(213, 23);
-            this.btRefresh.TabIndex = 4;
-            this.btRefresh.Text = "Refresh";
-            this.toolTip1.SetToolTip(this.btRefresh, "Graph is refreshed when settings changed");
-            this.btRefresh.UseVisualStyleBackColor = true;
-            this.btRefresh.Click += new System.EventHandler(this.btTruncate_Click);
-            // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -157,6 +134,29 @@
             this.trackBarTruncate.Size = new System.Drawing.Size(211, 45);
             this.trackBarTruncate.TabIndex = 0;
             this.trackBarTruncate.Scroll += new System.EventHandler(this.trackBarTruncate_Scroll);
+            // 
+            // checkBoxLiveRefresh
+            // 
+            this.checkBoxLiveRefresh.AutoSize = true;
+            this.checkBoxLiveRefresh.Location = new System.Drawing.Point(15, 505);
+            this.checkBoxLiveRefresh.Name = "checkBoxLiveRefresh";
+            this.checkBoxLiveRefresh.Size = new System.Drawing.Size(83, 17);
+            this.checkBoxLiveRefresh.TabIndex = 5;
+            this.checkBoxLiveRefresh.Text = "LiveRefresh";
+            this.checkBoxLiveRefresh.UseVisualStyleBackColor = true;
+            // 
+            // btRefresh
+            // 
+            this.btRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btRefresh.Location = new System.Drawing.Point(15, 466);
+            this.btRefresh.Name = "btRefresh";
+            this.btRefresh.Size = new System.Drawing.Size(213, 23);
+            this.btRefresh.TabIndex = 4;
+            this.btRefresh.Text = "Refresh";
+            this.toolTip1.SetToolTip(this.btRefresh, "Graph is refreshed when settings changed");
+            this.btRefresh.UseVisualStyleBackColor = true;
+            this.btRefresh.Click += new System.EventHandler(this.btTruncate_Click);
             // 
             // checkBoxShowValues
             // 
@@ -228,7 +228,7 @@
             this.ClientSize = new System.Drawing.Size(1167, 560);
             this.Controls.Add(this.splitContainer1);
             this.Name = "ProcessMapForm";
-            this.Text = "ProcessMapForm";
+            this.Text = "ProcessMap";
             this.Load += new System.EventHandler(this.ProcessMapForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

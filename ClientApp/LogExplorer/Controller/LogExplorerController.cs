@@ -114,6 +114,7 @@ namespace ClientApp.LogExplorer.Controller
             await LoadLabels();
             //refresh views
             //MessageBox.Show(JsonConvert.SerializeObject(info, Formatting.Indented));
+            _form.Text = info.Name + " - LogExplorer";
             mainView.Refresh();
             profileSelector.Refresh();
             LoadLazyLogIfNeeded();

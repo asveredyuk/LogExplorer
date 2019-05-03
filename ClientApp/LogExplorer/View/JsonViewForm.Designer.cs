@@ -50,19 +50,25 @@
         '\"',
         '\'',
         '\''};
+            this.fctb.AutoIndentCharsPatterns = "\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\n";
             this.fctb.AutoScrollMinSize = new System.Drawing.Size(29, 18);
             this.fctb.BackBrush = null;
+            this.fctb.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
             this.fctb.CharHeight = 18;
             this.fctb.CharWidth = 9;
             this.fctb.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fctb.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.fctb.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.fctb.Font = new System.Drawing.Font("Consolas", 12F);
             this.fctb.IsReplaceMode = false;
             this.fctb.Language = FastColoredTextBoxNS.Language.JS;
+            this.fctb.LeftBracket = '(';
+            this.fctb.LeftBracket2 = '{';
             this.fctb.Location = new System.Drawing.Point(12, 12);
             this.fctb.Name = "fctb";
             this.fctb.Paddings = new System.Windows.Forms.Padding(0);
             this.fctb.ReadOnly = true;
+            this.fctb.RightBracket = ')';
+            this.fctb.RightBracket2 = '}';
             this.fctb.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.fctb.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fctb.ServiceColors")));
             this.fctb.ShowLineNumbers = false;
@@ -79,7 +85,7 @@
             this.ClientSize = new System.Drawing.Size(653, 528);
             this.Controls.Add(this.fctb);
             this.Name = "JsonViewForm";
-            this.Text = "JsonViewForm";
+            this.Text = "Json View";
             this.Load += new System.EventHandler(this.JsonViewForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.fctb)).EndInit();
             this.ResumeLayout(false);

@@ -71,7 +71,7 @@
             this.Controls.Add(this.btClose);
             this.Controls.Add(this.jobWaiter);
             this.Name = "JobWaiterForm";
-            this.Text = "JobWaiterForm";
+            this.Text = "JobWaiter";
             this.Load += new System.EventHandler(this.JobWaiterForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
