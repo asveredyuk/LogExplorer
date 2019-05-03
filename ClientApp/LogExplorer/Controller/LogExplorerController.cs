@@ -124,6 +124,8 @@ namespace ClientApp.LogExplorer.Controller
         {
             var labels = await ApiBoundary.GetLabels(_state.Info.Name);
             _state.Labels = labels.ToList();
+
+            profileSelector.Refresh();
         }
 
         public void GoEditRules()

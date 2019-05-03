@@ -82,6 +82,7 @@ namespace ClientApp
         {
             LabelGenerateForm form = new LabelGenerateForm(_controller);
             form.ShowDialog();
+
         }
     }
 }
