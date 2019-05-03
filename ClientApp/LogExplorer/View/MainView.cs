@@ -144,9 +144,11 @@ namespace ClientApp.LogExplorer.View
                                 var text = rules[0].Text;
                                 var textColor = bgColor.GetBrightness() > 0.5 ? Color.Black : Color.White;
                                 var font = new Font("Cosnsolas", 15);
-                                var textSize = g.MeasureString(text, font);
+                                var fontNew = Util.FlexFont(0, 15, new Size((int) RECT_SIZE, (int) RECT_SIZE), text,
+                                    font);
+                                var textSize = g.MeasureString(text, fontNew);
                                 var pos = new PointF(rect.X + rect.Width/2 - textSize.Width/2, rect.Y + rect.Height/2 - textSize.Height/2);
-                                g.DrawString(text,font,new SolidBrush(textColor), pos);
+                                g.DrawString(text, fontNew, new SolidBrush(textColor), pos);
                                 break;
 
 

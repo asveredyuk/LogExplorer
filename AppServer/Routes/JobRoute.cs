@@ -60,8 +60,16 @@ namespace AppServer.Routes
             var files = GetAllJobs();
             var ordered = files.OrderByDescending(t => t.CreationTime);
             var jobs = new List<JobInfo>();
-            foreach (var fileInfo in ordered)
+            foreach (var _fileInfo in ordered)
             {
+                var fileInfo = _fileInfo;
+                if (!fileInfo.Exists)
+                {
+                    fileInfo = GetAllJobs().FirstOrDefault(t => t.Name == fileInfo.Name);
+                    if(fileInfo == null)
+                        continue;
+                }
+                //TODO: sometimes job get deleted and exception is thrown
                 var jobJson = File.ReadAllText(fileInfo.FullName);
                 var job = JsonConvert.DeserializeObject<Job>(jobJson);
                 //dynamic d = JsonConvert.DeserializeObject<ExpandoObject>(jobJson);

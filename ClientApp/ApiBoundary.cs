@@ -31,13 +31,26 @@ namespace ClientApp
 
         public static async Task<JobInfo> GetJobInfo(Guid id)
         {
-            WebRequest wq = WebRequest.CreateHttp(SERVER_PATH + "/jobs/" + id.ToString());
-            var res = await wq.GetResponseAsync();
-            using (var sr = new StreamReader(res.GetResponseStream()))
+            (int code, JobInfo info) = await MakeRequest<JobInfo>($"/jobs/{id.ToString()}");
+            if (code != 200)
             {
-                var json = await sr.ReadToEndAsync();
-                return JsonConvert.DeserializeObject<JobInfo>(json);
+                //MessageBox.Show("Api error");
+                //placeholde
+                return new JobInfo()
+                {
+                    Id = id,
+                    State = "unknown"
+                };
             }
+
+            return info;
+            //WebRequest wq = WebRequest.CreateHttp(SERVER_PATH + "/jobs/" + id.ToString());
+            //var res = await wq.GetResponseAsync();
+            //using (var sr = new StreamReader(res.GetResponseStream()))
+            //{
+            //    var json = await sr.ReadToEndAsync();
+            //    return JsonConvert.DeserializeObject<JobInfo>(json);
+            //}
         }
 
         

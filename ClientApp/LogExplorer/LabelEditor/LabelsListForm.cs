@@ -183,6 +183,11 @@ namespace ClientApp.LogExplorer.LabelEditor
         private async void btCacheAll_Click(object sender, EventArgs e)
         {
             var labelsToCache = _state.Labels.Where(ProfileFilter).Where(t=>!t.HasCache).ToList();
+            if (labelsToCache.Count == 0)
+            {
+                MessageBox.Show("Nothing to cache");
+                return;
+            }
             List<Guid> guids = new List<Guid>();
             foreach (var label in labelsToCache)
             {
