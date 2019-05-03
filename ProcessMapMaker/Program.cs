@@ -147,6 +147,12 @@ namespace ProcessMapMaker
                         JobResult.WriteForJob(jobPath,cachejob, 4, $"label {cachejob.LabelId} not found");
                     }
 
+                    if (Database.LabelHasCache(label._id))
+                    {
+                        Console.WriteLine("Already done");
+                        return 0;
+                    }
+
                     Console.WriteLine("Baking label " + label._id);
                     var sw = Stopwatch.StartNew();
                     BakeLabel(label);
