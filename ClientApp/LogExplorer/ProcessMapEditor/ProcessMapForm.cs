@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using ClientApp.LogExplorer.Controller;
+using ClientApp.LogExplorer.Model;
 using LogEntity;
 using Microsoft.Msagl.Core.Layout;
 using Microsoft.Msagl.Drawing;
@@ -108,6 +109,10 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
             {
                 var id = graphNode.LabelText;
                 var label = labels[id];
+                if (label.IsStartOrEnd())
+                {
+                    graphNode.Label.FontStyle = FontStyle.Bold;
+                }
                 graphNode.LabelText = label.Text;
                 graphNode.UserData = label;
             }

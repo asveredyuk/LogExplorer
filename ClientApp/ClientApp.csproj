@@ -86,6 +86,8 @@
     <Compile Include="LogExplorer\LabelEditor\LabelGenerateForm.Designer.cs">
       <DependentUpon>LabelGenerateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogExplorer\Model\LogLabelExt.cs" />
+    <Compile Include="LogExplorer\Model\ProcessMapRelationExt.cs" />
     <Compile Include="LogExplorer\ProcessMapEditor\OpenMapDialog.cs">
       <SubType>Form</SubType>
     </Compile>

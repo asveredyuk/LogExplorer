@@ -76,6 +76,15 @@ namespace ProcessMapMaker
 
             Database = DatabaseClient.Self.GetLogDatabase(Job.LogName);
 
+            if (Job.Labels.Length < 2)
+            {
+                string msg = "Number of labels is lower then 2";
+                Console.WriteLine(msg);
+                JobResult.WriteForJob(jobPath, Job, 4, msg);
+                return 4;
+            }
+
+
             var labels = GetLabels(Job.Labels).ToList();
             if (labels.Count != Job.Labels.Length)
             {
@@ -201,7 +210,7 @@ namespace ProcessMapMaker
             var processMap = new ProcessMap()
             {
                 _id = Job.MapId.ToString(),
-                Labels = labels.ToArray(),
+                Labels = labels.Concat(new LogLabel[]{LogLabel.MakeStart(),LogLabel.MakeEnd()}).ToArray(),
                 Name = Job.MapName,
                 Relations = relations
             };
@@ -360,6 +369,8 @@ namespace ProcessMapMaker
         /// <returns></returns>
         static IEnumerable<(int index, string label)> ConvertTrace(BsonDocument doc)
         {
+            yield return (-1, LogLabel.START_ID);
+            yield return (int.MaxValue, LogLabel.END_ID);
             foreach (var elem in doc)
             {
                 if (!elem.Value.IsBsonArray)

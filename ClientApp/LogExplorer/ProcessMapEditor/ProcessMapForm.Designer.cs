@@ -122,6 +122,11 @@
             this.nudTruncate.Name = "nudTruncate";
             this.nudTruncate.Size = new System.Drawing.Size(165, 20);
             this.nudTruncate.TabIndex = 2;
+            this.nudTruncate.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.nudTruncate.ValueChanged += new System.EventHandler(this.nudTruncate_ValueChanged);
             // 
             // trackBarTruncate
@@ -133,6 +138,7 @@
             this.trackBarTruncate.Name = "trackBarTruncate";
             this.trackBarTruncate.Size = new System.Drawing.Size(211, 45);
             this.trackBarTruncate.TabIndex = 0;
+            this.trackBarTruncate.Value = 1;
             this.trackBarTruncate.Scroll += new System.EventHandler(this.trackBarTruncate_Scroll);
             // 
             // checkBoxLiveRefresh

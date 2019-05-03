@@ -25,7 +25,7 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
 
         private async void btMakeMap_Click(object sender, EventArgs e)
         {
-            string[] selectedProfiles = checkedListBoxProfiles.SelectedItems.Cast<string>().ToArray();
+            string[] selectedProfiles = checkedListBoxProfiles.CheckedItems.Cast<string>().ToArray();
             if (selectedProfiles.Length == 0)
             {
                 MessageBox.Show("Select at least one profile");
@@ -35,6 +35,11 @@ namespace ClientApp.LogExplorer.ProcessMapEditor
             string name = tbName.Text;
             var labels = _controller.State.Labels.Where(t => selectedProfiles.Contains(t.ProfileName)).ToArray();
 
+            if (labels.Length < 2)
+            {
+                MessageBox.Show("Selected profiles contain less than 2 labels, not enough labels");
+                return;
+            }
             Job = new ProcessMapJob()
             {
                 Labels = labels.Select(t => t._id).ToArray(),

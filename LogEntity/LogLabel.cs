@@ -9,6 +9,9 @@ namespace LogEntity
 {
     public class LogLabel
     {
+        public const string START_ID = "00000000-0000-0000-0000-000000000000";
+        public const string END_ID = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+
         public string _id;
         /// <summary>
         /// The profile of the label
@@ -32,5 +35,31 @@ namespace LogEntity
         public string Text;
         [BsonIgnore]
         public bool HasCache;
+
+        public static LogLabel MakeStart()
+        {
+            return new LogLabel()
+            {
+                _id = START_ID,
+                Color = "Green",
+                JSFilter = "",
+                Name = "Start",
+                ProfileName = "",
+                Text = "Start"
+            };
+        }
+
+        public static LogLabel MakeEnd()
+        {
+            return new LogLabel()
+            {
+                _id = END_ID,
+                Color = "Blue",
+                JSFilter = "",
+                Name = "End",
+                ProfileName = "",
+                Text = "End"
+            };
+        }
     }
 }
