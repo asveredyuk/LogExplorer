@@ -37,6 +37,12 @@ namespace ClientApp
 
         private void LogExplorerForm_Load(object sender, EventArgs e)
         {
+            var res = new ConnectionForm().ShowDialog();
+            if (res != DialogResult.OK)
+            {
+                this.Close();
+                return;
+            }
             var args = Environment.GetCommandLineArgs();
             if (args.Length == 2)
             {

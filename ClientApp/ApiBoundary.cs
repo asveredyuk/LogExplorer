@@ -17,7 +17,25 @@ namespace ClientApp
 
     static partial class ApiBoundary
     {
-        private const string SERVER_PATH = "http://localhost:8080/";
+        public static string SERVER_PATH = "http://localhost:8080/";
+
+        static ApiBoundary()
+        {
+
+        }
+
+        public static async Task<string> Ping(string server)
+        {
+            WebRequest wq = WebRequest.CreateHttp(server+ "/ping");
+            wq.Timeout = 2000;
+            var res = await wq.GetResponseAsync();
+            using (var sr = new StreamReader(res.GetResponseStream()))
+            {
+                var json = await sr.ReadToEndAsync();
+                return json;
+            }
+
+        }
         public static async Task<JobInfo[]> GetJobs()
         {
             WebRequest wq = WebRequest.CreateHttp(SERVER_PATH + "/jobs");
@@ -53,7 +71,7 @@ namespace ClientApp
             //}
         }
 
-        
+
         public static async Task<string[]> GetLogsNames()
         {
             (int code, string[] data) = await MakeRequest<string[]>("/logs/list");
@@ -67,7 +85,7 @@ namespace ClientApp
 
         public static async Task<LogInfo> GetLogInfo(string logName)
         {
-            (int code, LogInfo info) = await MakeRequest<LogInfo>($"/logs/{logName}/info" );
+            (int code, LogInfo info) = await MakeRequest<LogInfo>($"/logs/{logName}/info");
             if (code != 200)
             {
                 MessageBox.Show("Api error");
@@ -89,7 +107,7 @@ namespace ClientApp
 
         public static async Task<string[]> GetDistinctFieldValues(string logname, string fieldname)
         {
-            var obj = new 
+            var obj = new
             {
                 FieldName = fieldname
             };
@@ -225,7 +243,7 @@ namespace ClientApp
                 sw.Close();
             }
             var res = await wq.GetResponseAsync() as HttpWebResponse;
-            if ((int) res.StatusCode != 200)
+            if ((int)res.StatusCode != 200)
             {
                 MessageBox.Show("error");
             }
@@ -271,14 +289,14 @@ namespace ClientApp
             }
             catch (WebException e)
             {
-                return ((int) (e.Response as HttpWebResponse).StatusCode, default(T));
+                return ((int)(e.Response as HttpWebResponse).StatusCode, default(T));
             }
             catch (Exception e)
             {
                 throw;
             }
 
-            
+
         }
     }
 

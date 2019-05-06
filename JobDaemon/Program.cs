@@ -42,7 +42,7 @@ namespace JobDaemon
             if (args.Length > 0)
             {
                 //this first item is a path to config file
-                ServerConfig.Config.FILE_PATH = args[1];
+                ServerConfig.Config.FILE_PATH = args[0];
             }
 
             JOBS_PATH = ServerConfig.Config.Self.JobRepoPath;

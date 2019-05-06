@@ -35,13 +35,13 @@ namespace ServerConfig
         }
         public DatabaseConnectionInfo MongoDBConnectionInfo { get; set; }
 
-        public string JobRepoPath { get; set; } = @"X:\jobs";
-        public string ImporterTempFolder { get; set; } = @"X:\temp";
+        public string JobRepoPath { get; set; } = @"X:\jobs\";
+        public string ImporterTempFolder { get; set; } = @"X:\temp\";
         public string FilesDir { get; set; } = @"C:\Users\Alex\Downloads\BPI2016_Clicks_Logged_In.csv\"; //@"X:\files\";
         //public string MongoDbName { get; set; } = "test";
         public string MongoDbPrefix { get; set; } = "_log_";
 
-        public string CsvLogImporterPath { get; set; } = @"C:\Users\Alex\source\repos\CSVLogImporter\CSVLogImporter\bin\Debug\CSVLogImporter.exe";
+        public string CsvLogImporterPath { get; set; } = @"C:\dev\LogExplorer\CSVLogImporter\bin\Debug\CSVLogImporter.exe";
         public string ProcessMapMakerPath { get; set; } = @"C:\dev\LogExplorer\ProcessMapMaker\bin\Debug\ProcessMapMaker.exe";
     }
 }

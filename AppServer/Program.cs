@@ -23,13 +23,13 @@ namespace AppServer
                     }
 
                     var config = ServerConfig.Config.Self;
-                    var json = JsonConvert.SerializeObject(config);
+                    var json = JsonConvert.SerializeObject(config, Formatting.Indented);
                     File.WriteAllText(ServerConfig.Config.FILE_PATH, json);
                     Console.WriteLine("Config file written");
                     return;
                 }
                 //this first item is a path to config file
-                ServerConfig.Config.FILE_PATH = args[1];
+                ServerConfig.Config.FILE_PATH = args[0];
             }
             Server serv = new Server();
             serv.Start();
