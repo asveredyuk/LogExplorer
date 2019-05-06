@@ -4,13 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DatabaseBoundary;
 using Newtonsoft.Json;
 
-namespace AppServer
+namespace ServerConfig
 {
-    class Config
+    public class Config
     {
-        private const string FILE_PATH = "config.json";
+        public static string FILE_PATH = "config.json";
         private static Config self;
 
         public static Config Self
@@ -32,9 +33,15 @@ namespace AppServer
                 return self;
             }
         }
+        public DatabaseConnectionInfo MongoDBConnectionInfo { get; set; }
 
+        public string JobRepoPath { get; set; } = @"X:\jobs";
+        public string ImporterTempFolder { get; set; } = @"X:\temp";
         public string FilesDir { get; set; } = @"C:\Users\Alex\Downloads\BPI2016_Clicks_Logged_In.csv\"; //@"X:\files\";
         //public string MongoDbName { get; set; } = "test";
         public string MongoDbPrefix { get; set; } = "_log_";
+
+        public string CsvLogImporterPath { get; set; } = @"C:\Users\Alex\source\repos\CSVLogImporter\CSVLogImporter\bin\Debug\CSVLogImporter.exe";
+        public string ProcessMapMakerPath { get; set; } = @"C:\dev\LogExplorer\ProcessMapMaker\bin\Debug\ProcessMapMaker.exe";
     }
 }

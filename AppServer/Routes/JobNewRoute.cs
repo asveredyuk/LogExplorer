@@ -11,13 +11,24 @@ using DatabaseBoundary;
 using JobSystem.Jobs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ServerConfig;
 
 namespace AppServer.Routes
 {
     class JobNewRoute : Router
     {
+        public string JOBS_PATH = @"X:\jobs\";
+        public string NEW_JOBS_PATH;
+
+        void InitPath()
+        {
+            NEW_JOBS_PATH = JOBS_PATH + @"new\";
+
+        }
         public JobNewRoute()
         {
+            JOBS_PATH = ServerConfig.Config.Self.JobRepoPath;
+            InitPath();
             Post("/import", new DelegateRouter(NewImportJob));
             Post("/processmap", new DelegateRouter(NewProcessMapJob));
             Post("/cachelabel", new DelegateRouter(NewCacheJob));
@@ -26,10 +37,11 @@ namespace AppServer.Routes
         public void NewCacheJob(HttpListenerRequest req, HttpListenerResponse resp)
         {
             var job = req.ReadJson<CacheLabelJob>();
+            job.ConnectionInfo = Config.Self.MongoDBConnectionInfo;
             try
             {
                 var json = JsonConvert.SerializeObject(job, Formatting.Indented);
-                var path = JobRoute.NEW_JOBS_PATH + job.Id.ToString() + ".job";
+                var path = NEW_JOBS_PATH + job.Id.ToString() + ".job";
                 File.WriteAllText(path, json);
             }
             catch (Exception e)
@@ -42,10 +54,11 @@ namespace AppServer.Routes
         public void NewProcessMapJob(HttpListenerRequest req, HttpListenerResponse resp)
         {
             var job = req.ReadJson<ProcessMapJob>();
+            job.ConnectionInfo = Config.Self.MongoDBConnectionInfo;
             try
             {
                 var json = JsonConvert.SerializeObject(job, Formatting.Indented);
-                var path = JobRoute.NEW_JOBS_PATH + job.Id.ToString() + ".job";
+                var path = NEW_JOBS_PATH + job.Id.ToString() + ".job";
                 File.WriteAllText(path, json);
             }
             catch (Exception e)
@@ -58,6 +71,8 @@ namespace AppServer.Routes
         {
             [JsonRequired]
             public string FileName { get; set; }
+            [JsonRequired]
+            public string LogName { get; set; }
             [JsonRequired]
             public string GroupingField { get; set; }
             [JsonRequired]
@@ -91,6 +106,7 @@ namespace AppServer.Routes
             {
                 Database = new ImportJob.DatabaseInfo()
                 {
+                    ConnectionInfo = Config.Self.MongoDBConnectionInfo,
                     Database = Config.Self.MongoDbPrefix + dbName,
                     Table = LogDatabase.DATA_COL_NAME
                 },
@@ -101,7 +117,7 @@ namespace AppServer.Routes
                     CsvDelimiter = args.CsvDelimiter
                 },
                 Schema = schema,
-                TmpFolder = "X:\\tmp"
+                TmpFolder = Config.Self.ImporterTempFolder
             };
             //if (JobRoute.FindJob(ij.Id) != null)
             //{
@@ -111,7 +127,7 @@ namespace AppServer.Routes
             try
             {
                 var json = JsonConvert.SerializeObject(ij, Formatting.Indented);
-                var path = JobRoute.NEW_JOBS_PATH + ij.Id.ToString() + ".job";
+                var path = NEW_JOBS_PATH + ij.Id.ToString() + ".job";
                 File.WriteAllText(path, json);
             }
             catch (Exception e)

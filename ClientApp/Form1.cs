@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -118,6 +119,7 @@ namespace ClientApp
             var delimiter = tbDelimiter.Text[0];
             var importArgs = new ImportArgs()
             {
+                LogName = Path.GetFileNameWithoutExtension(fname), //TODO: make text field for this
                 FileName = fname,
                 GroupingField = groupingField,
                 GroupingFieldType = groupingFieldType,

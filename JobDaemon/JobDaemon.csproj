@@ -64,6 +64,10 @@
       <Project>{B9CE5A5C-E971-40C8-8B30-5928A1ECD189}</Project>
       <Name>JobSystem</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServerConfig\ServerConfig.csproj">
+      <Project>{00303fec-e1da-4836-90e2-581624a43826}</Project>
+      <Name>ServerConfig</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

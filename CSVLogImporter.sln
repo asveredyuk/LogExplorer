@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseBoundary", "Databas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessMapMaker", "ProcessMapMaker\ProcessMapMaker.csproj", "{1A1419E4-999F-48A6-BBD0-9A50A8A46581}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerConfig", "ServerConfig\ServerConfig.csproj", "{00303FEC-E1DA-4836-90E2-581624A43826}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{1A1419E4-999F-48A6-BBD0-9A50A8A46581}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A1419E4-999F-48A6-BBD0-9A50A8A46581}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A1419E4-999F-48A6-BBD0-9A50A8A46581}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00303FEC-E1DA-4836-90E2-581624A43826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00303FEC-E1DA-4836-90E2-581624A43826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00303FEC-E1DA-4836-90E2-581624A43826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00303FEC-E1DA-4836-90E2-581624A43826}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

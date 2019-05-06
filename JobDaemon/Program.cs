@@ -13,21 +13,40 @@ namespace JobDaemon
 {
     class Program
     {
-        public const string JOBS_PATH = @"X:\jobs\";
-        public const string NEW_JOBS_PATH = JOBS_PATH + @"new\";
-        public const string PENDING_JOBS_PATH = JOBS_PATH + @"pending\";
-        public const string ACTIVE_JOBS_PATH = JOBS_PATH + @"active\";
-        public const string COMPLETED_JOBS_PATH = JOBS_PATH + @"completed\";
-        public const string FAILED_JOBS_PATH = JOBS_PATH + @"failed\";
-        public const string CANCELLED_JOBS_PATH = JOBS_PATH + @"cancelled\";
-        public const string INVALID_JOBS_PATH = JOBS_PATH + @"invalid\";
+        public static string JOBS_PATH = @"X:\jobs\";
+        public static string NEW_JOBS_PATH;
+        public static string PENDING_JOBS_PATH;
+        public static string ACTIVE_JOBS_PATH;
+        public static string COMPLETED_JOBS_PATH;
+        public static string FAILED_JOBS_PATH;
+        public static string CANCELLED_JOBS_PATH;
+        public static string INVALID_JOBS_PATH;
         public const string JOB_EXT = ".job";
         public const string PROGRESS_EXT = ".job.progress";
         private static NewJobWaiter newJobWaiter;
         private static JobExecutor jobExecutor;
         private static StatsDisplayer statsDisplayer;
+
+        static void InitPath()
+        {
+            NEW_JOBS_PATH = JOBS_PATH + @"new\";
+            PENDING_JOBS_PATH = JOBS_PATH + @"pending\";
+            ACTIVE_JOBS_PATH = JOBS_PATH + @"active\";
+            COMPLETED_JOBS_PATH = JOBS_PATH + @"completed\";
+            FAILED_JOBS_PATH = JOBS_PATH + @"failed\";
+            CANCELLED_JOBS_PATH = JOBS_PATH + @"cancelled\";
+            INVALID_JOBS_PATH = JOBS_PATH + @"invalid\";
+        }
         static void Main(string[] args)
         {
+            if (args.Length > 0)
+            {
+                //this first item is a path to config file
+                ServerConfig.Config.FILE_PATH = args[1];
+            }
+
+            JOBS_PATH = ServerConfig.Config.Self.JobRepoPath;
+            InitPath();
             //ImportJob j = new ImportJob()
             //{
             //    GroupingField = "SesstionId",

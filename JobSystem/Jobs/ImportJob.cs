@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DatabaseBoundary;
 using Newtonsoft.Json;
 
 namespace JobSystem.Jobs
@@ -40,6 +41,8 @@ namespace JobSystem.Jobs
 
         public class DatabaseInfo
         {
+            public DatabaseConnectionInfo ConnectionInfo { get; set; }
+
             [JsonRequired]
             public string Database { get; set; }   
             [JsonRequired]

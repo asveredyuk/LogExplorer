@@ -288,6 +288,8 @@ namespace ClientApp
         [JsonRequired]
         public string FileName { get; set; }
         [JsonRequired]
+        public string LogName { get; set; }
+        [JsonRequired]
         public string GroupingField { get; set; }
         [JsonRequired]
         public string TimeField { get; set; }

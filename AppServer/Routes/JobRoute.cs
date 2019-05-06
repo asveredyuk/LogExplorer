@@ -17,11 +17,18 @@ namespace AppServer.Routes
 {
     class JobRoute : Router
     {
-        public const string JOBS_PATH = @"X:\jobs\";
-        public const string NEW_JOBS_PATH = JOBS_PATH + @"new\";
+        public string JOBS_PATH = @"X:\jobs\";
+        public string NEW_JOBS_PATH;
 
+        void InitPath()
+        {
+            NEW_JOBS_PATH = JOBS_PATH + @"new\";
+
+        }
         public JobRoute()
         {
+            JOBS_PATH = ServerConfig.Config.Self.JobRepoPath;
+            InitPath();
             Get("/", new DelegateRouter(GetJobs));
             Get("/:id", new DelegateRouter(GetJobInfo));
             Delete("/:id", new DelegateRouter(RemoveJob));
@@ -152,7 +159,7 @@ namespace AppServer.Routes
 
         }
 
-        public static FileInfo[] GetAllJobs()
+        public FileInfo[] GetAllJobs()
         {
             var di = new DirectoryInfo(JOBS_PATH);
 
@@ -160,7 +167,7 @@ namespace AppServer.Routes
             
         }
 
-        public static FileInfo FindJob(Guid guid)
+        public FileInfo FindJob(Guid guid)
         {
             var all = GetAllJobs();
             return all.FirstOrDefault(t => t.FullName.Contains(guid.ToString()));

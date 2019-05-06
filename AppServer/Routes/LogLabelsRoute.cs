@@ -44,6 +44,10 @@ namespace AppServer.Routes
             string logname = args["logname"].Value<string>();
             var label = req.ReadJson<LogLabel>();
             var db = GetDb(logname);
+            if (db.GetLabels().Any(t => t._id == label._id))
+            {
+                throw new ApiException(400, "Label with such id already exists");
+            }
             db.AddLabel(label);
             resp.Close();
         }
@@ -60,6 +64,15 @@ namespace AppServer.Routes
 
             var db = GetDb(logname);
             var label = req.ReadJson<LogLabel>();
+            if (id != label._id)
+            {
+                throw new ApiException(400, "Id in url and id in object are different");
+            }
+
+            if (!db.GetLabels().Any(t => t._id == id))
+            {
+                throw new ApiException(404, "No label with given id found");
+            }
             db.UpdateLabel(label);
             resp.Close();
         }
@@ -75,6 +88,10 @@ namespace AppServer.Routes
             }
 
             var db = GetDb(logname);
+            if (!db.GetLabels().Any(t => t._id == id))
+            {
+                throw new ApiException(404, "No label with given id found");
+            }
             db.DeleteLabel(guid.ToString());
             resp.Close();
         }

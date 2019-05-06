@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace DatabaseBoundary
     {
         public const string LOG_DATABASE_PREFIX = "_log_";
 
+        public static DatabaseConnectionInfo ConnectionInfo { get; set; }
         private static DatabaseClient self;
 
         public static DatabaseClient Self
@@ -28,7 +30,29 @@ namespace DatabaseBoundary
 
         private DatabaseClient()
         {
-            this.client = new MongoClient();
+            if (ConnectionInfo == null)
+            {
+                var colorWas = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("! default mongo connection is used !");
+                Console.ForegroundColor = colorWas;
+                this.client = new MongoClient();
+                
+            }
+            else
+            {
+                //var settings = new MongoClientSettings();
+                //settings.Server = MongoServerAddress.Parse(ConnectionInfo.Server);
+                //settings.
+                var mongourlBuilder = new MongoUrlBuilder();
+                mongourlBuilder.Server = MongoServerAddress.Parse(ConnectionInfo.Server);
+                mongourlBuilder.Username = ConnectionInfo.Username;
+                mongourlBuilder.Password = ConnectionInfo.Password;
+                this.client = new MongoClient(mongourlBuilder.ToMongoUrl());
+            }
+            //TODO: implement connection
+            
+            //this.client = new MongoClient();
         }
 
         public IEnumerable<string> GetLogNames()

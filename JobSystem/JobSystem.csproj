@@ -61,5 +61,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseBoundary\DatabaseBoundary.csproj">
+      <Project>{dcfcacb1-422e-4e3d-986e-04ae25417716}</Project>
+      <Name>DatabaseBoundary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

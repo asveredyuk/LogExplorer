@@ -71,7 +71,6 @@
   <ItemGroup>
     <Compile Include="ApiException.cs" />
     <Compile Include="App.cs" />
-    <Compile Include="Config.cs" />
     <Compile Include="DebugLogger.cs" />
     <Compile Include="Routes\FilesRoute.cs" />
     <Compile Include="Routes\LogLabelsRoute.cs" />
@@ -108,6 +107,10 @@
     <ProjectReference Include="..\LogEntity\LogEntity.csproj">
       <Project>{A5261A9A-96A4-4366-BE23-53AA1539A795}</Project>
       <Name>LogEntity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerConfig\ServerConfig.csproj">
+      <Project>{00303fec-e1da-4836-90e2-581624a43826}</Project>
+      <Name>ServerConfig</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

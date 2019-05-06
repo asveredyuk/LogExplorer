@@ -76,10 +76,10 @@ namespace JobDaemon
         /// <returns>0 - completed successfully, 1 - cancelled, 2 - failed, result written, 3 - failed, unknown</returns>
         private (int, long) ExecuteJob(string jobFname, Job job)
         {
-            const string IMPORTER_PATH =
-                @"C:\Users\Alex\source\repos\CSVLogImporter\CSVLogImporter\bin\Debug\CSVLogImporter.exe";
-            const string MAPMAKER_PATH =
-                @"C:\dev\LogExplorer\ProcessMapMaker\bin\Debug\ProcessMapMaker.exe";
+            string IMPORTER_PATH = ServerConfig.Config.Self.CsvLogImporterPath;
+
+            string MAPMAKER_PATH = ServerConfig.Config.Self.ProcessMapMakerPath;
+                
             Stopwatch sw = Stopwatch.StartNew();
 
             (int, long) ReturnInfo(int exitCode)

@@ -32,6 +32,7 @@ namespace JobDaemon
         {
             ResetColor();
             Console.WriteLine("JobDaemon v" + Assembly.GetAssembly(typeof(Logger)).GetName().Version);
+            Console.WriteLine("Job repo path : " + Program.JOBS_PATH);
             Console.WriteLine("Started at " + DateTime.Now.ToString());
         }
 

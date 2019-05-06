@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DatabaseBoundary;
 
 namespace JobSystem.Jobs
 {
     public class ProcessMapJob : Job
     {
+        public DatabaseConnectionInfo ConnectionInfo { get; set; }
+
         public string LogName { get; set; }
 
 
