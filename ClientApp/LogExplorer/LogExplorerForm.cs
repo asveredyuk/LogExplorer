@@ -90,5 +90,11 @@ namespace ClientApp
             form.ShowDialog();
 
         }
+
+        private void basicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateProcessMapBasicForm form = new CreateProcessMapBasicForm(_controller);
+            form.ShowDialog();
+        }
     }
 }

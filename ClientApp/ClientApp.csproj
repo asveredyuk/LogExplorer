@@ -94,6 +94,12 @@
     </Compile>
     <Compile Include="LogExplorer\Model\LogLabelExt.cs" />
     <Compile Include="LogExplorer\Model\ProcessMapRelationExt.cs" />
+    <Compile Include="LogExplorer\ProcessMapEditor\CreateProcessMapBasicForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogExplorer\ProcessMapEditor\CreateProcessMapBasicForm.Designer.cs">
+      <DependentUpon>CreateProcessMapBasicForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LogExplorer\ProcessMapEditor\OpenMapDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -212,6 +218,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\LabelEditor\LabelGenerateForm.resx">
       <DependentUpon>LabelGenerateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogExplorer\ProcessMapEditor\CreateProcessMapBasicForm.resx">
+      <DependentUpon>CreateProcessMapBasicForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\ProcessMapEditor\OpenMapDialog.resx">
       <DependentUpon>OpenMapDialog.cs</DependentUpon>

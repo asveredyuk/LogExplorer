@@ -72,6 +72,7 @@
             this.Controls.Add(this.jobWaiter);
             this.Name = "JobWaiterForm";
             this.Text = "JobWaiter";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.JobWaiterForm_FormClosing);
             this.Load += new System.EventHandler(this.JobWaiterForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
