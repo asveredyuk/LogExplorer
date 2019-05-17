@@ -304,6 +304,8 @@ namespace ClientApp
     public class ImportArgs
     {
         [JsonRequired]
+        public Guid JobID { get; set; }
+        [JsonRequired]
         public string FileName { get; set; }
         [JsonRequired]
         public string LogName { get; set; }

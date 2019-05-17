@@ -92,6 +92,12 @@
     <Compile Include="LogExplorer\LabelEditor\LabelGenerateForm.Designer.cs">
       <DependentUpon>LabelGenerateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogExplorer\LogImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogExplorer\LogImportForm.Designer.cs">
+      <DependentUpon>LogImportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LogExplorer\Model\LogLabelExt.cs" />
     <Compile Include="LogExplorer\Model\ProcessMapRelationExt.cs" />
     <Compile Include="LogExplorer\ProcessMapEditor\CreateProcessMapBasicForm.cs">
@@ -218,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\LabelEditor\LabelGenerateForm.resx">
       <DependentUpon>LabelGenerateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogExplorer\LogImportForm.resx">
+      <DependentUpon>LogImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogExplorer\ProcessMapEditor\CreateProcessMapBasicForm.resx">
       <DependentUpon>CreateProcessMapBasicForm.cs</DependentUpon>

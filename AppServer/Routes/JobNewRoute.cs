@@ -70,6 +70,8 @@ namespace AppServer.Routes
         public class ImportArgs
         {
             [JsonRequired]
+            public Guid JobID { get; set; }
+            [JsonRequired]
             public string FileName { get; set; }
             [JsonRequired]
             public string LogName { get; set; }
@@ -90,7 +92,7 @@ namespace AppServer.Routes
             //TODO: this is wrong!! internal data detected! client should not work with this
             ImportArgs args = req.ReadJson<ImportArgs>();
             var fnameWithoutExtension = Path.GetFileNameWithoutExtension(args.FileName);
-            var dbName = new string(fnameWithoutExtension.Where(char.IsLetterOrDigit).ToArray());
+            var dbName = args.LogName;
             var schema = new Dictionary<string, ImportJob.SchemaItemInfo>();
             schema[args.GroupingField] = new ImportJob.SchemaItemInfo()
             {
@@ -110,7 +112,7 @@ namespace AppServer.Routes
                     Database = Config.Self.MongoDbPrefix + dbName,
                     Table = LogDatabase.DATA_COL_NAME
                 },
-                Id = Guid.NewGuid(),
+                Id = args.JobID,
                 Input = new ImportJob.CsvInputInfo()
                 {
                     CsvFileName = Config.Self.FilesDir + args.FileName,

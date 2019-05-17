@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClientApp.LogExplorer;
 using ClientApp.LogExplorer.Controller;
 using ClientApp.LogExplorer.LabelEditor;
 using ClientApp.LogExplorer.ProcessMapEditor;
@@ -94,6 +95,12 @@ namespace ClientApp
         private void basicToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CreateProcessMapBasicForm form = new CreateProcessMapBasicForm(_controller);
+            form.ShowDialog();
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LogImportForm form = new LogImportForm();
             form.ShowDialog();
         }
     }
