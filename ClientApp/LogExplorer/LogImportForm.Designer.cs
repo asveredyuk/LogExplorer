@@ -196,11 +196,11 @@
             this.label7.TabIndex = 1;
             this.label7.Text = "Log name";
             // 
-            // LogImportDialog
+            // LogImportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(453, 454);
+            this.ClientSize = new System.Drawing.Size(407, 281);
             this.Controls.Add(this.tbLogName);
             this.Controls.Add(this.btImport);
             this.Controls.Add(this.label5);
@@ -217,7 +217,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbFiles);
             this.Name = "LogImportForm";
-            this.Text = "LogImportDialog";
+            this.Text = "Import log";
             this.Load += new System.EventHandler(this.LogImportDialog_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

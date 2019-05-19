@@ -115,7 +115,7 @@
             this.Controls.Add(this.tbMapName);
             this.Controls.Add(this.label1);
             this.Name = "CreateProcessMapBasicForm";
-            this.Text = "CreateProcessMapBasicForm";
+            this.Text = "Create process map (basic)";
             this.Load += new System.EventHandler(this.CreateProcessMapBasicForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
