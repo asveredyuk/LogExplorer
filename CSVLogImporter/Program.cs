@@ -96,14 +96,18 @@ namespace CSVLogImporter
             };
             using (Progress = new JobProgressWrapper(selfProgr, args[0] + ".progress"))
             {
+                Progress.Progress.TotalStagesCount = 3;
                 Progress.CommitProgress();
 
                 //Console.ReadLine();
                 //todo: try to truncate all the data that is the same for all records in the line
                 try
                 {
+                    Progress.Progress.CurrentStageNomber = 1;
                     CsvImporter.Import(Job);
+                    Progress.Progress.CurrentStageNomber = 2;
                     MetaCompiler.Compile(Job.TmpFolder);
+                    Progress.Progress.CurrentStageNomber = 3;
                     MongoExporter.ExportToMongoDB(Job);
                 }
                 catch (ImportException e)

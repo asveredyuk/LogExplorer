@@ -11,6 +11,8 @@ namespace JobSystem
         public Guid Id { get; set; }
         public int CurrentStagePercentage { get; set; }
         public string CurrentStage { get; set; }
+        public int CurrentStageNomber { get; set; }
+        public int TotalStagesCount { get; set; }
         public int OverallProgress { get; set; }
         //message?
     }

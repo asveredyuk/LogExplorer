@@ -50,7 +50,31 @@ namespace ClientApp.LogExplorer.View
             int finishedCount = _jobInfos.Count(t => !IsJobPendingOrActive(t));
 
             lbStatus.Text = MakeLabel();
-            progressBar1.Value = finishedCount * 100 / _jobIds.Length;
+            if (_jobInfos.Count > 1)
+            {
+                progressBar1.Value = finishedCount * 100 / _jobIds.Length;
+            }
+            else
+            {
+                var info = JobInfos[0];
+                if (info.Progress == null)
+                {
+                    progressBar1.Style = ProgressBarStyle.Marquee;
+                }
+                else
+                {
+                    progressBar1.Style = ProgressBarStyle.Blocks;
+                    if (info.Progress.TotalStagesCount > 0)
+                    {
+                        progressBar1.Value = info.Progress.CurrentStagePercentage;
+                    }
+                    else
+                    {
+                        progressBar1.Value = info.Progress.OverallProgress;
+                    }
+                }
+            }
+
             if (finishedCount == _jobIds.Length)
             {
                 //all jobs done
@@ -66,6 +90,22 @@ namespace ClientApp.LogExplorer.View
 
         private string MakeLabel()
         {
+            if (_jobInfos.Count == 1)
+            {
+                var info = _jobInfos[0];
+                string r = "Status: ";
+                r += info.State;
+                if (info.State == "active" && info.Progress != null)
+                {
+                    if (info.Progress.TotalStagesCount > 0)
+                    {
+                        r +=
+                            $" stage {info.Progress.CurrentStageNomber} of {info.Progress.TotalStagesCount}: {info.Progress.CurrentStage}";
+                    }
+                }
+
+                return r;
+            }
             string[] statuses = new[] { "new", "pending", "active", "completed", "failed", "cancelled", "invalid" };
             string res = "Status: ";
             var rr = statuses.Select(t => (t, _jobInfos.Count(q => q.State == t))).Where(t => t.Item2 > 0).Select(t=>t.Item2.ToString() + " " + t.Item1);
