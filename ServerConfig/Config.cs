@@ -43,5 +43,7 @@ namespace ServerConfig
 
         public string CsvLogImporterPath { get; set; } = @"C:\dev\LogExplorer\CSVLogImporter\bin\Debug\CSVLogImporter.exe";
         public string ProcessMapMakerPath { get; set; } = @"C:\dev\LogExplorer\ProcessMapMaker\bin\Debug\ProcessMapMaker.exe";
+        public int ImporterMaxRamMegabytes { get; set; } = 1024;
+
     }
 }

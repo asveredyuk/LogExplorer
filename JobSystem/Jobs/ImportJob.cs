@@ -75,6 +75,7 @@ namespace JobSystem.Jobs
         //public string GroupingField { get; set; }
         //public string OrderingField { get; set; }
         public string TmpFolder { get; set; }
+        public int MaxMemoryUseMegabytes { get; set; } = 1024;//1gb
 
         /// <summary>
         /// Field that is same for all records in on trace

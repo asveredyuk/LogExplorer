@@ -16,7 +16,7 @@ namespace CSVLogImporter
         //const char SPLITTER = GlobalConsts.CSV_SPLITTER;
         public static int Import(ImportJob job)
         {
-
+            GlobalConsts.MEM_LIMIT = job.MaxMemoryUseMegabytes * 1024 * 1024;
             Program.Progress.Progress.CurrentStage = "Splitting log into parts";
             Program.Progress.Progress.CurrentStagePercentage = 0;
             Program.Progress.CommitProgress();

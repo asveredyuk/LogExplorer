@@ -8,8 +8,7 @@ namespace CSVLogImporter
 {
     class GlobalConsts
     {
-        public const long MEM_LIMIT = 1073741824;
-        public const char CSV_SPLITTER = ',';
+        public static long MEM_LIMIT = 1073741824;
 
         //todo: think about that, what if problems occur here
         public const char DATA_SPLITTER = ',';

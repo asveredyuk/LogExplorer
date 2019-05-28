@@ -119,7 +119,8 @@ namespace AppServer.Routes
                     CsvDelimiter = args.CsvDelimiter
                 },
                 Schema = schema,
-                TmpFolder = Config.Self.ImporterTempFolder
+                TmpFolder = Config.Self.ImporterTempFolder,
+                MaxMemoryUseMegabytes = Config.Self.ImporterMaxRamMegabytes
             };
             //if (JobRoute.FindJob(ij.Id) != null)
             //{
