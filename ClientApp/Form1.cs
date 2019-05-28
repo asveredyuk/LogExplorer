@@ -34,19 +34,13 @@ namespace ClientApp
             //    State = "active"
             //});
             btJobsRefresh_Click(null,null);
-            LoadFilesList();//dont await, go async
-            //UpdateJobsDataGrid();
         }
 
-        private async void LoadFilesList()
-        {
-            var list = await ApiBoundary.GetFiles();
-            cbFiles.Items.Clear();
-            cbFiles.Items.AddRange(list.Cast<object>().ToArray());
-        }
 
         private void UpdateJobsDataGrid()
         {
+            var arr = new string[] {"completed", "pending", "active", "new"};
+            jobs = jobs.OrderBy(t => 100 - Array.IndexOf(arr, t.State)).ToArray();
             dgJobs.Rows.Clear();
             foreach (var jobInfo in jobs)
             {
@@ -82,7 +76,12 @@ namespace ClientApp
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
-
+                var job = jobs[e.RowIndex];
+                if (job.State == "active")
+                {
+                    MessageBox.Show("Cannot delete active job");
+                    return;
+                }
                 DeleteJob(jobs[e.RowIndex]);
             }
         }
@@ -100,35 +99,23 @@ namespace ClientApp
             UpdateJobsDataGrid();
         }
 
-        private async void cbFiles_SelectedIndexChanged(object sender, EventArgs e)
+        private async void timerRefresh_Tick(object sender, EventArgs e)
         {
-            var fields = await ApiBoundary.GetHeaders(cbFiles.SelectedItem.ToString());
-            cbGroupingField.SelectedIndex = -1;
-            cbGroupingField.Items.Clear();
-            cbGroupingField.Items.AddRange(fields);
-            cbTimeField.Items.AddRange(fields);
+            jobs = await ApiBoundary.GetJobs();
+            
+            UpdateJobsDataGrid();
         }
 
-        private async void btImport_Click(object sender, EventArgs e)
+        private void cbAutoRefresh_CheckedChanged(object sender, EventArgs e)
         {
-            var fname = cbFiles.SelectedItem.ToString();
-            var groupingField = cbGroupingField.SelectedItem.ToString();
-            var groupingFieldType = cbGroupingFieldType.SelectedItem.ToString();
-            var timeField = cbTimeField.SelectedItem.ToString();
-            var timeFieldType = cbTimeFieldType.SelectedItem.ToString();
-            var delimiter = tbDelimiter.Text[0];
-            var importArgs = new ImportArgs()
+            if (cbAutoRefresh.Checked)
             {
-                LogName = Path.GetFileNameWithoutExtension(fname), //TODO: make text field for this
-                FileName = fname,
-                GroupingField = groupingField,
-                GroupingFieldType = groupingFieldType,
-                TimeField = timeField,
-                TimeFieldType = timeFieldType,
-                CsvDelimiter = delimiter
-            };
-            await ApiBoundary.AddImportTask(importArgs);
-            btJobsRefresh_Click(null,null);
+                timerRefresh.Start();
+            }
+            else
+            {
+                timerRefresh.Stop();
+            }
         }
     }
 
