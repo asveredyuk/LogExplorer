@@ -33,6 +33,7 @@ namespace ClientApp
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 _controller.OpenNewLog(dialog.Result);
+                ChangeLogIsOpen(true);
             }
         }
 
@@ -49,6 +50,14 @@ namespace ClientApp
             {
                 _controller.OpenNewLog(args[1]);
             }
+            ChangeLogIsOpen(false);
+        }
+
+        private void ChangeLogIsOpen(bool enabled)
+        {
+            mapToolStripMenuItem.Enabled = enabled;
+            rulesToolStripMenuItem.Enabled = enabled;
+            comboBoxProfile.Enabled = enabled;
         }
 
         private void editorToolStripMenuItem_Click(object sender, EventArgs e)
