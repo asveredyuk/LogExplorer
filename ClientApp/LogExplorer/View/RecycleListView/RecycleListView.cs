@@ -51,8 +51,7 @@ namespace ClientApp.LogExplorer.View.RecycleListView
                 nowControl.Width = flowLayoutPanel.Width-30;
                 flowLayoutPanel.Controls.Add(nowControl);
             }
-
-            flowLayoutPanel.VerticalScroll.Value = scroll;
+            flowLayoutPanel.VerticalScroll.Value = Math.Min(scroll, flowLayoutPanel.VerticalScroll.Maximum);
         }
 
         private void ItemControlOnOnDataDirty()

@@ -143,6 +143,7 @@
             // 
             // checkBoxLiveRefresh
             // 
+            this.checkBoxLiveRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxLiveRefresh.AutoSize = true;
             this.checkBoxLiveRefresh.Location = new System.Drawing.Point(15, 505);
             this.checkBoxLiveRefresh.Name = "checkBoxLiveRefresh";
@@ -153,7 +154,7 @@
             // 
             // btRefresh
             // 
-            this.btRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.btRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btRefresh.Location = new System.Drawing.Point(15, 466);
             this.btRefresh.Name = "btRefresh";
@@ -197,8 +198,10 @@
             // 
             this.dgvSelectedObject.AllowUserToAddRows = false;
             this.dgvSelectedObject.AllowUserToDeleteRows = false;
+            this.dgvSelectedObject.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvSelectedObject.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSelectedObject.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSelectedObject.Location = new System.Drawing.Point(3, 16);
             this.dgvSelectedObject.Name = "dgvSelectedObject";
             this.dgvSelectedObject.ReadOnly = true;
@@ -209,6 +212,9 @@
             // 
             // splitContainer1
             // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.Location = new System.Drawing.Point(12, 12);
             this.splitContainer1.Name = "splitContainer1";
             // 
