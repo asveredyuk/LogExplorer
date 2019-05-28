@@ -111,6 +111,8 @@ namespace ClientApp
         {
             LogImportForm form = new LogImportForm();
             form.ShowDialog();
+            if (_controller.State.Info != null)
+                ChangeLogIsOpen(true);
         }
     }
 }
